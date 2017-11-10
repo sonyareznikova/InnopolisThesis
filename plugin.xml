@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            id="org.eventb.ui.MachineFile"
+            objectClass="org.eventb.core.IMachineRoot">
+            <menu
+               label="CodeGen Eiffel"
+               id="code_gen_menu">
+            <separator
+                  name="code_gen_group">
+            </separator>
+         </menu>
+         <action
+               class="plugin.GenCodeEiffel"
+               enablesFor="1"
+               id="machine.EiffelCode"
+               label="Generate Eiffel Code"
+               menubarPath="code_gen_menu/code_gen_group"
+               tooltip="It generates Eiffel code and Spec drivers"/>
+      </objectContribution>
+      
+      </extension>
+</plugin>
