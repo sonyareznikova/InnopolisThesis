@@ -1,5 +1,7 @@
 package plugin;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -51,6 +53,9 @@ public class GenCodeEiffel implements IEditorActionDelegate{
 
 	// Implementation of the translation rules (Eiffel code Generation)
 	Translator oper;
+	
+	//Implementation of translation into Eiffel files
+	EiffelTranslator eifTran;
 
 	// Implementation of the translation for Specification Drivers (Eiffel)
 	SpecDriver spec;
@@ -69,6 +74,8 @@ public class GenCodeEiffel implements IEditorActionDelegate{
 		String machineName = rodinFile.getBareName().toString();
 
 		oper = new Translator();
+		
+		eifTran = new EiffelTranslator();
 
 		String output;
 		try {
@@ -81,12 +88,14 @@ public class GenCodeEiffel implements IEditorActionDelegate{
 					"Successful Translation.");
 		} catch (CoreException e) {
 			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
 	// Returns the generated Eiffel code from machine 'machineName'
 	//TODO: implement
-	public String test(IRodinFile rodinFile, String machineName, String packageName) throws RodinDBException, CoreException {
+	public String test(IRodinFile rodinFile, String machineName, String packageName) throws RodinDBException, CoreException, IOException {
 		String result = "";
 		ISCInternalContext[] ctxs = rodinDB.getMachineContexts(rodinFile, machineName);
 		ArrayList<String> contexts = getContexts(ctxs);
@@ -106,46 +115,69 @@ public class GenCodeEiffel implements IEditorActionDelegate{
 		
 		
 		ISCEvent[] evts = rodinDB.getMachineEvents(rodinFile, machineName); // info from Rodin's DB
-		// Go through each event
+		// translate initialisation
+		result += "\n" + "feature -- Initialisation\r\n" + 
+				"	initialisation\r\n" + 
+				"		do\r\n";
+		ArrayList<String> InitActions = eventActions(evts[0]);
+		for (String a: InitActions) {
+			result += "			"+ a + "\n"; 
+		}
+		result += "\n		ensure\r\n" + 
+				"			";
+		//requirements
+		result += "\n		end";
+		
+		//start translating other events
+		result += "\n" + "feature -- Events";
 		for (ISCEvent evt : evts){
-			result += "\n"+ evt.getLabel();
-			//check parameters
-			ISCParameter[] parameters = evt.getSCParameters();
-			if (parameters != null) {
-				result += "(";
-				for (ISCParameter p : parameters) {
-					result += p.getElementName() + " : ";
-					result += p.getElementType();
-				}
-				result += ") \n";
-			}
+			
 			if (!evt.getLabel().equals("INITIALISATION")){ //INITIALISATION is a bit different
+				result += "\n	"+ evt.getLabel() + " (";
+				System.out.println(evt.getLabel());
+				//check parameters
+				ArrayList<String> params = EventParameters(evt);
+				for (String par: params) {
+					if (params.indexOf(par) != params.size()-1) result += par + "; ";
+					else result += par;
+				}
+				result += ")";
+				
 				ArrayList<String> Guards = eventGuards(evt);
-				result += "require\n";
-				for (String g: Guards){
-					result += g + "\n";
+				result += "\n		require\n";
+				for (int i=0;i<Guards.size();i++){
+					result += "			" + "grd" + Integer.toString(i+1) + ": " + Guards.get(i) + "\n";
 				}
 				
-				result += "actions\n";
+				result += "		do\n";
 				ArrayList<String> Actions = eventActions(evt);
 				for (String a: Actions) {
-					result += a + "\n";
+					result += "			" + a + "\n";
 				}
 				
-			}
-			else if (evt.getLabel().equals("INITIALISATION")) {
-				ArrayList<String> InitActions = eventActions(evt);
-				for (String a: InitActions) {
-					result += a + "\n"; 
-				}
 			}
 			
 		}
 		return result;
 	}
-
+	
+	public ArrayList<String> EventParameters(ISCEvent evt) throws RodinDBException {
+		ArrayList<String> res = new ArrayList<String>();
+		ISCParameter[] parameters = evt.getSCParameters();
+		for (ISCParameter p : parameters) {
+			final FormulaFactory f = FormulaFactory.getDefault();
+			try {
+				//System.out.println(p.getType(f).toString());
+				res.add(p.getElementName().toString() + ": " + getType(p.getType(f).toString()));
+			} catch (CoreException e) {
+				e.printStackTrace();
+			}
+		}
+		return res;
+	}
+	
 	//Returns contexts
-	public ArrayList<String> getContexts(ISCInternalContext[] ctxs) throws RodinDBException {
+	public ArrayList<String> getContexts(ISCInternalContext[] ctxs) throws RodinDBException, IOException {
 		ArrayList<String> result = new ArrayList<String>();
 		for (ISCInternalContext ctx: ctxs) {
 			result.add(ctx.getElementName());
@@ -153,7 +185,9 @@ public class GenCodeEiffel implements IEditorActionDelegate{
 			ISCCarrierSet[] carriersets = ctx.getSCCarrierSets();
 			result.add("SETS");
 			for (ISCCarrierSet set: carriersets) {
-				result.add(set.getElementName());
+				String element_name = set.getElementName();
+				result.add(element_name);
+				eifTran.translateCarrierSets(element_name);
 			}
 			
 			ISCConstant[] constants = ctx.getSCConstants();
@@ -176,7 +210,6 @@ public class GenCodeEiffel implements IEditorActionDelegate{
 		ArrayList<String> res = new ArrayList<String>(); 
 		ISCGuard[] evtGuards = rodinDB.getEvtGuards (event);
 		for (int i=0; i<evtGuards.length;i++){
-			
 			res.add (translation(evtGuards[i].getPredicateString()));			
 		}
 		return res;
@@ -198,6 +231,7 @@ public class GenCodeEiffel implements IEditorActionDelegate{
 			final FormulaFactory f = FormulaFactory.getDefault();
 			String res = null;
 			try {
+				//System.out.println(var.getType(f).toString());
 				res = var.getElementName().toString() + ": " + getType(var.getType(f).toString());
 			} catch (CoreException e) {
 				e.printStackTrace();
@@ -245,7 +279,7 @@ public class GenCodeEiffel implements IEditorActionDelegate{
 		String res = "";
 		try {
 			for (String l: oper.parsePredicate(text)) {
-				res += l + "\n";
+				res += l;
 			}
 		}
 		catch (Exception ex)

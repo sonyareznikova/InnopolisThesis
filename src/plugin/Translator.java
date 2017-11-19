@@ -22,6 +22,7 @@ import org.eventb.core.ast.FormulaFactory;
 import org.eventb.core.ast.FreeIdentifier;
 import org.eventb.core.ast.IParseResult;
 import org.eventb.core.ast.ISimpleVisitor2;
+import org.eventb.core.ast.ITypeEnvironmentBuilder;
 import org.eventb.core.ast.IntegerLiteral;
 import org.eventb.core.ast.LiteralPredicate;
 import org.eventb.core.ast.MultiplePredicate;
@@ -69,6 +70,7 @@ public class Translator implements ISimpleVisitor2 {
 		final IParseResult result = 
 				ff.parseExpression(expression,null);
 		final Expression e = result.getParsedExpression();
+		//System.out.println(e.toString());
 		eiffelCode.add(":"+e.toString()+": ");
 		e.accept(this);
 		for (String i: eiffelType)
@@ -103,11 +105,12 @@ public class Translator implements ISimpleVisitor2 {
 		FreeIdentifier[] ident = assignment.getAssignedIdentifiers();
 		for (FreeIdentifier i: ident)
 			eiffelCode.add(i.toString());
-		eiffelCode.add(" := ");
+		eiffelCode.add(".assigns ( ");
 		Expression[] exp = assignment.getExpressions();
 		for (int i=0; i < exp.length;i++){
 			exp[i].accept(this);
 		}
+		eiffelCode.add(")");
 		
 	}
 	//visited
@@ -155,32 +158,40 @@ public class Translator implements ISimpleVisitor2 {
 		case Formula.BUNION:
 			for (int i=0;i<expression.getChildCount();i++) {
 				expression.getChild(i).accept(this);
-				if (i != expression.getChildCount()-1) eiffelCode.add(" union ");	
+				if (i != expression.getChildCount()-1) eiffelCode.add(".union (");	
 			}
+			eiffelCode.add(")");
 			break;
 		case Formula.BINTER:
 			for (int i=0;i<expression.getChildCount();i++) {
 				expression.getChild(i).accept(this);
-				if (i != expression.getChildCount()-1) eiffelCode.add(" intersection ");	
+				if (i != expression.getChildCount()-1) eiffelCode.add(".intersection ( ");	
 			}
+			eiffelCode.add(")");
 			break;
 		case Formula.BCOMP:
+			eiffelCode.add("create {EBREL_OPER[_,_]}.backward (");
 			for (int i=0;i<expression.getChildCount();i++) {
 				expression.getChild(i).accept(this);
-				if (i != expression.getChildCount()-1) eiffelCode.add(" bcomp ");	
+				if (i != expression.getChildCount()-1) eiffelCode.add(", ");	
 			}
+			eiffelCode.add(")");
 			break;
 		case Formula.FCOMP:
+			eiffelCode.add("create {EBREL_OPER[_,_]}.forward (");
 			for (int i=0;i<expression.getChildCount();i++) {
 				expression.getChild(i).accept(this);
-				if (i != expression.getChildCount()-1) eiffelCode.add(" fcomp ");	
+				if (i != expression.getChildCount()-1) eiffelCode.add(", ");	
 			}
+			eiffelCode.add(")");
 			break;
 		case Formula.OVR:
+			eiffelCode.add("create {EBREL_OPER[_,_]}.override (");
 			for (int i=0;i<expression.getChildCount();i++) {
 				expression.getChild(i).accept(this);
-				if (i != expression.getChildCount()-1) eiffelCode.add(" ovr ");	
+				if (i != expression.getChildCount()-1) eiffelCode.add(", ");	
 			}
+			eiffelCode.add(")");
 			break;
 		case Formula.PLUS:
 			for (int i=0;i<expression.getChildCount();i++) {
@@ -209,17 +220,23 @@ public class Translator implements ISimpleVisitor2 {
 		case Formula.INTEGER:
 			if (eiffelType != null){ //currently translating a Type
 				eiffelType.add("EBINT");
+				break;
 			}
+			eiffelCode.add("EBINT");
 			break;
 		case Formula.NATURAL:
 			if (eiffelType != null){ //currently translating a Type
-				eiffelType.add("EBNAT1");
+				eiffelType.add("EBNAT");
+				break;
 			}
+			eiffelCode.add("EBNAT");
 			break;
 		case Formula.NATURAL1:
 			if (eiffelType != null){ //currently translating a Type
 				eiffelType.add("EBNAT1");
+				break;
 			}
+			eiffelCode.add("EBNAT1");
 			break;
 		case Formula.BOOL:
 			eiffelCode.add(expression.toString());
@@ -261,89 +278,103 @@ public class Translator implements ISimpleVisitor2 {
 		System.out.println("visitBinaryExpression");
 		switch(expression.getTag()) {
 		case Formula.CPROD:
+			eiffelCode.add("create {EBREL [_,_]}.cartesian_prod (");
 			expression.getLeft().accept(this);
-			eiffelCode.add("x");
+			eiffelCode.add(", ");
 			expression.getRight().accept(this);
+			eiffelCode.add(")");
 			break;
 		case Formula.MINUS:
 			expression.getLeft().accept(this);
-			eiffelCode.add("-");
+			eiffelCode.add(" - ");
 			expression.getRight().accept(this);
 			break;
 		case Formula.MAPSTO:
+			eiffelCode.add(" (create {EBPAIR[_,_]}.make (");
 			expression.getLeft().accept(this);
-			eiffelCode.add("maps to");
+			eiffelCode.add(", ");
 			expression.getRight().accept(this);
+			eiffelCode.add("))");
 			break;
 		case Formula.DIV:
 			expression.getLeft().accept(this);
-			eiffelCode.add("/");
+			eiffelCode.add(" / ");
 			expression.getRight().accept(this);
 			break;
 		case Formula.MOD:
 			expression.getLeft().accept(this);
-			eiffelCode.add("\\");
+			eiffelCode.add(" \\ ");
 			expression.getRight().accept(this);
 			break;
 		case Formula.EXPN:
 			expression.getLeft().accept(this);
-			eiffelCode.add("^");
+			eiffelCode.add(" ^ ");
 			expression.getRight().accept(this);
 			break;
 		case Formula.REL:
 			expression.getLeft().accept(this);
-			eiffelCode.add("rel");
+			eiffelCode.add(" rel ");
 			expression.getRight().accept(this);
 			break;
 		case Formula.TREL:
+			eiffelCode.add("(");
 			expression.getLeft().accept(this);
-			eiffelCode.add("trel");
 			expression.getRight().accept(this);
+			eiffelCode.add(").is_total_rel");
 			break;
 		case Formula.SREL:
+			eiffelCode.add("(");
 			expression.getLeft().accept(this);
-			eiffelCode.add("srel");
 			expression.getRight().accept(this);
+			eiffelCode.add(").is_surj_rel");
 			break;
 		case Formula.STREL:
+			eiffelCode.add("(");
 			expression.getLeft().accept(this);
-			eiffelCode.add("strel");
 			expression.getRight().accept(this);
+			eiffelCode.add(").is_tsurj_rel");
 			break;
 		case Formula.PFUN:
+			eiffelCode.add("(");
 			expression.getLeft().accept(this);
-			eiffelCode.add("pfun");
 			expression.getRight().accept(this);
+			eiffelCode.add(").is_partial_func");
 			break;
 		case Formula.TFUN:
+			eiffelCode.add("(");
 			expression.getLeft().accept(this);
-			eiffelCode.add("tfun");
 			expression.getRight().accept(this);
+			eiffelCode.add(").is_total_func");
 			break;
 		case Formula.PINJ:
+			eiffelCode.add("(");
 			expression.getLeft().accept(this);
-			eiffelCode.add("pinj");
 			expression.getRight().accept(this);
+			eiffelCode.add(").is_pinj_func");
 			break;
 		case Formula.TINJ:
+			eiffelCode.add("(");
 			expression.getLeft().accept(this);
-			eiffelCode.add("tinj");
 			expression.getRight().accept(this);
+			eiffelCode.add(").is_tinj_func");
 			break;
 		case Formula.PSUR:
+			eiffelCode.add("(");
 			expression.getLeft().accept(this);
-			eiffelCode.add("psur");
 			expression.getRight().accept(this);
+			eiffelCode.add(").is_psurj_func");
 			break;
 		case Formula.TSUR:
+			eiffelCode.add("(");
 			expression.getLeft().accept(this);
-			eiffelCode.add("tsur");
 			expression.getRight().accept(this);
+			eiffelCode.add(").is_tsurj_func");
 			break;
 		case Formula.TBIJ:
+			eiffelCode.add("(");
 			expression.getLeft().accept(this);
-			eiffelCode.add("tbij");
 			expression.getRight().accept(this);
+			eiffelCode.add(").is_biject_func");
 			break;
 		case Formula.SETMINUS:
 			expression.getLeft().accept(this);
@@ -353,48 +384,58 @@ public class Translator implements ISimpleVisitor2 {
 			break;
 		case Formula.DOMRES:
 			expression.getLeft().accept(this);
-			eiffelCode.add("domres");
+			eiffelCode.add(".domain_restriction (");
 			expression.getRight().accept(this);
+			eiffelCode.add(")");
 			break;
 		case Formula.DOMSUB:
-			expression.getLeft().accept(this);
-			eiffelCode.add("domsub");
 			expression.getRight().accept(this);
+			eiffelCode.add(".domain_subtraction (");
+			expression.getLeft().accept(this);
+			eiffelCode.add(")");
 			break;
 		case Formula.RANRES:
 			expression.getLeft().accept(this);
-			eiffelCode.add("ranres");
+			eiffelCode.add(".range_restriction (");
 			expression.getRight().accept(this);
+			eiffelCode.add(")");
 			break;
 		case Formula.RANSUB:
 			expression.getLeft().accept(this);
-			eiffelCode.add("ransub");
+			eiffelCode.add(".range_substraction (");
 			expression.getRight().accept(this);
+			eiffelCode.add(")");
 			break;
 		case Formula.UPTO:
 			expression.getLeft().accept(this);
-			eiffelCode.add("upto");
+			eiffelCode.add(" upto ");
 			expression.getRight().accept(this);
 			break;
 		case Formula.RELIMAGE:
 			expression.getLeft().accept(this);
-			eiffelCode.add("relimage");
+			eiffelCode.add(".rel_image(");
 			expression.getRight().accept(this);
+			eiffelCode.add(")");
 			break;
 		case Formula.DPROD:
+			eiffelCode.add("create {EBREL_OPER [_, EBREL[_,_]]}.direct_product (");
 			expression.getLeft().accept(this);
-			eiffelCode.add("dprod");
+			eiffelCode.add(", ");
 			expression.getRight().accept(this);
+			eiffelCode.add(")");
 			break;
 		case Formula.PPROD:
+			eiffelCode.add("create {EBREL_OPER [EBREL [_,_], EBREL [_,_]]}.parallel_product ");
 			expression.getLeft().accept(this);
-			eiffelCode.add("pprod");
+			eiffelCode.add(", ");
 			expression.getRight().accept(this);
+			eiffelCode.add(")");
 			break;
 		case Formula.FUNIMAGE:
 			expression.getLeft().accept(this);
-			eiffelCode.add("funimage");
+			eiffelCode.add(".apply (");
 			expression.getRight().accept(this);
+			eiffelCode.add(")");
 			break;
 		}
 		
@@ -430,16 +471,26 @@ public class Translator implements ISimpleVisitor2 {
 		int n_children = expression.getChildCount();
 		switch (expression.getTag()) {
 		case Formula.QUNION:
-			eiffelCode.add("qunion");
+			eiffelCode.add(".qunion (");
 			for (int i=0;i<n_children;i++) {
-				expression.getChild(i).accept(this);
+				if (i != n_children-1) {
+					expression.getChild(i).accept(this);
+					eiffelCode.add(", ");
+				}
+				else expression.getChild(i).accept(this);
 			}
+			eiffelCode.add(")");
 			break;
 		case Formula.QINTER:
-			eiffelCode.add("qinter");
+			eiffelCode.add(".qinter (");
 			for (int i=0;i<n_children;i++) {
-				expression.getChild(i).accept(this);
+				if (i != n_children-1) {
+					expression.getChild(i).accept(this);
+					eiffelCode.add(", ");
+				}
+				else expression.getChild(i).accept(this);
 			}
+			eiffelCode.add(")");
 			break;
 		//do not implement
 		case Formula.CSET:
@@ -457,14 +508,22 @@ public class Translator implements ISimpleVisitor2 {
 	@Override
 	public void visitSetExtension(SetExtension expression) {
 		// '{' list_expression '}'
-		// TODO Auto-generated method stub
+		//
 		System.out.println("visitSetExtension");
 		int n_children = expression.getChildCount();
-		eiffelCode.add("{");
-		for (int i = 0; i < n_children; i++) {
-			expression.getChild(i).accept(this);
+		System.out.println(n_children);
+		for (int i=0;i<n_children;i++) {
+			if (expression.getChild(i) instanceof FreeIdentifier) {
+				eiffelCode.add("create {EBSET[_]}.singleton (");
+				expression.getChild(i).accept(this);
+				eiffelCode.add(")");
+			}
+			else {
+				eiffelCode.add("create EBREL[_,_]}.vals (<<");
+				expression.getChild(i).accept(this);
+				eiffelCode.add(">>)");
+			}
 		}
-		eiffelCode.add("}");
 		
 	}
 	
@@ -481,12 +540,14 @@ public class Translator implements ISimpleVisitor2 {
 			expression.getChild().accept(this);
 			break;
 		case Formula.POW:
-			eiffelCode.add("pow");
+			eiffelCode.add("(");
 			expression.getChild().accept(this);
+			eiffelCode.add(").power_set");
 			break;
 		case Formula.POW1:
-			eiffelCode.add("pow1");
+			eiffelCode.add("(");
 			expression.getChild().accept(this);
+			eiffelCode.add(").power_set1");
 			break;
 		case Formula.KUNION:
 			eiffelCode.add("kunion");
@@ -497,13 +558,14 @@ public class Translator implements ISimpleVisitor2 {
 			expression.getChild().accept(this);
 			break;
 		case Formula.KDOM:
-			eiffelCode.add("dom(");
+			eiffelCode.add("(");
 			expression.getChild().accept(this);
-			eiffelCode.add(")");
+			eiffelCode.add(").domain");
 			break;
 		case Formula.KRAN:
-			eiffelCode.add("range");
+			eiffelCode.add("(");
 			expression.getChild().accept(this);
+			eiffelCode.add(").range");
 			break;
 		case Formula.KMIN:
 			eiffelCode.add("kmin");
@@ -514,20 +576,24 @@ public class Translator implements ISimpleVisitor2 {
 			expression.getChild().accept(this);
 			break;
 		case Formula.CONVERSE:
-			eiffelCode.add("converse");
+			eiffelCode.add("(");
 			expression.getChild().accept(this);
+			eiffelCode.add(").converse");
 			break;
 		case Formula.KPRJ1_GEN:
-			eiffelCode.add("kprj1_gen");
+			eiffelCode.add("(");
 			expression.getChild().accept(this);
+			eiffelCode.add(").prj1");
 			break;
 		case Formula.KPRJ2_GEN:
-			eiffelCode.add("kprj2_gen");
+			eiffelCode.add("(");
 			expression.getChild().accept(this);
+			eiffelCode.add(").prj2");
 			break;
 		case Formula.KID_GEN:
-			eiffelCode.add("kid_gen");
+			eiffelCode.add("(");
 			expression.getChild().accept(this);
+			eiffelCode.add(".identity");
 			break;
 		}
 		
@@ -545,6 +611,9 @@ public class Translator implements ISimpleVisitor2 {
 	public void visitFreeIdentifier(FreeIdentifier identifierExpression) {
 		// TODO Auto-generated method stub
 		System.out.println("visitFreeIdentifier");
+		if (eiffelType != null) {
+			eiffelType.add(identifierExpression.getName());
+		}
 		eiffelCode.add(identifierExpression.getName());
 	}
 
@@ -590,7 +659,7 @@ public class Translator implements ISimpleVisitor2 {
 			break;
 		case Formula.LEQV:
 			predicate.getLeft().accept(this);
-			eiffelCode.add(".equals (");
+			eiffelCode.add(".is_equal (");
 			predicate.getRight().accept(this);
 			eiffelCode.add(")");
 			break;
@@ -670,12 +739,13 @@ public class Translator implements ISimpleVisitor2 {
 		switch (predicate.getTag()){
 		case 	Formula.EQUAL:
 			predicate.getLeft().accept(this);
-			eiffelCode.add(" = ");
+			eiffelCode.add(".is_equal (");
 			predicate.getRight().accept(this);
+			eiffelCode.add(")");
 			break;
 		case 	Formula.NOTEQUAL:
 			predicate.getLeft().accept(this);
-			eiffelCode.add(" != ");
+			eiffelCode.add(" /= ");
 			predicate.getRight().accept(this);
 			break;
 		case    Formula.LT:
@@ -699,34 +769,42 @@ public class Translator implements ISimpleVisitor2 {
 			predicate.getRight().accept(this);
 			break;
 		case 	Formula.IN:
-			predicate.getLeft().accept(this);
-			eiffelCode.add("belongs");
 			predicate.getRight().accept(this);
+			eiffelCode.add(".has (");
+			predicate.getLeft().accept(this);
+			eiffelCode.add(")");
 			break;
 		case 	Formula.NOTIN:
-			predicate.getLeft().accept(this);
-			eiffelCode.add("not in");
+			eiffelCode.add("not ");
 			predicate.getRight().accept(this);
+			eiffelCode.add(".has (");
+			predicate.getLeft().accept(this);
+			eiffelCode.add(")");
 			break;
 		case 	Formula.SUBSET:
 			predicate.getLeft().accept(this);
-			eiffelCode.add("a subset of");
+			eiffelCode.add(".is_strict_subset (");
 			predicate.getRight().accept(this);
+			eiffelCode.add(")");
+		case    Formula.SUBSETEQ:
+			predicate.getLeft().accept(this);
+			eiffelCode.add(".is_subset (");
+			predicate.getRight().accept(this);
+			eiffelCode.add(")");
 			break;
 		case 	Formula.NOTSUBSET:
+			eiffelCode.add("not ");
 			predicate.getLeft().accept(this);
-			eiffelCode.add("!subset of");
+			eiffelCode.add(".is_strict_subset (");
 			predicate.getRight().accept(this);
-			break;
-		case 	Formula.SUBSETEQ:
-			predicate.getLeft().accept(this);
-			eiffelCode.add("subset or equals");
-			predicate.getRight().accept(this);
+			eiffelCode.add(")");
 			break;
 		case 	Formula.NOTSUBSETEQ:
+			eiffelCode.add("not");
 			predicate.getLeft().accept(this);
-			eiffelCode.add("!subset or equals");
+			eiffelCode.add("is_subset (");
 			predicate.getRight().accept(this);
+			eiffelCode.add(")");
 			break;
 		}
 		
