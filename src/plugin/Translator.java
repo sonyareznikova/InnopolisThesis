@@ -44,6 +44,9 @@ public class Translator implements ISimpleVisitor2 {
 	//carrying out the translation of types
 	ArrayList<String> eiffelType;
 	
+	//carrying out the translation of initialisation
+	ArrayList<String> eiffelInit;
+	
 	//constructor
 	Translator(){
 		eiffelCode = new ArrayList<String>();
@@ -78,6 +81,21 @@ public class Translator implements ISimpleVisitor2 {
 		eiffelType = null;
 		return res;
 	}
+	
+	public String parseInitialisation(String action) {
+		String res = "";
+		eiffelInit = new ArrayList<String>();
+		final FormulaFactory ff = FormulaFactory.getDefault();
+		final IParseResult result = 
+				ff.parseAssignment(action, null);
+		
+		final Assignment a = result.getParsedAssignment();
+		a.accept(this);
+		
+		for (String i: eiffelInit) res += i;
+		eiffelInit = null;
+		return res;
+	}
 
 	// Translates EventB assignments (var := Expression) into Eiffel
 	public String Assignment(String assig){
@@ -102,16 +120,25 @@ public class Translator implements ISimpleVisitor2 {
 	public void visitBecomesEqualTo(BecomesEqualTo assignment) {
 		// TODO Auto-generated method stub
 		System.out.println("visitBecomesEqualTo");
-		FreeIdentifier[] ident = assignment.getAssignedIdentifiers();
-		for (FreeIdentifier i: ident)
-			eiffelCode.add(i.toString());
-		eiffelCode.add(".assigns ( ");
 		Expression[] exp = assignment.getExpressions();
-		for (int i=0; i < exp.length;i++){
-			exp[i].accept(this);
+		FreeIdentifier[] ident = assignment.getAssignedIdentifiers();
+		if (eiffelInit != null) {
+			for (FreeIdentifier i: ident) {
+				eiffelInit.add(i.toString());
+			}
+			for (int i=0;i<exp.length;i++) {
+				exp[i].accept(this);
+			}
 		}
-		eiffelCode.add(")");
-		
+		else {
+			for (FreeIdentifier i: ident)
+				eiffelCode.add(i.toString());
+			eiffelCode.add(".assigns ( ");
+			for (int i=0; i < exp.length;i++){
+				exp[i].accept(this);
+			}
+			eiffelCode.add(")");
+		}
 	}
 	//visited
 	@Override
@@ -222,6 +249,10 @@ public class Translator implements ISimpleVisitor2 {
 				eiffelType.add("EBINT");
 				break;
 			}
+			if (eiffelInit != null) {
+				eiffelInit.add("EBINT");
+				break;
+			}
 			eiffelCode.add("EBINT");
 			break;
 		case Formula.NATURAL:
@@ -229,11 +260,19 @@ public class Translator implements ISimpleVisitor2 {
 				eiffelType.add("EBNAT");
 				break;
 			}
+			if (eiffelInit != null) {
+				eiffelInit.add("EBNAT");
+				break;
+			}
 			eiffelCode.add("EBNAT");
 			break;
 		case Formula.NATURAL1:
 			if (eiffelType != null){ //currently translating a Type
 				eiffelType.add("EBNAT1");
+				break;
+			}
+			if (eiffelInit != null) {
+				eiffelInit.add("EBNAT1");
 				break;
 			}
 			eiffelCode.add("EBNAT1");
@@ -248,6 +287,10 @@ public class Translator implements ISimpleVisitor2 {
 			eiffelCode.add(expression.toString());
 			break;
 		case Formula.EMPTYSET:
+			if (eiffelInit != null) {
+				eiffelInit.add(".is_empty");
+				break;
+			}
 			eiffelCode.add(" create {EBSET}.empty_set");
 			break;
 		case Formula.KPRED:
@@ -278,6 +321,14 @@ public class Translator implements ISimpleVisitor2 {
 		System.out.println("visitBinaryExpression");
 		switch(expression.getTag()) {
 		case Formula.CPROD:
+			if (eiffelType != null) {
+				eiffelType.add("EBREL [");
+				expression.getLeft().accept(this);
+				eiffelType.add(", ");
+				expression.getRight().accept(this);
+				eiffelType.add("]");
+				break;
+			}
 			eiffelCode.add("create {EBREL [_,_]}.cartesian_prod (");
 			expression.getLeft().accept(this);
 			eiffelCode.add(", ");
@@ -317,64 +368,34 @@ public class Translator implements ISimpleVisitor2 {
 			expression.getRight().accept(this);
 			break;
 		case Formula.TREL:
-			eiffelCode.add("(");
-			expression.getLeft().accept(this);
-			expression.getRight().accept(this);
-			eiffelCode.add(").is_total_rel");
+			eiffelCode.add(".is_total_rel");
 			break;
 		case Formula.SREL:
-			eiffelCode.add("(");
-			expression.getLeft().accept(this);
-			expression.getRight().accept(this);
-			eiffelCode.add(").is_surj_rel");
+			eiffelCode.add(".is_surj_rel");
 			break;
 		case Formula.STREL:
-			eiffelCode.add("(");
-			expression.getLeft().accept(this);
-			expression.getRight().accept(this);
-			eiffelCode.add(").is_tsurj_rel");
+			eiffelCode.add(".is_tsurj_rel");
 			break;
 		case Formula.PFUN:
-			eiffelCode.add("(");
-			expression.getLeft().accept(this);
-			expression.getRight().accept(this);
-			eiffelCode.add(").is_partial_func");
+			eiffelCode.add(".is_partial_func");
 			break;
 		case Formula.TFUN:
-			eiffelCode.add("(");
-			expression.getLeft().accept(this);
-			expression.getRight().accept(this);
-			eiffelCode.add(").is_total_func");
+			eiffelCode.add(".is_total_func");
 			break;
 		case Formula.PINJ:
-			eiffelCode.add("(");
-			expression.getLeft().accept(this);
-			expression.getRight().accept(this);
-			eiffelCode.add(").is_pinj_func");
+			eiffelCode.add(".is_pinj_func");
 			break;
 		case Formula.TINJ:
-			eiffelCode.add("(");
-			expression.getLeft().accept(this);
-			expression.getRight().accept(this);
-			eiffelCode.add(").is_tinj_func");
+			eiffelCode.add(".is_tinj_func");
 			break;
 		case Formula.PSUR:
-			eiffelCode.add("(");
-			expression.getLeft().accept(this);
-			expression.getRight().accept(this);
-			eiffelCode.add(").is_psurj_func");
+			eiffelCode.add(".is_psurj_func");
 			break;
 		case Formula.TSUR:
-			eiffelCode.add("(");
-			expression.getLeft().accept(this);
-			expression.getRight().accept(this);
-			eiffelCode.add(").is_tsurj_func");
+			eiffelCode.add(".is_tsurj_func");
 			break;
 		case Formula.TBIJ:
-			eiffelCode.add("(");
-			expression.getLeft().accept(this);
-			expression.getRight().accept(this);
-			eiffelCode.add(").is_biject_func");
+			eiffelCode.add(".is_biject_func");
 			break;
 		case Formula.SETMINUS:
 			expression.getLeft().accept(this);
@@ -458,7 +479,12 @@ public class Translator implements ISimpleVisitor2 {
 		// 0..9
 		// TODO Auto-generated method stub
 		System.out.println("visitIntegerLiteral");
-		eiffelCode.add(expression.getValue().toString());
+		if (eiffelInit != null) {
+			eiffelInit.add(expression.getValue().toString());
+		}
+		else {
+			eiffelCode.add(expression.getValue().toString());
+		}
 		
 	}
 	
@@ -511,7 +537,6 @@ public class Translator implements ISimpleVisitor2 {
 		//
 		System.out.println("visitSetExtension");
 		int n_children = expression.getChildCount();
-		System.out.println(n_children);
 		for (int i=0;i<n_children;i++) {
 			if (expression.getChild(i) instanceof FreeIdentifier) {
 				eiffelCode.add("create {EBSET[_]}.singleton (");
@@ -540,6 +565,18 @@ public class Translator implements ISimpleVisitor2 {
 			expression.getChild().accept(this);
 			break;
 		case Formula.POW:
+			if (eiffelType != null ) {
+				if (expression.getChild() instanceof FreeIdentifier) {
+					eiffelType.add("EBSET [");
+					expression.getChild().accept(this);
+					eiffelType.add("]");
+					break;
+				}
+				else {
+					expression.getChild().accept(this);
+					break;
+				}
+			}
 			eiffelCode.add("(");
 			expression.getChild().accept(this);
 			eiffelCode.add(").power_set");
@@ -769,6 +806,21 @@ public class Translator implements ISimpleVisitor2 {
 			predicate.getRight().accept(this);
 			break;
 		case 	Formula.IN:
+			//Binary relations are translated to Eiffel in its own way
+			if (predicate.getRight().getTag() == Formula.TREL ||
+					predicate.getRight().getTag() == Formula.SREL ||
+					predicate.getRight().getTag() == Formula.STREL ||
+					predicate.getRight().getTag() == Formula.PFUN ||
+					predicate.getRight().getTag() == Formula.TFUN ||
+					predicate.getRight().getTag() == Formula.PINJ ||
+					predicate.getRight().getTag() == Formula.TINJ ||
+					predicate.getRight().getTag() == Formula.PSUR ||
+					predicate.getRight().getTag() == Formula.TSUR ||
+					predicate.getRight().getTag() == Formula.TBIJ) {
+						predicate.getLeft().accept(this);
+						predicate.getRight().accept(this);
+						break;
+				}
 			predicate.getRight().accept(this);
 			eiffelCode.add(".has (");
 			predicate.getLeft().accept(this);

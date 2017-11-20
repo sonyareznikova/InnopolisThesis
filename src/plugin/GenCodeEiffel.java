@@ -103,30 +103,22 @@ public class GenCodeEiffel implements IEditorActionDelegate{
 			result += c + "\n";
 		}
 		
-		result += "\n\nVars\n";
-		//Go through variables - get types
-		result += machineVariables(rodinFile, machineName);
-		
-		ISCInvariant[] invs = rodinDB.getMachineInvariants(rodinFile, machineName);
-		result += "\nInvariants\n";
-		for (ISCInvariant inv: invs) {
-			result += (translation(inv.getPredicateString())) + "\n";
-		}
-		
-		
+		//getting all events
 		ISCEvent[] evts = rodinDB.getMachineEvents(rodinFile, machineName); // info from Rodin's DB
+		
 		// translate initialisation
+		System.out.println("init");
+		ArrayList<String> InitActions = InitialisationTranslation(evts[0]);
+		
 		result += "\n" + "feature -- Initialisation\r\n" + 
 				"	initialisation\r\n" + 
 				"		do\r\n";
-		ArrayList<String> InitActions = eventActions(evts[0]);
-		for (String a: InitActions) {
-			result += "			"+ a + "\n"; 
-		}
-		result += "\n		ensure\r\n" + 
-				"			";
-		//requirements
-		result += "\n		end";
+
+		result += "\n		ensure\r\n";
+		
+		for (String a: InitActions) result += "			"+ a + "\n"; 
+				
+		result += "		end";
 		
 		//start translating other events
 		result += "\n" + "feature -- Events";
@@ -158,7 +150,30 @@ public class GenCodeEiffel implements IEditorActionDelegate{
 			}
 			
 		}
+		
+		result += "\nfeature -- Access\n";
+		//Go through variables - get types
+		result +=  machineVariables(rodinFile, machineName);
+		
+		//translate invariants
+		System.out.println("invariants");
+		ISCInvariant[] invs = rodinDB.getMachineInvariants(rodinFile, machineName);
+		result += "\ninvariant\n";
+		for (int i=0;i<invs.length;i++) {
+			result += "		inv" + Integer.toString(i+1) + ": " + (translation(invs[i].getPredicateString())) + "\n";
+		}
+		
+		result += "\nend";
 		return result;
+	}
+	
+	public ArrayList<String> InitialisationTranslation(ISCEvent evt) throws CoreException {
+		ArrayList<String> res = new ArrayList<String>();
+		ISCAction[] evtActions =  rodinDB.getEvtActions(evt);
+		for (ISCAction act: evtActions) {
+			res.add(oper.parseInitialisation(act.getAssignmentString()));
+		}
+		return res;
 	}
 	
 	public ArrayList<String> EventParameters(ISCEvent evt) throws RodinDBException {
@@ -221,7 +236,6 @@ public class GenCodeEiffel implements IEditorActionDelegate{
 		ISCVariable[] variables = rodinDB.getMachineVariables(rodinFile,machineName);
 		for (ISCVariable var : variables){
 			res.append(variable(var));
-			res.append(" ");
 		}
 		return res.toString();
 	}
@@ -232,7 +246,7 @@ public class GenCodeEiffel implements IEditorActionDelegate{
 			String res = null;
 			try {
 				//System.out.println(var.getType(f).toString());
-				res = var.getElementName().toString() + ": " + getType(var.getType(f).toString());
+				res = "\n		" + var.getElementName().toString() + ": " + getType(var.getType(f).toString());
 			} catch (CoreException e) {
 				e.printStackTrace();
 			}
