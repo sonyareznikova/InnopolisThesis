@@ -44,11 +44,6 @@ public class EiffelTranslator {
 				"			out\n" + 
 				"		end";
 		
-		String create = "create\n" + 
-				"	default_create,\n" + 
-				"	-- Added by the user\n" + 
-				"	make";
-		
 		String feature_defaults = "create\n" + 
 				"	default_create,\n" + 
 				"	-- Added by the user\n" + 
@@ -129,7 +124,6 @@ public class EiffelTranslator {
 		
 		System.out.println(class_definition);
 		System.out.println(inherit_statement);
-		System.out.println(create);
 		System.out.println(feature_defaults);
 		System.out.println(feature_redefinition);
 		System.out.println(feature_user_added);

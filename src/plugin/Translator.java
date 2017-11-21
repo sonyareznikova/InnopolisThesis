@@ -20,6 +20,7 @@ import org.eventb.core.ast.ExtendedPredicate;
 import org.eventb.core.ast.Formula;
 import org.eventb.core.ast.FormulaFactory;
 import org.eventb.core.ast.FreeIdentifier;
+import org.eventb.core.ast.IDatatypeTranslation;
 import org.eventb.core.ast.IParseResult;
 import org.eventb.core.ast.ISimpleVisitor2;
 import org.eventb.core.ast.ITypeEnvironmentBuilder;
@@ -44,8 +45,11 @@ public class Translator implements ISimpleVisitor2 {
 	//carrying out the translation of types
 	ArrayList<String> eiffelType;
 	
-	//carrying out the translation of initialisation
+	//carrying out the translation of initialisation ENSURE
 	ArrayList<String> eiffelInit;
+	
+	//carrying out the translation of initialisation DO
+	ArrayList<String> eiffelDoInit;
 	
 	//constructor
 	Translator(){
@@ -96,6 +100,21 @@ public class Translator implements ISimpleVisitor2 {
 		eiffelInit = null;
 		return res;
 	}
+	
+	public String parseForDoInit(String action) {
+		String res = "";
+		eiffelDoInit = new ArrayList<String>();
+		final FormulaFactory ff = FormulaFactory.getDefault();
+		final IParseResult result = 
+				ff.parseAssignment(action, null);
+		
+		final Assignment a = result.getParsedAssignment();
+		a.accept(this);
+		
+		for (String i: eiffelDoInit) res += i;
+		eiffelDoInit = null;
+		return res;
+	}
 
 	// Translates EventB assignments (var := Expression) into Eiffel
 	public String Assignment(String assig){
@@ -128,6 +147,13 @@ public class Translator implements ISimpleVisitor2 {
 			}
 			for (int i=0;i<exp.length;i++) {
 				exp[i].accept(this);
+			}
+		}
+		else if (eiffelDoInit != null) {
+			for (FreeIdentifier i: ident) {
+				eiffelDoInit.add("create ");
+				eiffelDoInit.add(i.toString());
+				eiffelDoInit.add(".default_create");
 			}
 		}
 		else {
@@ -480,7 +506,9 @@ public class Translator implements ISimpleVisitor2 {
 		// TODO Auto-generated method stub
 		System.out.println("visitIntegerLiteral");
 		if (eiffelInit != null) {
+			eiffelInit.add(".equals (");
 			eiffelInit.add(expression.getValue().toString());
+			eiffelInit.add(")");
 		}
 		else {
 			eiffelCode.add(expression.getValue().toString());

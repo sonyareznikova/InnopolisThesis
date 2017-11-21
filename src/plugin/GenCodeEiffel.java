@@ -108,15 +108,17 @@ public class GenCodeEiffel implements IEditorActionDelegate{
 		
 		// translate initialisation
 		System.out.println("init");
-		ArrayList<String> InitActions = InitialisationTranslation(evts[0]);
+		ArrayList<String> InitActions = InitialisationDoTranslation(evts[0]);
+		ArrayList<String> InitEnsure = InitialisationEnsureTranslation(evts[0]);
 		
 		result += "\n" + "feature -- Initialisation\r\n" + 
 				"	initialisation\r\n" + 
 				"		do\r\n";
-
+		for (String e: InitActions) result += "			"+ e + "\n";
+		
 		result += "\n		ensure\r\n";
 		
-		for (String a: InitActions) result += "			"+ a + "\n"; 
+		for (String a: InitEnsure) result += "			"+ a + "\n"; 
 				
 		result += "		end";
 		
@@ -145,10 +147,8 @@ public class GenCodeEiffel implements IEditorActionDelegate{
 				ArrayList<String> Actions = eventActions(evt);
 				for (String a: Actions) {
 					result += "			" + a + "\n";
-				}
-				
-			}
-			
+				}	
+			}	
 		}
 		
 		result += "\nfeature -- Access\n";
@@ -167,7 +167,18 @@ public class GenCodeEiffel implements IEditorActionDelegate{
 		return result;
 	}
 	
-	public ArrayList<String> InitialisationTranslation(ISCEvent evt) throws CoreException {
+	//translate initialisation actions for the DO part
+	public ArrayList<String> InitialisationDoTranslation(ISCEvent evt) throws CoreException {
+		ArrayList<String> res = new ArrayList<String>();
+		ISCAction[] evtActions = rodinDB.getEvtActions(evt);
+		for (ISCAction act: evtActions) {
+			res.add(oper.parseForDoInit(act.getAssignmentString()));
+		}
+		return res;
+	}
+	
+	//translate initialisation actions for the ENSURE part
+	public ArrayList<String> InitialisationEnsureTranslation(ISCEvent evt) throws CoreException {
 		ArrayList<String> res = new ArrayList<String>();
 		ISCAction[] evtActions =  rodinDB.getEvtActions(evt);
 		for (ISCAction act: evtActions) {
