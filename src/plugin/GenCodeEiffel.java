@@ -76,10 +76,14 @@ public class GenCodeEiffel implements IEditorActionDelegate{
 		oper = new Translator();
 		
 		eifTran = new EiffelTranslator();
+		
 
 		String output;
 		try {
 			output = test(rodinFile,machineName, projectName);
+			//FileWriter writer = new FileWriter("file.txt");
+			//writer.write(output);
+			//writer.close();
 			System.out.println(output);
 			MessageDialog.openInformation(
 					PlatformUI.getWorkbench().
@@ -96,9 +100,12 @@ public class GenCodeEiffel implements IEditorActionDelegate{
 	// Returns the generated Eiffel code from machine 'machineName'
 	//TODO: implement
 	public String test(IRodinFile rodinFile, String machineName, String packageName) throws RodinDBException, CoreException, IOException {
-		String result = "";
+		String result = "class " + machineName + "\n";
+		result += "create initialisation";
 		ISCInternalContext[] ctxs = rodinDB.getMachineContexts(rodinFile, machineName);
-		ArrayList<String> contexts = getContexts(ctxs);
+		//there is no need for parameter types but the method is one for contexts and event guards
+		HashMap<String,String> emptyTypes = new HashMap<String,String>();
+		ArrayList<String> contexts = getContexts(ctxs, emptyTypes);
 		for (String c: contexts) {
 			result += c + "\n";
 		}
@@ -129,22 +136,27 @@ public class GenCodeEiffel implements IEditorActionDelegate{
 			if (!evt.getLabel().equals("INITIALISATION")){ //INITIALISATION is a bit different
 				result += "\n	"+ evt.getLabel() + " (";
 				System.out.println(evt.getLabel());
-				//check parameters
-				ArrayList<String> params = EventParameters(evt);
-				for (String par: params) {
-					if (params.indexOf(par) != params.size()-1) result += par + "; ";
-					else result += par;
+				//check parameters and create a mapping between variables and types for each event
+				//inserting event parameters into the resulting code
+				HashMap<String,String> params = EventParameters(evt);
+				int counter = 0;
+				int len = params.size();
+				for (String var: params.keySet()) {
+					counter++;
+					if (counter != len) result += var + ": " + params.get(var) + "; ";
+					else result += var + ": " + params.get(var);
 				}
 				result += ")";
 				
-				ArrayList<String> Guards = eventGuards(evt);
+				
+				ArrayList<String> Guards = eventGuards(evt, params);
 				result += "\n		require\n";
 				for (int i=0;i<Guards.size();i++){
 					result += "			" + "grd" + Integer.toString(i+1) + ": " + Guards.get(i) + "\n";
 				}
 				
 				result += "		do\n";
-				ArrayList<String> Actions = eventActions(evt);
+				ArrayList<String> Actions = eventActions(evt, params);
 				for (String a: Actions) {
 					result += "			" + a + "\n";
 				}	
@@ -160,12 +172,15 @@ public class GenCodeEiffel implements IEditorActionDelegate{
 		ISCInvariant[] invs = rodinDB.getMachineInvariants(rodinFile, machineName);
 		result += "\ninvariant\n";
 		for (int i=0;i<invs.length;i++) {
-			result += "		inv" + Integer.toString(i+1) + ": " + (translation(invs[i].getPredicateString())) + "\n";
+			//using emptyTypes here as well as the method is the same for invariants and event guards
+			result += "		inv" + Integer.toString(i+1) + ": " + (translation(invs[i].getPredicateString(), emptyTypes)) + "\n";
 		}
 		
 		result += "\nend";
 		return result;
 	}
+	
+	//get POs
 	
 	//translate initialisation actions for the DO part
 	public ArrayList<String> InitialisationDoTranslation(ISCEvent evt) throws CoreException {
@@ -187,23 +202,28 @@ public class GenCodeEiffel implements IEditorActionDelegate{
 		return res;
 	}
 	
-	public ArrayList<String> EventParameters(ISCEvent evt) throws RodinDBException {
+	public HashMap<String,String> EventParameters(ISCEvent evt) throws RodinDBException {
 		ArrayList<String> res = new ArrayList<String>();
+		HashMap<String, String> res1 = new HashMap<String, String>();
 		ISCParameter[] parameters = evt.getSCParameters();
 		for (ISCParameter p : parameters) {
 			final FormulaFactory f = FormulaFactory.getDefault();
 			try {
 				//System.out.println(p.getType(f).toString());
-				res.add(p.getElementName().toString() + ": " + getType(p.getType(f).toString()));
+				String name = p.getElementName().toString();
+				String type = getType(p.getType(f).toString());
+				res.add(name + ": " + type);
+				res1.put(name, type);
+				//res.add(p.getElementName().toString() + ": " + getType(p.getType(f).toString()));
 			} catch (CoreException e) {
 				e.printStackTrace();
 			}
 		}
-		return res;
+		return res1;
 	}
 	
 	//Returns contexts
-	public ArrayList<String> getContexts(ISCInternalContext[] ctxs) throws RodinDBException, IOException {
+	public ArrayList<String> getContexts(ISCInternalContext[] ctxs, HashMap<String,String> types) throws RodinDBException, IOException {
 		ArrayList<String> result = new ArrayList<String>();
 		for (ISCInternalContext ctx: ctxs) {
 			result.add(ctx.getElementName());
@@ -216,6 +236,7 @@ public class GenCodeEiffel implements IEditorActionDelegate{
 				eifTran.translateCarrierSets(element_name);
 			}
 			
+			//TODO: translate into a class
 			ISCConstant[] constants = ctx.getSCConstants();
 			result.add("\nCONSTANTS");
 			for (ISCConstant c: constants) {
@@ -225,18 +246,18 @@ public class GenCodeEiffel implements IEditorActionDelegate{
 			ISCAxiom[] axioms = ctx.getSCAxioms();
 			result.add("\nAXIOMS");
 			for (ISCAxiom ax: axioms) {
-				result.add(translation(ax.getPredicateString()));
+				result.add(translation(ax.getPredicateString(), types));
 			}	
 		}
 		return result;
 	}
 	
 	// Returns the translation in Eiffel of the guards of 'machineName'
-	public ArrayList<String> eventGuards(ISCEvent event) throws RodinDBException {
+	public ArrayList<String> eventGuards(ISCEvent event, HashMap<String,String> types) throws RodinDBException {
 		ArrayList<String> res = new ArrayList<String>(); 
 		ISCGuard[] evtGuards = rodinDB.getEvtGuards (event);
 		for (int i=0; i<evtGuards.length;i++){
-			res.add (translation(evtGuards[i].getPredicateString()));			
+			res.add (translation(evtGuards[i].getPredicateString(), types));			
 		}
 		return res;
 	}
@@ -268,16 +289,16 @@ public class GenCodeEiffel implements IEditorActionDelegate{
 			return oper.parseExpression(varDef);
 		}
 		
-		public String translateAssignment(String assig){
-			return oper.Assignment(assig);
+		public String translateAssignment(String assig, HashMap<String,String> types){
+			return oper.Assignment(assig, types);
 		}
 
 		// Returns the translation in Eiffel of the actions of 'event'
-		public ArrayList<String> eventActions(ISCEvent event) throws CoreException {
+		public ArrayList<String> eventActions(ISCEvent event, HashMap<String,String> types) throws CoreException {
 			ISCAction[] evtActions =  rodinDB.getEvtActions(event);
 			ArrayList<String> res = new ArrayList<String>();
 			for (ISCAction evtAction : evtActions){
-				res.add(translateAssignment(evtAction.getAssignmentString()));
+				res.add(translateAssignment(evtAction.getAssignmentString(), types));
 			}
 
 			return res;
@@ -300,10 +321,11 @@ public class GenCodeEiffel implements IEditorActionDelegate{
 		return null;
 	}
 
-	public String translation (String text){
+	public String translation (String text, HashMap<String,String> types){
 		String res = "";
 		try {
-			for (String l: oper.parsePredicate(text)) {
+			ArrayList<String> parsed = oper.parsePredicate(text, types);
+			for (String l: parsed) {
 				res += l;
 			}
 		}

@@ -1,6 +1,7 @@
 package plugin;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.eventb.core.ast.Assignment;
 import org.eventb.core.ast.AssociativeExpression;
@@ -51,15 +52,18 @@ public class Translator implements ISimpleVisitor2 {
 	//carrying out the translation of initialisation DO
 	ArrayList<String> eiffelDoInit;
 	
+	//to store types of current parameters
+	HashMap<String,String> currentTypes;
+	
 	//constructor
 	Translator(){
 		eiffelCode = new ArrayList<String>();
 	}
 	
-	public ArrayList<String> parsePredicate(String text){
+	public ArrayList<String> parsePredicate(String text, HashMap<String,String> types){
 		//start a new translation
 		eiffelCode = new ArrayList<String>();
-		
+		currentTypes = types;
 		final FormulaFactory ff = FormulaFactory.getDefault();
 		final IParseResult result = 
 				ff.parsePredicate(text, null);
@@ -117,9 +121,10 @@ public class Translator implements ISimpleVisitor2 {
 	}
 
 	// Translates EventB assignments (var := Expression) into Eiffel
-	public String Assignment(String assig){
+	public String Assignment(String assig, HashMap<String,String> types){
 		//start a new translation
 		eiffelCode = new ArrayList<String>();
+		currentTypes = types;
 		String res = "";
 		
 		final FormulaFactory ff = FormulaFactory.getDefault();
@@ -223,7 +228,13 @@ public class Translator implements ISimpleVisitor2 {
 			eiffelCode.add(")");
 			break;
 		case Formula.BCOMP:
-			eiffelCode.add("create {EBREL_OPER[_,_]}.backward (");
+			FreeIdentifier[] fi = expression.getFreeIdentifiers();
+			eiffelCode.add("create {EBREL_OPER[");
+			for (int i = 0; i < fi.length; i++) {
+				eiffelCode.add(currentTypes.get(fi[i].getName()));
+				if (i != fi.length - 1) eiffelCode.add(",");
+			}
+			eiffelCode.add("]}.backward (");
 			for (int i=0;i<expression.getChildCount();i++) {
 				expression.getChild(i).accept(this);
 				if (i != expression.getChildCount()-1) eiffelCode.add(", ");	
@@ -231,7 +242,13 @@ public class Translator implements ISimpleVisitor2 {
 			eiffelCode.add(")");
 			break;
 		case Formula.FCOMP:
-			eiffelCode.add("create {EBREL_OPER[_,_]}.forward (");
+			FreeIdentifier[] fiF = expression.getFreeIdentifiers();
+			eiffelCode.add("create {EBREL_OPER[");
+			for (int i = 0; i < fiF.length; i++) {
+				eiffelCode.add(currentTypes.get(fiF[i].getName()));
+				if (i != fiF.length - 1) eiffelCode.add(",");
+			}
+			eiffelCode.add("]}.forward (");
 			for (int i=0;i<expression.getChildCount();i++) {
 				expression.getChild(i).accept(this);
 				if (i != expression.getChildCount()-1) eiffelCode.add(", ");	
@@ -355,7 +372,9 @@ public class Translator implements ISimpleVisitor2 {
 				eiffelType.add("]");
 				break;
 			}
-			eiffelCode.add("create {EBREL [_,_]}.cartesian_prod (");
+			String leftChildType = currentTypes.get(expression.getFreeIdentifiers()[1].getName());
+			String rightChildType = currentTypes.get(expression.getFreeIdentifiers()[0].getName());
+			eiffelCode.add("create {EBREL [" + leftChildType + "," + rightChildType + "]}.cartesian_prod (");
 			expression.getLeft().accept(this);
 			eiffelCode.add(", ");
 			expression.getRight().accept(this);
@@ -367,7 +386,9 @@ public class Translator implements ISimpleVisitor2 {
 			expression.getRight().accept(this);
 			break;
 		case Formula.MAPSTO:
-			eiffelCode.add(" (create {EBPAIR[_,_]}.make (");
+			String leftChildTypeMT = currentTypes.get(expression.getLeft().toString());
+			String rightChildTypeMT = currentTypes.get(expression.getRight().toString());
+			eiffelCode.add("(create {EBPAIR[" + leftChildTypeMT + "," + rightChildTypeMT + "]}.make (");
 			expression.getLeft().accept(this);
 			eiffelCode.add(", ");
 			expression.getRight().accept(this);
@@ -465,14 +486,18 @@ public class Translator implements ISimpleVisitor2 {
 			eiffelCode.add(")");
 			break;
 		case Formula.DPROD:
-			eiffelCode.add("create {EBREL_OPER [_, EBREL[_,_]]}.direct_product (");
+			String leftChildTypeDProd = currentTypes.get(expression.getLeft().toString());
+			String rightChildTypeDProd = currentTypes.get(expression.getRight().toString());
+			eiffelCode.add("create EBREL_OPER [_, EBREL[" + leftChildTypeDProd + "," + rightChildTypeDProd + "]]}.direct_product (");
 			expression.getLeft().accept(this);
 			eiffelCode.add(", ");
 			expression.getRight().accept(this);
 			eiffelCode.add(")");
 			break;
 		case Formula.PPROD:
-			eiffelCode.add("create {EBREL_OPER [EBREL [_,_], EBREL [_,_]]}.parallel_product ");
+			String leftChildTypePProd = currentTypes.get(expression.getLeft().toString());
+			String rightChildTypePProd = currentTypes.get(expression.getRight().toString());
+			eiffelCode.add("create {EBREL_OPER [EBREL [" + leftChildTypePProd + "," + rightChildTypePProd + "], EBREL [" + leftChildTypePProd + "," + rightChildTypePProd + "]]}.parallel_product (");
 			expression.getLeft().accept(this);
 			eiffelCode.add(", ");
 			expression.getRight().accept(this);
@@ -562,17 +587,20 @@ public class Translator implements ISimpleVisitor2 {
 	@Override
 	public void visitSetExtension(SetExtension expression) {
 		// '{' list_expression '}'
-		//
 		System.out.println("visitSetExtension");
 		int n_children = expression.getChildCount();
 		for (int i=0;i<n_children;i++) {
 			if (expression.getChild(i) instanceof FreeIdentifier) {
-				eiffelCode.add("create {EBSET[_]}.singleton (");
+				String childName = expression.getChild(i).toString();
+				String childType = currentTypes.get(childName);
+				eiffelCode.add("create {EBSET[" + childType +"]}.singleton (");
 				expression.getChild(i).accept(this);
 				eiffelCode.add(")");
 			}
 			else {
-				eiffelCode.add("create EBREL[_,_]}.vals (<<");
+				//get names of all Free Identifiers later in the formula and then include their types
+				FreeIdentifier[] fi = expression.getFreeIdentifiers();
+				eiffelCode.add("create EBREL["+ currentTypes.get(fi[0].getName()) + "," + currentTypes.get(fi[1].getName()) + "]}.vals (<<");
 				expression.getChild(i).accept(this);
 				eiffelCode.add(">>)");
 			}
