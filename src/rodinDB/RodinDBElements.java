@@ -2,6 +2,7 @@ package rodinDB;
 
 import java.util.ArrayList;
 
+import org.eventb.core.IEvent;
 import org.eventb.core.IPORoot;
 import org.eventb.core.IPOSequent;
 import org.eventb.core.IPSStatus;
@@ -180,7 +181,6 @@ public class RodinDBElements {
 		}
 		return (IPSStatus[]) result.toArray(new IPSStatus[result.size()]);
 	}
-
 	
 
 	// it returns the event of the machine 'machineName' 

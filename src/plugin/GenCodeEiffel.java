@@ -20,6 +20,7 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eventb.core.EventBPlugin;
+import org.eventb.core.IPSStatus;
 import org.eventb.core.ISCAction;
 import org.eventb.core.ISCAxiom;
 import org.eventb.core.ISCCarrierSet;
@@ -76,7 +77,6 @@ public class GenCodeEiffel implements IEditorActionDelegate{
 		oper = new Translator();
 		
 		eifTran = new EiffelTranslator();
-		
 
 		String output;
 		try {
@@ -100,6 +100,7 @@ public class GenCodeEiffel implements IEditorActionDelegate{
 	// Returns the generated Eiffel code from machine 'machineName'
 	//TODO: implement
 	public String test(IRodinFile rodinFile, String machineName, String packageName) throws RodinDBException, CoreException, IOException {
+		
 		String result = "class " + machineName + "\n";
 		result += "create initialisation";
 		ISCInternalContext[] ctxs = rodinDB.getMachineContexts(rodinFile, machineName);
@@ -159,7 +160,8 @@ public class GenCodeEiffel implements IEditorActionDelegate{
 				ArrayList<String> Actions = eventActions(evt, params);
 				for (String a: Actions) {
 					result += "			" + a + "\n";
-				}	
+				}
+				result += "		end\n";
 			}	
 		}
 		
@@ -324,6 +326,7 @@ public class GenCodeEiffel implements IEditorActionDelegate{
 	public String translation (String text, HashMap<String,String> types){
 		String res = "";
 		try {
+			System.out.println(text);
 			ArrayList<String> parsed = oper.parsePredicate(text, types);
 			for (String l: parsed) {
 				res += l;
