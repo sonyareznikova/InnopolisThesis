@@ -501,10 +501,11 @@ public class Translator implements ISimpleVisitor2 {
 			eiffelCode.add(")");
 			break;
 		case Formula.UPTO:
-			eiffelCode.add("{");
+			eiffelCode.add("create {EBSET[INTEGER]}.make_upto(");
 			expression.getLeft().accept(this);
-			eiffelCode.add(" upto ");
+			eiffelCode.add(", ");
 			expression.getRight().accept(this);
+			eiffelCode.add(")");
 			break;
 		case Formula.RELIMAGE:
 			expression.getLeft().accept(this);
@@ -613,7 +614,6 @@ public class Translator implements ISimpleVisitor2 {
 	//visited
 	@Override
 	public void visitSetExtension(SetExtension expression) {
-		// '{' list_expression '}'
 		System.out.println("visitSetExtension");
 		int n_children = expression.getChildCount();
 		for (int i=0;i<n_children;i++) {
@@ -627,7 +627,8 @@ public class Translator implements ISimpleVisitor2 {
 			else {
 				//get names of all Free Identifiers later in the formula and then include their types
 				FreeIdentifier[] fi = expression.getFreeIdentifiers();
-				eiffelCode.add("create {EBREL["+ currentTypes.get(fi[0].getName()) + "," + currentTypes.get(fi[1].getName()) + "]}.vals (<<");
+				eiffelCode.add("create {EBREL["+ currentTypes.get(fi[0].getName()) + "," 
+				+ currentTypes.get(fi[1].getName()) + "]}.vals (<<");
 				expression.getChild(i).accept(this);
 				eiffelCode.add(">>)");
 			}
@@ -723,7 +724,8 @@ public class Translator implements ISimpleVisitor2 {
 	@Override
 	public void visitBoundIdentifier(BoundIdentifier identifierExpression) {
 		// TODO Auto-generated method stub
-		System.out.println("visitBoundIdentifier");	
+		System.out.println("visitBoundIdentifier");
+		eiffelCode.add(identifierExpression.toString());
 	}
 	
 	//visited
@@ -774,7 +776,7 @@ public class Translator implements ISimpleVisitor2 {
 		switch (predicate.getTag()) {
 		case Formula.LIMP:
 			predicate.getLeft().accept(this);
-			eiffelCode.add("implies");
+			eiffelCode.add(" implies ");
 			predicate.getRight().accept(this);
 			break;
 		case Formula.LEQV:
@@ -826,14 +828,16 @@ public class Translator implements ISimpleVisitor2 {
 		int n_children = predicate.getChildCount();
 		switch (predicate.getTag()) {
 		case Formula.FORALL:
-			eiffelCode.add(".for_all");
+			eiffelCode.add("(");
 			for (int i = 0; i < n_children; i++) {
 				predicate.getChild(i).accept(this);
 			}
+			eiffelCode.add(").for_all(");
 			BoundIdentDecl[] bndind = predicate.getBoundIdentDecls();
 			for (BoundIdentDecl bd: bndind) {
 				bd.accept(this);
 			}
+			eiffelCode.add(")");
 			break;
 		case Formula.EXISTS:
 			eiffelCode.add(".exists");
