@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<org.eventb.core.psFile>
+<org.eventb.core.psStatus name="INITIALISATION/invr7_1/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="INITIALISATION/invr7_2/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="INITIALISATION/invr7_3/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="INITIALISATION/invr7_4/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="INITIALISATION/invr7_5/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="INITIALISATION/invr7_6/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="INITIALISATION/invr7_7/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="INITIALISATION/invr7_8/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="INITIALISATION/invr7_9/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="INITIALISATION/invr7_10/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="INITIALISATION/invr7_11/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="INITIALISATION/invr7_12/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="create_account/invr7_1/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="create_account/invr7_2/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="create_account/invr7_3/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="create_account/invr7_4/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="create_account/invr7_9/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="delete_principal_scontent/grdr7_1/WD" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="delete_principal_scontent/grdr7_2/WD" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="delete_principal_scontent/invr7_12/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="delete_secondary_scontent/grdr7_1/WD" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="delete_secondary_scontent/grdr7_2/WD" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="delete_secondary_scontent/invr7_12/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="edit_owned_secondary_scontent/grdr7_1/WD" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="edit_owned_secondary_scontent/grdr7_2/WD" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="edit_owned_secondary_scontent/invr7_12/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="edit_not_owned_scontent/grdr7_1/WD" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="edit_not_owned_scontent/grdr7_2/WD" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="edit_not_owned_scontent/invr7_12/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="true"/>
+<org.eventb.core.psStatus name="comment_scontent_principal/grdr7_1/WD" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="comment_scontent_principal/grdr7_2/WD" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="comment_scontent_principal/invr7_12/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="comment_scontent_secondary/grdr7_1/WD" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="comment_scontent_secondary/grdr7_2/WD" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="comment_scontent_secondary/invr7_12/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="edit_owned_not_required_planner/grdr7_1/WD" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="edit_owned_not_required_planner/grdr7_2/WD" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="edit_owned_not_required_planner/invr7_12/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="create_social_event/invr7_1/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="create_social_event/invr7_2/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="create_social_event/invr7_3/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="create_social_event/invr7_4/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="create_social_event/invr7_6/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="create_social_event/invr7_7/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="create_social_event/invr7_8/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="create_social_event/invr7_9/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="create_social_event/invr7_10/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="create_social_event/invr7_11/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="create_social_event/invr7_12/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="upload_principal_content_planner/invr7_12/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="true"/>
+<org.eventb.core.psStatus name="upload_secondary_content_planner/invr7_12/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="true"/>
+<org.eventb.core.psStatus name="sent_invite/invr7_1/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="sent_invite/invr7_6/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="sent_invite/invr7_7/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="sent_invite/invr7_8/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="sent_invite/invr7_11/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="sent_invite/invr7_12/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="grant_populate/grdr7_3/WD" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="grant_populate/invr7_9/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="grant_populate/invr7_10/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="grant_populate/invr7_11/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="reply_with_join/invr7_2/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="reply_with_join/invr7_3/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="reply_with_join/invr7_4/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="reply_with_join/invr7_5/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="reply_with_join/invr7_6/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="reply_with_join/invr7_7/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="reply_with_join/invr7_8/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="reply_with_decline/invr7_2/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="reply_with_decline/invr7_3/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="reply_with_decline/invr7_4/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="reply_with_decline/invr7_5/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="reply_with_decline/invr7_6/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="reply_with_decline/invr7_7/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="reply_with_decline/invr7_8/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="reply_with_maybe/invr7_2/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="reply_with_maybe/invr7_3/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="reply_with_maybe/invr7_4/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="reply_with_maybe/invr7_5/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="reply_with_maybe/invr7_6/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="reply_with_maybe/invr7_7/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psManual="false"/>
+<org.eventb.core.psStatus name="reply_with_maybe/invr7_8/INV" org.eventb.core.confidence="1000" org.eventb.core.poStamp="0" org.eventb.core.psBroken="true" org.eventb.core.psManual="false"/>
+</org.eventb.core.psFile>

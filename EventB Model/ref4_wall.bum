@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<org.eventb.core.machineFile org.eventb.core.configuration="org.eventb.core.fwd" org.eventb.texttools.text_lastmodified="1361888706195" org.eventb.texttools.text_representation="machine ref4_wall refines ref3_required  sees ctx1&#10;&#10;variables persons // persons in the network&#10;          contents // contents in the net&#10;          owner // owner of a content&#10;          pages // contents visible for each person&#10;          viewp // persons having view permission&#10;          editp // edit permission&#10;          principal // main contents&#10;          field // principal of a secondary content (e.g. a comment)&#10;          required // required rawcontent (cannot be deleted)&#10;          wallcontents // all contents in the wall&#10;          wall // who sees what of the wall&#10;          wallaccess // who has rights to see someone else's wall&#10;          wallowner // the owner of each wall&#10;&#10;&#10;invariants&#10;  @invr4_0 wallcontents ⊆ CONTENTS∖contents&#10;  @invr4_1 wall ∈ wallcontents  persons       // &lt;&lt;-&gt;&#10;  @invr4_2 wallowner ∈ wallcontents → persons&#10;  @invr4_3 wallowner ⊆ wall&#10;  @invr4_4 wallaccess ∈ persons ↔ persons&#10;  @invr4_5 persons◁ id ⊆ wallaccess // every person can see its own wall&#10;  @invr4_6 wall ⊆ wallowner ; wallaccess // a content can be seen if its owner gave access&#10;&#10;&#10;events&#10;  event INITIALISATION extends INITIALISATION&#10;    then&#10;      @actr4_1 wallcontents ≔ ∅&#10;      @actr4_2 wall ≔ ∅&#10;      @actr4_3 wallowner ≔ ∅&#10;      @actr4_4 wallaccess ≔  ∅&#10;  end&#10;&#10;  event create_account extends create_account&#10;    where&#10;      @grdr4_1 c1 ∉ wallcontents&#10;    then&#10;      @actr4_1 wallaccess ≔  wallaccess ∪  {p1↦p1}&#10;  end&#10;&#10;  event make_visible extends make_visible&#10;  end&#10;&#10;  event hide extends hide&#10;  end&#10;&#10;  event delete_principal extends delete_principal&#10;  end&#10;&#10;  event delete_secondary extends delete_secondary&#10;  end&#10;&#10;  event grant_view_perm extends grant_view_perm&#10;  end&#10;&#10;  event grant_edit_perm extends grant_edit_perm&#10;  end&#10;&#10;  event edit_owned_secondary extends edit_owned_secondary&#10;    where&#10;      @grdr4_1 newc ∉ wallcontents&#10;  end&#10;&#10;  event edit_not_owned extends edit_not_owned&#10;    where&#10;      @grdr4_1 newc ∉ wallcontents&#10;  end&#10;&#10;  event transmit_rc extends transmit_rc&#10;  end&#10;&#10;  event comment_rc_principal extends comment_rc_principal&#10;    where&#10;      @grdr4_1 cmt ∉ wallcontents&#10;  end&#10;&#10;  event comment_rc_secondary extends comment_rc_secondary&#10;    where&#10;      @grdr4_1 cmt ∉ wallcontents&#10;  end&#10;&#10;  event edit_owned_required extends edit_owned_required&#10;    where&#10;      @grdr4_1 newc ∉ wallcontents&#10;  end&#10;&#10;  event edit_owned_not_required extends edit_owned_not_required&#10;    where&#10;      @grdr4_1 newc ∉ wallcontents&#10;  end&#10;&#10;  event comment_wall&#10;    any ow cmt&#10;    where&#10;      @grdr4_1 ow ∈ dom(wallaccess)&#10;      @grdr4_2 cmt ∈ CONTENTS ∖ (contents ∪ wallcontents)&#10;    then&#10;      @actr4_1 wallcontents ≔ wallcontents ∪ {cmt}&#10;      @actr4_2 wall ≔ wall ∪ ({cmt}× wallaccess[{ow}])&#10;      @actr4_3 wallowner ≔ wallowner ∪ {cmt↦ow}&#10;  end&#10;&#10;  event hide_comment_wall&#10;    any pe cmt&#10;    where&#10;      @grdr4_1 pe ∈ ran(wall)&#10;      @grdr4_2 cmt ∈ dom(wall)&#10;      @grdr4_3 pe ≠ wallowner(cmt)&#10;      @grdr4_4 cmt ↦ pe ∈ wall&#10;    then&#10;      @actr4_2 wall ≔ wall ∖ {cmt↦pe}&#10;  end&#10;&#10;  event delete_comment_wall&#10;    any pe cmt&#10;    where&#10;      @grdr4_1 pe ∈ ran(wall)&#10;      @grdr4_3 cmt ∈ dom(wall)&#10;      @grdr4_4 wallowner(cmt) = pe&#10;    then&#10;      @actr4_1 wallcontents ≔ wallcontents ∖ {cmt}&#10;      @actr4_2 wall ≔ {cmt} ⩤ wall&#10;      @actr4_3 wallowner ≔ {cmt} ⩤ wallowner&#10;  end&#10;&#10;  event upload_principal extends upload_principal&#10;    where&#10;      @grdr4_1 c2 ∉ wallcontents&#10;  end&#10;&#10;  event upload_secondary extends upload_secondary&#10;    where&#10;      @grdr4_1 c2 ∉ wallcontents&#10;  end&#10;end&#10;" version="5">
+<org.eventb.core.refinesMachine name="_78ZN0IAXEeKj0pNGFHKNbQ" org.eventb.core.target="ref3_required"/>
+<org.eventb.core.seesContext name="_78ZN0YAXEeKj0pNGFHKNbQ" org.eventb.core.target="ctx1"/>
+<org.eventb.core.variable name="_gc2SQZUkEeGSmsOPZ71WXA" org.eventb.core.comment="persons in the network" org.eventb.core.identifier="persons"/>
+<org.eventb.core.variable name="_gc2SQpUkEeGSmsOPZ71WXA" org.eventb.core.comment="contents in the net" org.eventb.core.identifier="contents"/>
+<org.eventb.core.variable name="_gc2SQ5UkEeGSmsOPZ71WXA" org.eventb.core.comment="owner of a content" org.eventb.core.identifier="owner"/>
+<org.eventb.core.variable name="_gc2SRJUkEeGSmsOPZ71WXA" org.eventb.core.comment="contents visible for each person" org.eventb.core.identifier="pages"/>
+<org.eventb.core.variable name="_gc2SRZUkEeGSmsOPZ71WXA" org.eventb.core.comment="persons having view permission" org.eventb.core.identifier="viewp"/>
+<org.eventb.core.variable name="_gc2SRpUkEeGSmsOPZ71WXA" org.eventb.core.comment="edit permission" org.eventb.core.identifier="editp"/>
+<org.eventb.core.variable name="_gc2SR5UkEeGSmsOPZ71WXA" org.eventb.core.comment="main contents" org.eventb.core.identifier="principal"/>
+<org.eventb.core.variable name="_gc2SSJUkEeGSmsOPZ71WXA" org.eventb.core.comment="principal of a secondary content (e.g. a comment)" org.eventb.core.identifier="field"/>
+<org.eventb.core.variable name="_gc25UJUkEeGSmsOPZ71WXA" org.eventb.core.comment="required rawcontent (cannot be deleted)" org.eventb.core.identifier="required"/>
+<org.eventb.core.variable name="_gc25UZUkEeGSmsOPZ71WXA" org.eventb.core.comment="all contents in the wall" org.eventb.core.identifier="wallcontents"/>
+<org.eventb.core.variable name="_gc25UpUkEeGSmsOPZ71WXA" org.eventb.core.comment="who sees what of the wall" org.eventb.core.identifier="wall"/>
+<org.eventb.core.variable name="_gc25U5UkEeGSmsOPZ71WXA" org.eventb.core.comment="who has rights to see someone else's wall" org.eventb.core.identifier="wallaccess"/>
+<org.eventb.core.variable name="_gc25VJUkEeGSmsOPZ71WXA" org.eventb.core.comment="the owner of each wall" org.eventb.core.identifier="wallowner"/>
+<org.eventb.core.invariant name="_gc25VZUkEeGSmsOPZ71WXA" org.eventb.core.label="invr4_0" org.eventb.core.predicate="wallcontents ⊆ CONTENTS∖contents"/>
+<org.eventb.core.invariant name="_gc3gYJUkEeGSmsOPZ71WXA" org.eventb.core.comment="&lt;&lt;-&gt;" org.eventb.core.label="invr4_1" org.eventb.core.predicate="wall ∈ wallcontents  persons"/>
+<org.eventb.core.invariant name="_gc3gYZUkEeGSmsOPZ71WXA" org.eventb.core.label="invr4_2" org.eventb.core.predicate="wallowner ∈ wallcontents → persons"/>
+<org.eventb.core.invariant name="_gc3gYpUkEeGSmsOPZ71WXA" org.eventb.core.label="invr4_3" org.eventb.core.predicate="wallowner ⊆ wall"/>
+<org.eventb.core.invariant name="_gc3gY5UkEeGSmsOPZ71WXA" org.eventb.core.label="invr4_4" org.eventb.core.predicate="wallaccess ∈ persons ↔ persons"/>
+<org.eventb.core.invariant name="_gc3gZJUkEeGSmsOPZ71WXA" org.eventb.core.comment="every person can see its own wall" org.eventb.core.label="invr4_5" org.eventb.core.predicate="persons◁ id ⊆ wallaccess"/>
+<org.eventb.core.invariant name="_gc3gZZUkEeGSmsOPZ71WXA" org.eventb.core.comment="a content can be seen if its owner gave access" org.eventb.core.label="invr4_6" org.eventb.core.predicate="wall ⊆ wallowner ; wallaccess"/>
+<org.eventb.core.event name="'" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="INITIALISATION">
+<org.eventb.core.action name="_gc4HcJUkEeGSmsOPZ71WXA" org.eventb.core.assignment="wallcontents ≔ ∅" org.eventb.core.label="actr4_1"/>
+<org.eventb.core.action name="_gc4HcZUkEeGSmsOPZ71WXA" org.eventb.core.assignment="wall ≔ ∅" org.eventb.core.label="actr4_2"/>
+<org.eventb.core.action name="_gc4HcpUkEeGSmsOPZ71WXA" org.eventb.core.assignment="wallowner ≔ ∅" org.eventb.core.label="actr4_3"/>
+<org.eventb.core.action name="_gc4Hc5UkEeGSmsOPZ71WXA" org.eventb.core.assignment="wallaccess ≔  ∅" org.eventb.core.label="actr4_4"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_gc4HdJUkEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="create_account">
+<org.eventb.core.refinesEvent name="_78bDAIAXEeKj0pNGFHKNbQ" org.eventb.core.target="create_account"/>
+<org.eventb.core.guard name="_gc4HdpUkEeGSmsOPZ71WXA" org.eventb.core.label="grdr4_1" org.eventb.core.predicate="c1 ∉ wallcontents"/>
+<org.eventb.core.action name="_gc4ugJUkEeGSmsOPZ71WXA" org.eventb.core.assignment="wallaccess ≔  wallaccess ∪  {p1↦p1}" org.eventb.core.label="actr4_1"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_gc4ugZUkEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="make_visible">
+<org.eventb.core.refinesEvent name="_78bDAYAXEeKj0pNGFHKNbQ" org.eventb.core.target="make_visible"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_gc4ug5UkEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="hide">
+<org.eventb.core.refinesEvent name="_78bDAoAXEeKj0pNGFHKNbQ" org.eventb.core.target="hide"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_gc4uhZUkEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="delete_principal">
+<org.eventb.core.refinesEvent name="_78bqEIAXEeKj0pNGFHKNbQ" org.eventb.core.target="delete_principal"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_gc4uh5UkEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="delete_secondary">
+<org.eventb.core.refinesEvent name="_78bqEYAXEeKj0pNGFHKNbQ" org.eventb.core.target="delete_secondary"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_gc5VkZUkEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="grant_view_perm">
+<org.eventb.core.refinesEvent name="_78bqEoAXEeKj0pNGFHKNbQ" org.eventb.core.target="grant_view_perm"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_gc5Vk5UkEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="grant_edit_perm">
+<org.eventb.core.refinesEvent name="_78bqE4AXEeKj0pNGFHKNbQ" org.eventb.core.target="grant_edit_perm"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_Du1jcZj6EeG_TIv2gvsZ4g" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="edit_owned_secondary">
+<org.eventb.core.refinesEvent name="_78bqFIAXEeKj0pNGFHKNbQ" org.eventb.core.target="edit_owned_secondary"/>
+<org.eventb.core.guard name="_Du1jc5j6EeG_TIv2gvsZ4g" org.eventb.core.label="grdr4_1" org.eventb.core.predicate="newc ∉ wallcontents"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_gc58oJUkEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="edit_not_owned">
+<org.eventb.core.refinesEvent name="_78cRIIAXEeKj0pNGFHKNbQ" org.eventb.core.target="edit_not_owned"/>
+<org.eventb.core.guard name="_gc58opUkEeGSmsOPZ71WXA" org.eventb.core.label="grdr4_1" org.eventb.core.predicate="newc ∉ wallcontents"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_gc58o5UkEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="transmit_rc">
+<org.eventb.core.refinesEvent name="_78cRIYAXEeKj0pNGFHKNbQ" org.eventb.core.target="transmit_rc"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_gc58pZUkEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="comment_rc_principal">
+<org.eventb.core.refinesEvent name="_78cRIoAXEeKj0pNGFHKNbQ" org.eventb.core.target="comment_rc_principal"/>
+<org.eventb.core.guard name="_gc6jsZUkEeGSmsOPZ71WXA" org.eventb.core.label="grdr4_1" org.eventb.core.predicate="cmt ∉ wallcontents"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_Du2KgJj6EeG_TIv2gvsZ4g" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="comment_rc_secondary">
+<org.eventb.core.refinesEvent name="_78cRI4AXEeKj0pNGFHKNbQ" org.eventb.core.target="comment_rc_secondary"/>
+<org.eventb.core.guard name="_Du2Kgpj6EeG_TIv2gvsZ4g" org.eventb.core.label="grdr4_1" org.eventb.core.predicate="cmt ∉ wallcontents"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_gc6jtZUkEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="edit_owned_required">
+<org.eventb.core.refinesEvent name="_78c4MIAXEeKj0pNGFHKNbQ" org.eventb.core.target="edit_owned_required"/>
+<org.eventb.core.guard name="_gc7KwJUkEeGSmsOPZ71WXA" org.eventb.core.label="grdr4_1" org.eventb.core.predicate="newc ∉ wallcontents"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_gc7KwZUkEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="edit_owned_not_required">
+<org.eventb.core.refinesEvent name="_78c4MYAXEeKj0pNGFHKNbQ" org.eventb.core.target="edit_owned_not_required"/>
+<org.eventb.core.guard name="_gc7Kw5UkEeGSmsOPZ71WXA" org.eventb.core.label="grdr4_1" org.eventb.core.predicate="newc ∉ wallcontents"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_gc7KxJUkEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="false" org.eventb.core.label="comment_wall">
+<org.eventb.core.parameter name="_gc7KxZUkEeGSmsOPZ71WXA" org.eventb.core.identifier="ow"/>
+<org.eventb.core.parameter name="_gc7KxpUkEeGSmsOPZ71WXA" org.eventb.core.identifier="cmt"/>
+<org.eventb.core.guard name="_gc7Kx5UkEeGSmsOPZ71WXA" org.eventb.core.label="grdr4_1" org.eventb.core.predicate="ow ∈ dom(wallaccess)"/>
+<org.eventb.core.guard name="_gc7x0JUkEeGSmsOPZ71WXA" org.eventb.core.label="grdr4_2" org.eventb.core.predicate="cmt ∈ CONTENTS ∖ (contents ∪ wallcontents)"/>
+<org.eventb.core.action name="_gc7x0ZUkEeGSmsOPZ71WXA" org.eventb.core.assignment="wallcontents ≔ wallcontents ∪ {cmt}" org.eventb.core.label="actr4_1"/>
+<org.eventb.core.action name="_gc7x0pUkEeGSmsOPZ71WXA" org.eventb.core.assignment="wall ≔ wall ∪ ({cmt}× wallaccess[{ow}])" org.eventb.core.label="actr4_2"/>
+<org.eventb.core.action name="_gc7x05UkEeGSmsOPZ71WXA" org.eventb.core.assignment="wallowner ≔ wallowner ∪ {cmt↦ow}" org.eventb.core.label="actr4_3"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_gc7x1JUkEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="false" org.eventb.core.label="hide_comment_wall">
+<org.eventb.core.parameter name="_gc7x1ZUkEeGSmsOPZ71WXA" org.eventb.core.identifier="pe"/>
+<org.eventb.core.parameter name="_gc7x1pUkEeGSmsOPZ71WXA" org.eventb.core.identifier="cmt"/>
+<org.eventb.core.guard name="_gc7x15UkEeGSmsOPZ71WXA" org.eventb.core.label="grdr4_1" org.eventb.core.predicate="pe ∈ ran(wall)"/>
+<org.eventb.core.guard name="_gc7x2JUkEeGSmsOPZ71WXA" org.eventb.core.label="grdr4_2" org.eventb.core.predicate="cmt ∈ dom(wall)"/>
+<org.eventb.core.guard name="_gc8Y4JUkEeGSmsOPZ71WXA" org.eventb.core.label="grdr4_3" org.eventb.core.predicate="pe ≠ wallowner(cmt)"/>
+<org.eventb.core.guard name="_gc8Y4ZUkEeGSmsOPZ71WXA" org.eventb.core.label="grdr4_4" org.eventb.core.predicate="cmt ↦ pe ∈ wall"/>
+<org.eventb.core.action name="_gc8Y4pUkEeGSmsOPZ71WXA" org.eventb.core.assignment="wall ≔ wall ∖ {cmt↦pe}" org.eventb.core.label="actr4_2"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_gc8Y45UkEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="false" org.eventb.core.label="delete_comment_wall">
+<org.eventb.core.parameter name="_gc8Y5JUkEeGSmsOPZ71WXA" org.eventb.core.identifier="pe"/>
+<org.eventb.core.parameter name="_gc8Y5ZUkEeGSmsOPZ71WXA" org.eventb.core.identifier="cmt"/>
+<org.eventb.core.guard name="_gc8Y5pUkEeGSmsOPZ71WXA" org.eventb.core.label="grdr4_1" org.eventb.core.predicate="pe ∈ ran(wall)"/>
+<org.eventb.core.guard name="_gc8_8JUkEeGSmsOPZ71WXA" org.eventb.core.label="grdr4_3" org.eventb.core.predicate="cmt ∈ dom(wall)"/>
+<org.eventb.core.guard name="_gc8_8ZUkEeGSmsOPZ71WXA" org.eventb.core.label="grdr4_4" org.eventb.core.predicate="wallowner(cmt) = pe"/>
+<org.eventb.core.action name="_gc8_8pUkEeGSmsOPZ71WXA" org.eventb.core.assignment="wallcontents ≔ wallcontents ∖ {cmt}" org.eventb.core.label="actr4_1"/>
+<org.eventb.core.action name="_gc8_85UkEeGSmsOPZ71WXA" org.eventb.core.assignment="wall ≔ {cmt} ⩤ wall" org.eventb.core.label="actr4_2"/>
+<org.eventb.core.action name="_gc8_9JUkEeGSmsOPZ71WXA" org.eventb.core.assignment="wallowner ≔ {cmt} ⩤ wallowner" org.eventb.core.label="actr4_3"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_gc8_9ZUkEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="upload_principal">
+<org.eventb.core.refinesEvent name="_78etYIAXEeKj0pNGFHKNbQ" org.eventb.core.target="upload_principal"/>
+<org.eventb.core.guard name="_gc8_95UkEeGSmsOPZ71WXA" org.eventb.core.label="grdr4_1" org.eventb.core.predicate="c2 ∉ wallcontents"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_gc9nAJUkEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="upload_secondary">
+<org.eventb.core.refinesEvent name="_78etYYAXEeKj0pNGFHKNbQ" org.eventb.core.target="upload_secondary"/>
+<org.eventb.core.guard name="_gc9nApUkEeGSmsOPZ71WXA" org.eventb.core.label="grdr4_1" org.eventb.core.predicate="c2 ∉ wallcontents"/>
+</org.eventb.core.event>
+</org.eventb.core.machineFile>

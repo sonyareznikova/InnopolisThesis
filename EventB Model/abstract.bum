@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<org.eventb.core.machineFile org.eventb.core.configuration="org.eventb.core.fwd" org.eventb.texttools.text_lastmodified="1362150464732" org.eventb.texttools.text_representation="machine abstract sees ctx1&#10;&#10;variables persons // persons in the network&#10;          contents // contents in the net&#10;          owner // owner of a content&#10;          pages // contents visible for each person&#10;&#10;invariants&#10;  @inv1 persons ⊆ PERSON&#10;  @inv2 contents ⊆ CONTENTS&#10;  @inv3 owner ∈ contents↠ persons&#10;  @inv4 pages ∈ contents persons&#10;  @inv5 owner ⊆ pages&#10;&#10;events&#10;  event INITIALISATION&#10;    then&#10;      @act1 persons ≔ ∅&#10;      @act2 contents ≔ ∅&#10;      @act3 owner ≔ ∅&#10;      @act4 pages ≔  ∅&#10;  end&#10;&#10;  event create_account&#10;    any c1 p1&#10;    where&#10;      @grd1 p1∈ PERSON∖persons&#10;      @grd2 c1 ∈ CONTENTS∖contents&#10;    then&#10;      @act1 contents ≔ contents ∪ {c1}&#10;      @act2 persons ≔ persons ∪ {p1}&#10;      @act3 owner ≔ owner ∪ {c1↦p1}&#10;      @act4 pages ≔ pages  ∪ {c1↦ p1}&#10;  end&#10;&#10;  event upload&#10;    any  c2 p1&#10;    where&#10;      @grd1 p1 ∈ persons&#10;      @grd3 c2 ∈ CONTENTS∖contents&#10;    then&#10;      @act1 contents ≔ contents ∪ {c2}&#10;      @act2 owner ≔ owner ∪ {c2↦p1}&#10;      @act3 pages ≔ pages ∪ {c2↦p1}&#10;  end&#10;&#10;  event make_visible&#10;    any c1 p1&#10;    where&#10;      @grd1 p1∈ persons&#10;      @grd2 c1 ∈ contents&#10;      @grd3 c1↦p1 ∉ pages&#10;    then&#10;      @act4 pages ≔ pages ∪ {c1↦ p1}&#10;  end&#10;&#10;  event hide&#10;    any c1 p1&#10;    where&#10;      @grd1 p1∈ persons&#10;      @grd2 c1 ∈ contents&#10;      @grd3 c1↦ p1 ∈ pages&#10;      @grd4 owner(c1) ≠  p1&#10;    then&#10;      @act4 pages ≔ pages ∖ {c1↦ p1}&#10;  end&#10;&#10;  event delete&#10;    any c1 cts ow&#10;    where&#10;      @grd1 c1 ∈ contents&#10;      @grd2 {c1}∪cts ⊂ dom(owner▷{ow})&#10;      @grd3 cts ⊆ contents&#10;      @grd4 c1 ∉ cts&#10;      @grd5 owner[{c1}∪cts] = {ow}&#10;    then&#10;      @act1 contents ≔ contents ∖ ({c1}∪cts)&#10;      @act2 owner ≔ ({c1}∪cts) ⩤ owner&#10;      @act4 pages ≔ ({c1}∪cts) ⩤ pages&#10;  end&#10;&#10;  event transmit_rc&#10;  any prs rc ow&#10;  where&#10;  &#9;@grd1 prs ⊆ persons&#10;  &#9;@grd2 rc ∈ contents&#10;  &#9;@grd3 owner(rc) = ow&#10;  &#9;@grd4 owner(rc) ∉  prs&#10;  then&#10;  &#9;@act1 pages ≔ pages ∪ ({rc} × prs)&#10;  end&#10;&#10;  event edit_owned&#10;    any c1 p1 newc&#10;    where&#10;      @grd1r1 c1 ∈ contents&#10;      @grd2r1 p1 ∈ persons&#10;      @grd5r1 owner(c1) = p1&#10;      @grd8r1 newc ∈ CONTENTS∖contents&#10;    then&#10;      @act1 contents ≔  (contents∖{c1}) ∪ {newc}&#10;      @act2 pages ≔  ({c1}⩤ pages ) ∪ ({newc}×pages[{c1}])&#10;      @act3 owner ≔ ({c1}⩤ owner) ∪ {newc↦p1}&#10;  end&#10;&#10;  event edit_not_owned&#10;    any c1 p1 newc&#10;    where&#10;      @grd1r1 c1 ∈ contents&#10;      @grd2r1 p1 ∈ persons&#10;      @grd5r1 owner(c1) ≠ p1&#10;      @grd8r1 newc ∈ CONTENTS∖contents&#10;    then&#10;      @act1 contents ≔  contents ∪ {newc}&#10;      @act2 pages ≔  (pages ∖ {c1↦p1}) ∪ {newc↦p1}&#10;      @act3 owner ≔ owner ∪ {newc↦p1}&#10;  end&#10;&#10;  event comment_rc&#10;    any rc cmt prs&#10;    where&#10;      @grd1 rc ∈ contents&#10;      @grd2 cmt ∈ CONTENTS∖contents&#10;      @grd3 prs ⊆ persons&#10;      @grd4 {rc}× prs ⊆ pages&#10;      @grd5 prs ≠ ∅&#10;    then&#10;      @act1 owner ≔ owner  ∪  {cmt↦owner(rc)}&#10;      @act2 contents ≔ contents ∪   {cmt}&#10;      @act4 pages ≔ pages  ∪  ({cmt} ×  prs) ∪ {cmt↦owner(rc)}&#10;  end&#10;end&#10;" version="5">
+<org.eventb.core.seesContext name="_Y-Rb4IJ5EeK-c_np-tCR6Q" org.eventb.core.target="ctx1"/>
+<org.eventb.core.variable name="_RkVlsZT_EeGSmsOPZ71WXA" org.eventb.core.comment="persons in the network" org.eventb.core.identifier="persons"/>
+<org.eventb.core.variable name="_RkVlspT_EeGSmsOPZ71WXA" org.eventb.core.comment="contents in the net" org.eventb.core.identifier="contents"/>
+<org.eventb.core.variable name="_RkVls5T_EeGSmsOPZ71WXA" org.eventb.core.comment="owner of a content" org.eventb.core.identifier="owner"/>
+<org.eventb.core.variable name="_RkVltJT_EeGSmsOPZ71WXA" org.eventb.core.comment="contents visible for each person" org.eventb.core.identifier="pages"/>
+<org.eventb.core.invariant name="_RkVltZT_EeGSmsOPZ71WXA" org.eventb.core.label="inv1" org.eventb.core.predicate="persons ⊆ PERSON"/>
+<org.eventb.core.invariant name="_RkWMwJT_EeGSmsOPZ71WXA" org.eventb.core.label="inv2" org.eventb.core.predicate="contents ⊆ CONTENTS"/>
+<org.eventb.core.invariant name="_RkWMwZT_EeGSmsOPZ71WXA" org.eventb.core.label="inv3" org.eventb.core.predicate="owner ∈ contents↠ persons"/>
+<org.eventb.core.invariant name="_RkWMwpT_EeGSmsOPZ71WXA" org.eventb.core.label="inv4" org.eventb.core.predicate="pages ∈ contents persons"/>
+<org.eventb.core.invariant name="_RkWMw5T_EeGSmsOPZ71WXA" org.eventb.core.label="inv5" org.eventb.core.predicate="owner ⊆ pages"/>
+<org.eventb.core.event name="'" org.eventb.core.convergence="0" org.eventb.core.extended="false" org.eventb.core.label="INITIALISATION">
+<org.eventb.core.action name="_RkWz0JT_EeGSmsOPZ71WXA" org.eventb.core.assignment="persons ≔ ∅" org.eventb.core.label="act1"/>
+<org.eventb.core.action name="_RkWz0ZT_EeGSmsOPZ71WXA" org.eventb.core.assignment="contents ≔ ∅" org.eventb.core.label="act2"/>
+<org.eventb.core.action name="_RkWz0pT_EeGSmsOPZ71WXA" org.eventb.core.assignment="owner ≔ ∅" org.eventb.core.label="act3"/>
+<org.eventb.core.action name="_RkWz05T_EeGSmsOPZ71WXA" org.eventb.core.assignment="pages ≔  ∅" org.eventb.core.label="act4"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_RkWz1JT_EeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="false" org.eventb.core.label="create_account">
+<org.eventb.core.parameter name="_RkWz1ZT_EeGSmsOPZ71WXA" org.eventb.core.identifier="c1"/>
+<org.eventb.core.parameter name="_RkXa4JT_EeGSmsOPZ71WXA" org.eventb.core.identifier="p1"/>
+<org.eventb.core.guard name="_RkXa4ZT_EeGSmsOPZ71WXA" org.eventb.core.label="grd1" org.eventb.core.predicate="p1∈ PERSON∖persons"/>
+<org.eventb.core.guard name="_RkXa4pT_EeGSmsOPZ71WXA" org.eventb.core.label="grd2" org.eventb.core.predicate="c1 ∈ CONTENTS∖contents"/>
+<org.eventb.core.action name="_RkXa45T_EeGSmsOPZ71WXA" org.eventb.core.assignment="contents ≔ contents ∪ {c1}" org.eventb.core.label="act1"/>
+<org.eventb.core.action name="_RkXa5JT_EeGSmsOPZ71WXA" org.eventb.core.assignment="persons ≔ persons ∪ {p1}" org.eventb.core.label="act2"/>
+<org.eventb.core.action name="_RkXa5ZT_EeGSmsOPZ71WXA" org.eventb.core.assignment="owner ≔ owner ∪ {c1↦p1}" org.eventb.core.label="act3"/>
+<org.eventb.core.action name="_RkYB8JT_EeGSmsOPZ71WXA" org.eventb.core.assignment="pages ≔ pages  ∪ {c1↦ p1}" org.eventb.core.label="act4"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_RkYB8ZT_EeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="false" org.eventb.core.label="upload">
+<org.eventb.core.parameter name="_RkYB8pT_EeGSmsOPZ71WXA" org.eventb.core.identifier="c2"/>
+<org.eventb.core.parameter name="_RkYB85T_EeGSmsOPZ71WXA" org.eventb.core.identifier="p1"/>
+<org.eventb.core.guard name="_RkYB9JT_EeGSmsOPZ71WXA" org.eventb.core.label="grd1" org.eventb.core.predicate="p1 ∈ persons"/>
+<org.eventb.core.guard name="_RkYB9ZT_EeGSmsOPZ71WXA" org.eventb.core.label="grd3" org.eventb.core.predicate="c2 ∈ CONTENTS∖contents"/>
+<org.eventb.core.action name="_RkYB9pT_EeGSmsOPZ71WXA" org.eventb.core.assignment="contents ≔ contents ∪ {c2}" org.eventb.core.label="act1"/>
+<org.eventb.core.action name="_RkYpAJT_EeGSmsOPZ71WXA" org.eventb.core.assignment="owner ≔ owner ∪ {c2↦p1}" org.eventb.core.label="act2"/>
+<org.eventb.core.action name="_RkYpAZT_EeGSmsOPZ71WXA" org.eventb.core.assignment="pages ≔ pages ∪ {c2↦p1}" org.eventb.core.label="act3"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_RkYpApT_EeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="false" org.eventb.core.label="make_visible">
+<org.eventb.core.parameter name="_RkYpA5T_EeGSmsOPZ71WXA" org.eventb.core.identifier="c1"/>
+<org.eventb.core.parameter name="_RkYpBJT_EeGSmsOPZ71WXA" org.eventb.core.identifier="p1"/>
+<org.eventb.core.guard name="_RkYpBZT_EeGSmsOPZ71WXA" org.eventb.core.label="grd1" org.eventb.core.predicate="p1∈ persons"/>
+<org.eventb.core.guard name="_RkZQEJT_EeGSmsOPZ71WXA" org.eventb.core.label="grd2" org.eventb.core.predicate="c1 ∈ contents"/>
+<org.eventb.core.guard name="_RkZQEZT_EeGSmsOPZ71WXA" org.eventb.core.label="grd3" org.eventb.core.predicate="c1↦p1 ∉ pages"/>
+<org.eventb.core.action name="_RkZQEpT_EeGSmsOPZ71WXA" org.eventb.core.assignment="pages ≔ pages ∪ {c1↦ p1}" org.eventb.core.label="act4"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_RkZQE5T_EeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="false" org.eventb.core.label="hide">
+<org.eventb.core.parameter name="_RkZQFJT_EeGSmsOPZ71WXA" org.eventb.core.identifier="c1"/>
+<org.eventb.core.parameter name="_RkZQFZT_EeGSmsOPZ71WXA" org.eventb.core.identifier="p1"/>
+<org.eventb.core.guard name="_RkZQFpT_EeGSmsOPZ71WXA" org.eventb.core.label="grd1" org.eventb.core.predicate="p1∈ persons"/>
+<org.eventb.core.guard name="_RkZ3IJT_EeGSmsOPZ71WXA" org.eventb.core.label="grd2" org.eventb.core.predicate="c1 ∈ contents"/>
+<org.eventb.core.guard name="_RkZ3IZT_EeGSmsOPZ71WXA" org.eventb.core.label="grd3" org.eventb.core.predicate="c1↦ p1 ∈ pages"/>
+<org.eventb.core.guard name="_RkZ3IpT_EeGSmsOPZ71WXA" org.eventb.core.label="grd4" org.eventb.core.predicate="owner(c1) ≠  p1"/>
+<org.eventb.core.action name="_RkZ3I5T_EeGSmsOPZ71WXA" org.eventb.core.assignment="pages ≔ pages ∖ {c1↦ p1}" org.eventb.core.label="act4"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_RkZ3JJT_EeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="false" org.eventb.core.label="delete">
+<org.eventb.core.parameter name="_RkaeMJT_EeGSmsOPZ71WXA" org.eventb.core.identifier="c1"/>
+<org.eventb.core.parameter name="_RkaeMZT_EeGSmsOPZ71WXA" org.eventb.core.identifier="cts"/>
+<org.eventb.core.parameter name="_mr_uIIAeEeKj0pNGFHKNbQ" org.eventb.core.identifier="ow"/>
+<org.eventb.core.guard name="_RkaeMpT_EeGSmsOPZ71WXA" org.eventb.core.label="grd1" org.eventb.core.predicate="c1 ∈ contents"/>
+<org.eventb.core.guard name="_RkaeM5T_EeGSmsOPZ71WXA" org.eventb.core.label="grd2" org.eventb.core.predicate="{c1}∪cts ⊂ dom(owner▷{ow})"/>
+<org.eventb.core.guard name="_RkaeNJT_EeGSmsOPZ71WXA" org.eventb.core.label="grd3" org.eventb.core.predicate="cts ⊆ contents"/>
+<org.eventb.core.guard name="_RkaeNZT_EeGSmsOPZ71WXA" org.eventb.core.label="grd4" org.eventb.core.predicate="c1 ∉ cts"/>
+<org.eventb.core.guard name="_mr_uIYAeEeKj0pNGFHKNbQ" org.eventb.core.label="grd5" org.eventb.core.predicate="owner[{c1}∪cts] = {ow}"/>
+<org.eventb.core.action name="_RkbFQJT_EeGSmsOPZ71WXA" org.eventb.core.assignment="contents ≔ contents ∖ ({c1}∪cts)" org.eventb.core.label="act1"/>
+<org.eventb.core.action name="_RkbFQZT_EeGSmsOPZ71WXA" org.eventb.core.assignment="owner ≔ ({c1}∪cts) ⩤ owner" org.eventb.core.label="act2"/>
+<org.eventb.core.action name="_RkbFQpT_EeGSmsOPZ71WXA" org.eventb.core.assignment="pages ≔ ({c1}∪cts) ⩤ pages" org.eventb.core.label="act4"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_RkbFQ5T_EeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="false" org.eventb.core.label="transmit_rc">
+<org.eventb.core.parameter name="_RkbFRJT_EeGSmsOPZ71WXA" org.eventb.core.identifier="prs"/>
+<org.eventb.core.parameter name="_RkbFRZT_EeGSmsOPZ71WXA" org.eventb.core.identifier="rc"/>
+<org.eventb.core.parameter name="_7AXDYIAXEeKj0pNGFHKNbQ" org.eventb.core.identifier="ow"/>
+<org.eventb.core.guard name="_RkbsUJT_EeGSmsOPZ71WXA" org.eventb.core.label="grd1" org.eventb.core.predicate="prs ⊆ persons"/>
+<org.eventb.core.guard name="_RkbsUZT_EeGSmsOPZ71WXA" org.eventb.core.label="grd2" org.eventb.core.predicate="rc ∈ contents"/>
+<org.eventb.core.guard name="_RkbsUpT_EeGSmsOPZ71WXA" org.eventb.core.label="grd3" org.eventb.core.predicate="owner(rc) = ow"/>
+<org.eventb.core.guard name="_RkbsU5T_EeGSmsOPZ71WXA" org.eventb.core.label="grd4" org.eventb.core.predicate="owner(rc) ∉  prs"/>
+<org.eventb.core.action name="_7AXDYYAXEeKj0pNGFHKNbQ" org.eventb.core.assignment="pages ≔ pages ∪ ({rc} × prs)" org.eventb.core.label="act1"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_RkcTYZT_EeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="false" org.eventb.core.label="edit_owned">
+<org.eventb.core.parameter name="_RkcTYpT_EeGSmsOPZ71WXA" org.eventb.core.identifier="c1"/>
+<org.eventb.core.parameter name="_RkcTY5T_EeGSmsOPZ71WXA" org.eventb.core.identifier="p1"/>
+<org.eventb.core.parameter name="_RkcTZZT_EeGSmsOPZ71WXA" org.eventb.core.identifier="newc"/>
+<org.eventb.core.guard name="_RkcTZpT_EeGSmsOPZ71WXA" org.eventb.core.label="grd1r1" org.eventb.core.predicate="c1 ∈ contents"/>
+<org.eventb.core.guard name="_Rkc6cJT_EeGSmsOPZ71WXA" org.eventb.core.label="grd2r1" org.eventb.core.predicate="p1 ∈ persons"/>
+<org.eventb.core.guard name="_Rkc6cZT_EeGSmsOPZ71WXA" org.eventb.core.label="grd5r1" org.eventb.core.predicate="owner(c1) = p1"/>
+<org.eventb.core.guard name="_Rkc6dJT_EeGSmsOPZ71WXA" org.eventb.core.label="grd8r1" org.eventb.core.predicate="newc ∈ CONTENTS∖contents"/>
+<org.eventb.core.action name="_Rkc6dZT_EeGSmsOPZ71WXA" org.eventb.core.assignment="contents ≔  (contents∖{c1}) ∪ {newc}" org.eventb.core.label="act1"/>
+<org.eventb.core.action name="_RkdhgJT_EeGSmsOPZ71WXA" org.eventb.core.assignment="pages ≔  ({c1}⩤ pages ) ∪ ({newc}×pages[{c1}])" org.eventb.core.label="act2"/>
+<org.eventb.core.action name="_RkdhgZT_EeGSmsOPZ71WXA" org.eventb.core.assignment="owner ≔ ({c1}⩤ owner) ∪ {newc↦p1}" org.eventb.core.label="act3"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_RkdhgpT_EeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="false" org.eventb.core.label="edit_not_owned">
+<org.eventb.core.parameter name="_Rkdhg5T_EeGSmsOPZ71WXA" org.eventb.core.identifier="c1"/>
+<org.eventb.core.parameter name="_RkdhhJT_EeGSmsOPZ71WXA" org.eventb.core.identifier="p1"/>
+<org.eventb.core.parameter name="_RkdhhZT_EeGSmsOPZ71WXA" org.eventb.core.identifier="newc"/>
+<org.eventb.core.guard name="_RkeIkJT_EeGSmsOPZ71WXA" org.eventb.core.label="grd1r1" org.eventb.core.predicate="c1 ∈ contents"/>
+<org.eventb.core.guard name="_RkeIkZT_EeGSmsOPZ71WXA" org.eventb.core.label="grd2r1" org.eventb.core.predicate="p1 ∈ persons"/>
+<org.eventb.core.guard name="_RkeIkpT_EeGSmsOPZ71WXA" org.eventb.core.label="grd5r1" org.eventb.core.predicate="owner(c1) ≠ p1"/>
+<org.eventb.core.guard name="_RkeIk5T_EeGSmsOPZ71WXA" org.eventb.core.label="grd8r1" org.eventb.core.predicate="newc ∈ CONTENTS∖contents"/>
+<org.eventb.core.action name="_RkeIlJT_EeGSmsOPZ71WXA" org.eventb.core.assignment="contents ≔  contents ∪ {newc}" org.eventb.core.label="act1"/>
+<org.eventb.core.action name="_RkeIlZT_EeGSmsOPZ71WXA" org.eventb.core.assignment="pages ≔  (pages ∖ {c1↦p1}) ∪ {newc↦p1}" org.eventb.core.label="act2"/>
+<org.eventb.core.action name="_RkevoJT_EeGSmsOPZ71WXA" org.eventb.core.assignment="owner ≔ owner ∪ {newc↦p1}" org.eventb.core.label="act3"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_RkevoZT_EeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="false" org.eventb.core.label="comment_rc">
+<org.eventb.core.parameter name="_RkevopT_EeGSmsOPZ71WXA" org.eventb.core.identifier="rc"/>
+<org.eventb.core.parameter name="_Rkevo5T_EeGSmsOPZ71WXA" org.eventb.core.identifier="cmt"/>
+<org.eventb.core.parameter name="_RkevpJT_EeGSmsOPZ71WXA" org.eventb.core.identifier="prs"/>
+<org.eventb.core.guard name="_RkevpZT_EeGSmsOPZ71WXA" org.eventb.core.label="grd1" org.eventb.core.predicate="rc ∈ contents"/>
+<org.eventb.core.guard name="_RkevppT_EeGSmsOPZ71WXA" org.eventb.core.label="grd2" org.eventb.core.predicate="cmt ∈ CONTENTS∖contents"/>
+<org.eventb.core.guard name="_RkfWsJT_EeGSmsOPZ71WXA" org.eventb.core.label="grd3" org.eventb.core.predicate="prs ⊆ persons"/>
+<org.eventb.core.guard name="_RkfWsZT_EeGSmsOPZ71WXA" org.eventb.core.label="grd4" org.eventb.core.predicate="{rc}× prs ⊆ pages"/>
+<org.eventb.core.guard name="_RkfWspT_EeGSmsOPZ71WXA" org.eventb.core.label="grd5" org.eventb.core.predicate="prs ≠ ∅"/>
+<org.eventb.core.action name="_RkfWs5T_EeGSmsOPZ71WXA" org.eventb.core.assignment="owner ≔ owner  ∪  {cmt↦owner(rc)}" org.eventb.core.label="act1"/>
+<org.eventb.core.action name="_RkfWtJT_EeGSmsOPZ71WXA" org.eventb.core.assignment="contents ≔ contents ∪   {cmt}" org.eventb.core.label="act2"/>
+<org.eventb.core.action name="_Rkf9wJT_EeGSmsOPZ71WXA" org.eventb.core.assignment="pages ≔ pages  ∪  ({cmt} ×  prs) ∪ {cmt↦owner(rc)}" org.eventb.core.label="act4"/>
+</org.eventb.core.event>
+</org.eventb.core.machineFile>

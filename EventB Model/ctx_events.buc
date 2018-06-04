@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<org.eventb.core.contextFile org.eventb.core.configuration="org.eventb.core.fwd;org.animb.valuation.valBase" org.eventb.texttools.text_lastmodified="1336477271465" org.eventb.texttools.text_representation="context ctx_events extends ctx_lists&#10;sets&#10;EVENTS&#10;end" version="3">
+<org.eventb.core.extendsContext name="_U-hikZj6EeGr1OWTpSJVRQ" org.eventb.core.target="ctx_lists"/>
+<org.eventb.core.carrierSet name="_U-hikpj6EeGr1OWTpSJVRQ" org.eventb.core.identifier="EVENTS"/>
+</org.eventb.core.contextFile>

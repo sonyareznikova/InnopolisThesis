@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<system xmlns="http://www.eiffel.com/developers/xml/configuration-1-15-0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.eiffel.com/developers/xml/configuration-1-15-0 http://www.eiffel.com/developers/xml/configuration-1-15-0.xsd" name="eb_math_lang" uuid="680A990D-1DC7-46B2-B00F-44F49DC99336">
+	<target name="eb_math_lang">
+		<root class="APPLICATION" feature="make"/>
+		<option warning="true" is_obsolete_routine_type="true">
+			<assertions precondition="true" postcondition="true" check="true" invariant="true" loop="true" supplier_precondition="true"/>
+		</option>
+		<setting name="console_application" value="true"/>
+		<library name="base" location="$ISE_LIBRARY\library\base\base-safe.ecf"/>
+		<library name="base2" location="$ISE_LIBRARY\unstable\library\base2\base2.ecf"/>
+		<cluster name="eb_math_lang" location=".\">
+			<file_rule>
+				<exclude>/EIFGENs$</exclude>
+				<exclude>/CVS$</exclude>
+				<exclude>/.svn$</exclude>
+			</file_rule>
+			<cluster name="test1" location="test1\"/>
+		</cluster>
+	</target>
+</system>

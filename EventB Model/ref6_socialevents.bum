@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<org.eventb.core.machineFile org.eventb.core.configuration="org.eventb.core.fwd" org.eventb.texttools.text_lastmodified="1362150358722" org.eventb.texttools.text_representation="machine ref6_socialevents refines ref5_lists  sees ctx_events&#10;&#10;variables persons // persons in the network&#10;         contents // contents in the net&#10;         owner // owner of a content&#10;         pages // contents visible for each person&#10;         viewp // persons having view permission&#10;         editp // edit permission&#10;         principal // main contents&#10;         field // principal of a secondary content (e.g. a comment)&#10;         required // required rawcontent (cannot be deleted)&#10;         wallcontents // all contents in the wall&#10;         wall // who sees what of the wall&#10;         wallaccess // who has rights to see someone else's wall&#10;         wallowner // the owner of each wall&#10;         listpe // persons belonging to each list&#10;         listow // who created  each list&#10;         policies // policies concerning lists&#10;         disjointness // a particular policy&#10;&#10;         sevents // events in the social event planner&#10;         scontents // contents attached to events&#10;         eventcontents // the contets associated to a social event&#10;         eventowner // event owners&#10;&#10;invariants&#10;&#10; @invr6_1 sevents ⊆ EVENTS&#10; @invr6_2 scontents ⊆ contents&#10; @invr6_3 eventcontents ∈ scontents ↔ sevents&#10; @invr6_4 eventowner ∈ sevents → persons&#10;&#10;events&#10; event INITIALISATION extends INITIALISATION&#10;   then&#10;     @actr6_1 sevents ≔ ∅&#10;     @actr6_2 scontents ≔ ∅&#10;     @actr6_3 eventcontents ≔  ∅&#10;     @actr6_4 eventowner ≔  ∅&#10;  end&#10;&#10;event make_visible extends make_visible end&#10;&#10; event hide extends hide end&#10;&#10; event delete_principal_scontent extends delete_principal&#10; where&#10;   @grdr6_1 c1 ∈ scontents&#10; then&#10;  @actr6_1 scontents ≔ scontents∖({c1}∪cts)&#10;  @actr6_2 eventcontents ≔ ({c1}∪cts) ⩤ eventcontents&#10; end&#10;&#10; event delete_secondary_scontent extends delete_secondary&#10; where&#10;   @grdr6_1 c1 ∈ scontents&#10; then&#10;  @actr6_1 scontents ≔ scontents∖{c1}&#10;  @actr6_2 eventcontents ≔ {c1} ⩤ eventcontents&#10; end&#10;&#10; event grant_view_perm extends grant_view_perm end&#10;&#10; event grant_edit_perm extends grant_edit_perm end&#10;&#10; event addtolist extends addtolist end&#10;&#10; event comment_wall extends comment_wall end&#10;&#10; event hide_comment_wall extends hide_comment_wall end&#10;&#10; event delete_comment_wall extends delete_comment_wall end&#10;&#10; event transmit_nolist extends transmit_nolist end&#10;&#10; event transmit_tolist extends transmit_tolist end&#10;&#10; event transmit_tolist_restricted extends transmit_tolist_restricted end&#10;&#10; event create_account extends create_account end&#10;&#10; event create_list extends create_list end&#10;&#10; event delete_list extends delete_list end&#10;&#10; event add_disjointness extends add_disjointness end&#10;&#10; event upload_principal extends upload_principal end&#10;&#10; event upload_secondary extends upload_secondary end&#10;&#10; event comment_scontent_principal extends comment_rc_principal&#10; where&#10;   @grdr6_1 rc ∈ scontents&#10; then&#10;   @actr6_1 scontents ≔ scontents ∪ {cmt}&#10;   @actr6_2 eventcontents ≔  eventcontents ∪ ({cmt} × eventcontents[{rc}])&#10; end&#10;&#10; event comment_scontent_secondary extends comment_rc_secondary&#10; where&#10;   @grdr6_1 rc ∈ scontents&#10; then&#10;   @actr6_1 scontents ≔ scontents ∪ {cmt}&#10;   @actr6_2 eventcontents ≔  eventcontents ∪ ({cmt} × eventcontents[{rc}])&#10; end&#10;&#10; event edit_not_owned_scontent extends edit_not_owned&#10; where&#10;   @grdr6_1 c1 ∈ scontents&#10; then&#10;  @actr6_1 scontents ≔ (scontents∖{c1})∪{newc}&#10;  @actr6_2 eventcontents ≔  ({c1} ⩤ eventcontents) ∪ ({newc}×eventcontents[{c1}])&#10; end&#10;&#10; event edit_owned_required_page extends edit_owned_required&#10; where&#10;  @grdr6_1 c1 ∉ scontents&#10; end&#10;&#10; event edit_owned_not_required_page extends edit_owned_not_required&#10; where&#10;  @grdr6_1 c1 ∉ scontents&#10; end&#10;&#10; event edit_owned_not_required_planner extends edit_owned_not_required&#10; where&#10;  @grdr6_1 c1 ∈ scontents&#10; then&#10;  @actr6_1 scontents ≔ (scontents∖{c1})∪{newc}&#10;  @actr6_2 eventcontents ≔  ({c1} ⩤ eventcontents) ∪ ({newc}×eventcontents[{c1}])&#10; end&#10;&#10; event edit_owned_secondary_scontent extends edit_owned_secondary&#10; where&#10;   @grdr6_1 c1 ∈ scontents&#10; then&#10;  @actr6_1 scontents ≔ (scontents∖{c1}) ∪ {newc}&#10;  @actr6_2 eventcontents ≔ ({c1} ⩤ eventcontents) ∪ ({newc}×eventcontents[{c1}])&#10; end&#10;&#10; event create_social_event&#10;   any pe se&#10;   where&#10;     @grdr6_1 pe ∈ persons&#10;     @grdr6_2 se ∉ sevents&#10;   then&#10;     @actr6_1 sevents ≔ sevents ∪ {se}&#10;     @actr6_2 eventowner(se) ≔ pe&#10; end&#10;&#10; event upload_principal_content_planner extends upload_principal&#10; any se&#10; where&#10;  @grdr6_1 se ∈ sevents&#10; then&#10;  @actr6_1 scontents ≔ scontents ∪ {c2}&#10;  @actr6_2 eventcontents ≔  eventcontents ∪ {c2↦se}&#10; end&#10;&#10;&#10; event upload_secondary_content_planner extends upload_secondary&#10; any se&#10; where&#10;  @grdr6_1 se ∈ sevents&#10; then&#10;  @actr6_1 scontents ≔ scontents ∪ {c1}&#10;  @actr6_2 eventcontents ≔  eventcontents ∪ {c1↦se}&#10; end&#10;&#10;&#10;end&#10;&#10;&#10;&#10;&#10;" version="5">
+<org.eventb.core.refinesMachine name="_JLKvgIJ5EeK-c_np-tCR6Q" org.eventb.core.target="ref5_lists"/>
+<org.eventb.core.seesContext name="_JLKvgYJ5EeK-c_np-tCR6Q" org.eventb.core.target="ctx_events"/>
+<org.eventb.core.variable name="_xDuIIJj5EeG_TIv2gvsZ4g" org.eventb.core.comment="persons in the network" org.eventb.core.identifier="persons"/>
+<org.eventb.core.variable name="_xDuIIZj5EeG_TIv2gvsZ4g" org.eventb.core.comment="contents in the net" org.eventb.core.identifier="contents"/>
+<org.eventb.core.variable name="_xDuIIpj5EeG_TIv2gvsZ4g" org.eventb.core.comment="owner of a content" org.eventb.core.identifier="owner"/>
+<org.eventb.core.variable name="_xDuII5j5EeG_TIv2gvsZ4g" org.eventb.core.comment="contents visible for each person" org.eventb.core.identifier="pages"/>
+<org.eventb.core.variable name="_xDuIJJj5EeG_TIv2gvsZ4g" org.eventb.core.comment="persons having view permission" org.eventb.core.identifier="viewp"/>
+<org.eventb.core.variable name="_xDuvMJj5EeG_TIv2gvsZ4g" org.eventb.core.comment="edit permission" org.eventb.core.identifier="editp"/>
+<org.eventb.core.variable name="_xDuvMZj5EeG_TIv2gvsZ4g" org.eventb.core.comment="main contents" org.eventb.core.identifier="principal"/>
+<org.eventb.core.variable name="_xDuvMpj5EeG_TIv2gvsZ4g" org.eventb.core.comment="principal of a secondary content (e.g. a comment)" org.eventb.core.identifier="field"/>
+<org.eventb.core.variable name="_xDuvM5j5EeG_TIv2gvsZ4g" org.eventb.core.comment="required rawcontent (cannot be deleted)" org.eventb.core.identifier="required"/>
+<org.eventb.core.variable name="_xDuvNJj5EeG_TIv2gvsZ4g" org.eventb.core.comment="all contents in the wall" org.eventb.core.identifier="wallcontents"/>
+<org.eventb.core.variable name="_xDuvNZj5EeG_TIv2gvsZ4g" org.eventb.core.comment="who sees what of the wall" org.eventb.core.identifier="wall"/>
+<org.eventb.core.variable name="_xDuvNpj5EeG_TIv2gvsZ4g" org.eventb.core.comment="who has rights to see someone else's wall" org.eventb.core.identifier="wallaccess"/>
+<org.eventb.core.variable name="_xDvWQJj5EeG_TIv2gvsZ4g" org.eventb.core.comment="the owner of each wall" org.eventb.core.identifier="wallowner"/>
+<org.eventb.core.variable name="_xDvWQZj5EeG_TIv2gvsZ4g" org.eventb.core.comment="persons belonging to each list" org.eventb.core.identifier="listpe"/>
+<org.eventb.core.variable name="_xDvWQpj5EeG_TIv2gvsZ4g" org.eventb.core.comment="who created  each list" org.eventb.core.identifier="listow"/>
+<org.eventb.core.variable name="_xDvWQ5j5EeG_TIv2gvsZ4g" org.eventb.core.comment="policies concerning lists" org.eventb.core.identifier="policies"/>
+<org.eventb.core.variable name="_xDvWRJj5EeG_TIv2gvsZ4g" org.eventb.core.comment="a particular policy" org.eventb.core.identifier="disjointness"/>
+<org.eventb.core.variable name="_xDvWRZj5EeG_TIv2gvsZ4g" org.eventb.core.comment="events in the social event planner" org.eventb.core.identifier="sevents"/>
+<org.eventb.core.variable name="_xDvWRpj5EeG_TIv2gvsZ4g" org.eventb.core.comment="contents attached to events" org.eventb.core.identifier="scontents"/>
+<org.eventb.core.variable name="_xDv9UJj5EeG_TIv2gvsZ4g" org.eventb.core.comment="the contets associated to a social event" org.eventb.core.identifier="eventcontents"/>
+<org.eventb.core.variable name="_xDv9UZj5EeG_TIv2gvsZ4g" org.eventb.core.comment="event owners" org.eventb.core.identifier="eventowner"/>
+<org.eventb.core.invariant name="_xDv9Upj5EeG_TIv2gvsZ4g" org.eventb.core.label="invr6_1" org.eventb.core.predicate="sevents ⊆ EVENTS"/>
+<org.eventb.core.invariant name="_xDv9U5j5EeG_TIv2gvsZ4g" org.eventb.core.label="invr6_2" org.eventb.core.predicate="scontents ⊆ contents"/>
+<org.eventb.core.invariant name="_xDv9VJj5EeG_TIv2gvsZ4g" org.eventb.core.label="invr6_3" org.eventb.core.predicate="eventcontents ∈ scontents ↔ sevents"/>
+<org.eventb.core.invariant name="_xDwkYJj5EeG_TIv2gvsZ4g" org.eventb.core.label="invr6_4" org.eventb.core.predicate="eventowner ∈ sevents → persons"/>
+<org.eventb.core.event name="'" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="INITIALISATION">
+<org.eventb.core.action name="_xDwkYZj5EeG_TIv2gvsZ4g" org.eventb.core.assignment="sevents ≔ ∅" org.eventb.core.label="actr6_1"/>
+<org.eventb.core.action name="_xDwkYpj5EeG_TIv2gvsZ4g" org.eventb.core.assignment="scontents ≔ ∅" org.eventb.core.label="actr6_2"/>
+<org.eventb.core.action name="_xDwkY5j5EeG_TIv2gvsZ4g" org.eventb.core.assignment="eventcontents ≔  ∅" org.eventb.core.label="actr6_3"/>
+<org.eventb.core.action name="_xDwkZJj5EeG_TIv2gvsZ4g" org.eventb.core.assignment="eventowner ≔  ∅" org.eventb.core.label="actr6_4"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_xDxLcJj5EeG_TIv2gvsZ4g" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="make_visible">
+<org.eventb.core.refinesEvent name="_JLNy0IJ5EeK-c_np-tCR6Q" org.eventb.core.target="make_visible"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_xDxLcpj5EeG_TIv2gvsZ4g" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="hide">
+<org.eventb.core.refinesEvent name="_JLNy0YJ5EeK-c_np-tCR6Q" org.eventb.core.target="hide"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_Cy8LAp4gEeGHYpIOEcbU-Q" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="delete_principal_scontent">
+<org.eventb.core.refinesEvent name="_JLNy0oJ5EeK-c_np-tCR6Q" org.eventb.core.target="delete_principal"/>
+<org.eventb.core.guard name="_Cy8yEZ4gEeGHYpIOEcbU-Q" org.eventb.core.label="grdr6_1" org.eventb.core.predicate="c1 ∈ scontents"/>
+<org.eventb.core.action name="_Cy8yEp4gEeGHYpIOEcbU-Q" org.eventb.core.assignment="scontents ≔ scontents∖({c1}∪cts)" org.eventb.core.label="actr6_1"/>
+<org.eventb.core.action name="_1WPuAJ5vEeGHYpIOEcbU-Q" org.eventb.core.assignment="eventcontents ≔ ({c1}∪cts) ⩤ eventcontents" org.eventb.core.label="actr6_2"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_S0pUEJ4gEeGHYpIOEcbU-Q" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="delete_secondary_scontent">
+<org.eventb.core.refinesEvent name="_JLOZ4IJ5EeK-c_np-tCR6Q" org.eventb.core.target="delete_secondary"/>
+<org.eventb.core.guard name="_qn_NcZ4gEeGHYpIOEcbU-Q" org.eventb.core.label="grdr6_1" org.eventb.core.predicate="c1 ∈ scontents"/>
+<org.eventb.core.action name="_qn_Ncp4gEeGHYpIOEcbU-Q" org.eventb.core.assignment="scontents ≔ scontents∖{c1}" org.eventb.core.label="actr6_1"/>
+<org.eventb.core.action name="_qn_0gJ4gEeGHYpIOEcbU-Q" org.eventb.core.assignment="eventcontents ≔ {c1} ⩤ eventcontents" org.eventb.core.label="actr6_2"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_xDxygpj5EeG_TIv2gvsZ4g" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="grant_view_perm">
+<org.eventb.core.refinesEvent name="_JLPA8IJ5EeK-c_np-tCR6Q" org.eventb.core.target="grant_view_perm"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_xDxyhJj5EeG_TIv2gvsZ4g" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="grant_edit_perm">
+<org.eventb.core.refinesEvent name="_JLPA8YJ5EeK-c_np-tCR6Q" org.eventb.core.target="grant_edit_perm"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_xDxyhpj5EeG_TIv2gvsZ4g" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="addtolist">
+<org.eventb.core.refinesEvent name="_JLPA8oJ5EeK-c_np-tCR6Q" org.eventb.core.target="addtolist"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_xDyZkZj5EeG_TIv2gvsZ4g" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="comment_wall">
+<org.eventb.core.refinesEvent name="_JLPA84J5EeK-c_np-tCR6Q" org.eventb.core.target="comment_wall"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_xDyZk5j5EeG_TIv2gvsZ4g" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="hide_comment_wall">
+<org.eventb.core.refinesEvent name="_JLPA9IJ5EeK-c_np-tCR6Q" org.eventb.core.target="hide_comment_wall"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_xDyZlZj5EeG_TIv2gvsZ4g" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="delete_comment_wall">
+<org.eventb.core.refinesEvent name="_JLPoAIJ5EeK-c_np-tCR6Q" org.eventb.core.target="delete_comment_wall"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_xDyZl5j5EeG_TIv2gvsZ4g" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="transmit_nolist">
+<org.eventb.core.refinesEvent name="_JLPoAYJ5EeK-c_np-tCR6Q" org.eventb.core.target="transmit_nolist"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_xDzAoZj5EeG_TIv2gvsZ4g" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="transmit_tolist">
+<org.eventb.core.refinesEvent name="_JLPoAoJ5EeK-c_np-tCR6Q" org.eventb.core.target="transmit_tolist"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_xDzAo5j5EeG_TIv2gvsZ4g" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="transmit_tolist_restricted">
+<org.eventb.core.refinesEvent name="_JLPoA4J5EeK-c_np-tCR6Q" org.eventb.core.target="transmit_tolist_restricted"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_xDznsJj5EeG_TIv2gvsZ4g" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="create_account">
+<org.eventb.core.refinesEvent name="_JLPoBIJ5EeK-c_np-tCR6Q" org.eventb.core.target="create_account"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_xDznspj5EeG_TIv2gvsZ4g" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="create_list">
+<org.eventb.core.refinesEvent name="_JLQPEIJ5EeK-c_np-tCR6Q" org.eventb.core.target="create_list"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_xDzntJj5EeG_TIv2gvsZ4g" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="delete_list">
+<org.eventb.core.refinesEvent name="_JLQPEYJ5EeK-c_np-tCR6Q" org.eventb.core.target="delete_list"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_xD0OwZj5EeG_TIv2gvsZ4g" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="add_disjointness">
+<org.eventb.core.refinesEvent name="_JLQPEoJ5EeK-c_np-tCR6Q" org.eventb.core.target="add_disjointness"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_go7YwJ4fEeGHYpIOEcbU-Q" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="upload_principal">
+<org.eventb.core.refinesEvent name="_JLQPE4J5EeK-c_np-tCR6Q" org.eventb.core.target="upload_principal"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_go7Ywp4fEeGHYpIOEcbU-Q" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="upload_secondary">
+<org.eventb.core.refinesEvent name="_JLQPFIJ5EeK-c_np-tCR6Q" org.eventb.core.target="upload_secondary"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_AE1JgJ4hEeGHYpIOEcbU-Q" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="comment_scontent_principal">
+<org.eventb.core.refinesEvent name="_JLQ2IIJ5EeK-c_np-tCR6Q" org.eventb.core.target="comment_rc_principal"/>
+<org.eventb.core.guard name="_AE1wkZ4hEeGHYpIOEcbU-Q" org.eventb.core.label="grdr6_1" org.eventb.core.predicate="rc ∈ scontents"/>
+<org.eventb.core.action name="_tXQlMJ4iEeGHYpIOEcbU-Q" org.eventb.core.assignment="scontents ≔ scontents ∪ {cmt}" org.eventb.core.label="actr6_1"/>
+<org.eventb.core.action name="_tXQlMZ4iEeGHYpIOEcbU-Q" org.eventb.core.assignment="eventcontents ≔  eventcontents ∪ ({cmt} × eventcontents[{rc}])" org.eventb.core.label="actr6_2"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_GQHnEJ4hEeGHYpIOEcbU-Q" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="comment_scontent_secondary">
+<org.eventb.core.refinesEvent name="_JLQ2IYJ5EeK-c_np-tCR6Q" org.eventb.core.target="comment_rc_secondary"/>
+<org.eventb.core.guard name="_GQHnEp4hEeGHYpIOEcbU-Q" org.eventb.core.label="grdr6_1" org.eventb.core.predicate="rc ∈ scontents"/>
+<org.eventb.core.action name="_A_4xoZ4jEeGHYpIOEcbU-Q" org.eventb.core.assignment="scontents ≔ scontents ∪ {cmt}" org.eventb.core.label="actr6_1"/>
+<org.eventb.core.action name="_A_4xop4jEeGHYpIOEcbU-Q" org.eventb.core.assignment="eventcontents ≔  eventcontents ∪ ({cmt} × eventcontents[{rc}])" org.eventb.core.label="actr6_2"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_Op6jkZ4hEeGHYpIOEcbU-Q" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="edit_not_owned_scontent">
+<org.eventb.core.refinesEvent name="_JLRdMIJ5EeK-c_np-tCR6Q" org.eventb.core.target="edit_not_owned"/>
+<org.eventb.core.guard name="_Op7KoZ4hEeGHYpIOEcbU-Q" org.eventb.core.label="grdr6_1" org.eventb.core.predicate="c1 ∈ scontents"/>
+<org.eventb.core.action name="_2RET8Z4hEeGHYpIOEcbU-Q" org.eventb.core.assignment="scontents ≔ (scontents∖{c1})∪{newc}" org.eventb.core.label="actr6_1"/>
+<org.eventb.core.action name="_2RET8p4hEeGHYpIOEcbU-Q" org.eventb.core.assignment="eventcontents ≔  ({c1} ⩤ eventcontents) ∪ ({newc}×eventcontents[{c1}])" org.eventb.core.label="actr6_2"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_FROkAJ5wEeGHYpIOEcbU-Q" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="edit_owned_required_page">
+<org.eventb.core.refinesEvent name="_JLRdMYJ5EeK-c_np-tCR6Q" org.eventb.core.target="edit_owned_required"/>
+<org.eventb.core.guard name="_UqTm0Z5wEeGHYpIOEcbU-Q" org.eventb.core.label="grdr6_1" org.eventb.core.predicate="c1 ∉ scontents"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_ax1FsZ4jEeGHYpIOEcbU-Q" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="edit_owned_not_required_page">
+<org.eventb.core.refinesEvent name="_JLRdMoJ5EeK-c_np-tCR6Q" org.eventb.core.target="edit_owned_not_required"/>
+<org.eventb.core.guard name="_UqVcAJ5wEeGHYpIOEcbU-Q" org.eventb.core.label="grdr6_1" org.eventb.core.predicate="c1 ∉ scontents"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_qwA5sJ5wEeGHYpIOEcbU-Q" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="edit_owned_not_required_planner">
+<org.eventb.core.refinesEvent name="_JLSEQIJ5EeK-c_np-tCR6Q" org.eventb.core.target="edit_owned_not_required"/>
+<org.eventb.core.guard name="_qwCH0J5wEeGHYpIOEcbU-Q" org.eventb.core.label="grdr6_1" org.eventb.core.predicate="c1 ∈ scontents"/>
+<org.eventb.core.action name="_qwCH0Z5wEeGHYpIOEcbU-Q" org.eventb.core.assignment="scontents ≔ (scontents∖{c1})∪{newc}" org.eventb.core.label="actr6_1"/>
+<org.eventb.core.action name="_qwCu4J5wEeGHYpIOEcbU-Q" org.eventb.core.assignment="eventcontents ≔  ({c1} ⩤ eventcontents) ∪ ({newc}×eventcontents[{c1}])" org.eventb.core.label="actr6_2"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_xD2D8Jj5EeG_TIv2gvsZ4g" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="edit_owned_secondary_scontent">
+<org.eventb.core.refinesEvent name="_JLSEQYJ5EeK-c_np-tCR6Q" org.eventb.core.target="edit_owned_secondary"/>
+<org.eventb.core.guard name="_xD2D8pj5EeG_TIv2gvsZ4g" org.eventb.core.label="grdr6_1" org.eventb.core.predicate="c1 ∈ scontents"/>
+<org.eventb.core.action name="_xD2D85j5EeG_TIv2gvsZ4g" org.eventb.core.assignment="scontents ≔ (scontents∖{c1}) ∪ {newc}" org.eventb.core.label="actr6_1"/>
+<org.eventb.core.action name="_xD2D9Jj5EeG_TIv2gvsZ4g" org.eventb.core.assignment="eventcontents ≔ ({c1} ⩤ eventcontents) ∪ ({newc}×eventcontents[{c1}])" org.eventb.core.label="actr6_2"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_xD2D9Zj5EeG_TIv2gvsZ4g" org.eventb.core.convergence="0" org.eventb.core.extended="false" org.eventb.core.label="create_social_event">
+<org.eventb.core.parameter name="_xD2D9pj5EeG_TIv2gvsZ4g" org.eventb.core.identifier="pe"/>
+<org.eventb.core.parameter name="_xD2rAJj5EeG_TIv2gvsZ4g" org.eventb.core.identifier="se"/>
+<org.eventb.core.guard name="_xD2rAZj5EeG_TIv2gvsZ4g" org.eventb.core.label="grdr6_1" org.eventb.core.predicate="pe ∈ persons"/>
+<org.eventb.core.guard name="_xD2rApj5EeG_TIv2gvsZ4g" org.eventb.core.label="grdr6_2" org.eventb.core.predicate="se ∉ sevents"/>
+<org.eventb.core.action name="_xD2rA5j5EeG_TIv2gvsZ4g" org.eventb.core.assignment="sevents ≔ sevents ∪ {se}" org.eventb.core.label="actr6_1"/>
+<org.eventb.core.action name="_xD2rBJj5EeG_TIv2gvsZ4g" org.eventb.core.assignment="eventowner(se) ≔ pe" org.eventb.core.label="actr6_2"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_CP82oJnWEeGAN4sEIuR6bg" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="upload_principal_content_planner">
+<org.eventb.core.refinesEvent name="_JLSrUIJ5EeK-c_np-tCR6Q" org.eventb.core.target="upload_principal"/>
+<org.eventb.core.parameter name="_CP82opnWEeGAN4sEIuR6bg" org.eventb.core.identifier="se"/>
+<org.eventb.core.guard name="_CP82o5nWEeGAN4sEIuR6bg" org.eventb.core.label="grdr6_1" org.eventb.core.predicate="se ∈ sevents"/>
+<org.eventb.core.action name="_CP82pJnWEeGAN4sEIuR6bg" org.eventb.core.assignment="scontents ≔ scontents ∪ {c2}" org.eventb.core.label="actr6_1"/>
+<org.eventb.core.action name="_CP82pZnWEeGAN4sEIuR6bg" org.eventb.core.assignment="eventcontents ≔  eventcontents ∪ {c2↦se}" org.eventb.core.label="actr6_2"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_oOzo8JnVEeGAN4sEIuR6bg" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="upload_secondary_content_planner">
+<org.eventb.core.refinesEvent name="_JLTSYIJ5EeK-c_np-tCR6Q" org.eventb.core.target="upload_secondary"/>
+<org.eventb.core.parameter name="_oOzo8pnVEeGAN4sEIuR6bg" org.eventb.core.identifier="se"/>
+<org.eventb.core.guard name="_oOzo9JnVEeGAN4sEIuR6bg" org.eventb.core.label="grdr6_1" org.eventb.core.predicate="se ∈ sevents"/>
+<org.eventb.core.action name="_oOzo9pnVEeGAN4sEIuR6bg" org.eventb.core.assignment="scontents ≔ scontents ∪ {c1}" org.eventb.core.label="actr6_1"/>
+<org.eventb.core.action name="_oOzo95nVEeGAN4sEIuR6bg" org.eventb.core.assignment="eventcontents ≔  eventcontents ∪ {c1↦se}" org.eventb.core.label="actr6_2"/>
+</org.eventb.core.event>
+</org.eventb.core.machineFile>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<org.eventb.core.scContextFile org.eventb.core.accurate="true" org.eventb.core.configuration="org.eventb.core.fwd;org.animb.valuation.valBase">
+<org.eventb.core.scExtendsContext name="'" org.eventb.core.scTarget="/SocialEventPlanner/ctx_lists.bcc|org.eventb.core.scContextFile#ctx_lists" org.eventb.core.source="/SocialEventPlanner/ctx_events.buc|org.eventb.core.contextFile#ctx_events|org.eventb.core.extendsContext#_U-hikZj6EeGr1OWTpSJVRQ"/>
+<org.eventb.core.scInternalContext name="ctx1">
+<org.eventb.core.scCarrierSet name="CONTENTS" org.eventb.core.source="/SocialEventPlanner/ctx1.buc|org.eventb.core.contextFile#ctx1|org.eventb.core.carrierSet#_K5XigZT_EeGSmsOPZ71WXA" org.eventb.core.type="ℙ(CONTENTS)"/>
+<org.eventb.core.scCarrierSet name="PERSON" org.eventb.core.source="/SocialEventPlanner/ctx1.buc|org.eventb.core.contextFile#ctx1|org.eventb.core.carrierSet#_K5XigJT_EeGSmsOPZ71WXA" org.eventb.core.type="ℙ(PERSON)"/>
+</org.eventb.core.scInternalContext>
+<org.eventb.core.scInternalContext name="ctx_lists">
+<org.eventb.core.scExtendsContext name="'" org.eventb.core.scTarget="/SocialEventPlanner/ctx1.bcc|org.eventb.core.scContextFile#ctx1" org.eventb.core.source="/SocialEventPlanner/ctx_lists.buc|org.eventb.core.contextFile#ctx_lists|org.eventb.core.extendsContext#_PGJE8JT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.scCarrierSet name="LISTS" org.eventb.core.source="/SocialEventPlanner/ctx_lists.buc|org.eventb.core.contextFile#ctx_lists|org.eventb.core.carrierSet#_PGJE8ZT_EeGSmsOPZ71WXA" org.eventb.core.type="ℙ(LISTS)"/>
+</org.eventb.core.scInternalContext>
+<org.eventb.core.scCarrierSet name="EVENTS" org.eventb.core.source="/SocialEventPlanner/ctx_events.buc|org.eventb.core.contextFile#ctx_events|org.eventb.core.carrierSet#_U-hikpj6EeGr1OWTpSJVRQ" org.eventb.core.type="ℙ(EVENTS)"/>
+</org.eventb.core.scContextFile>

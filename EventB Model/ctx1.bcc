@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<org.eventb.core.scContextFile org.eventb.core.accurate="true" org.eventb.core.configuration="org.eventb.core.fwd;org.animb.valuation.valBase">
+<org.eventb.core.scCarrierSet name="CONTENTS" org.eventb.core.source="/SocialEventPlanner/ctx1.buc|org.eventb.core.contextFile#ctx1|org.eventb.core.carrierSet#_K5XigZT_EeGSmsOPZ71WXA" org.eventb.core.type="ℙ(CONTENTS)"/>
+<org.eventb.core.scCarrierSet name="PERSON" org.eventb.core.source="/SocialEventPlanner/ctx1.buc|org.eventb.core.contextFile#ctx1|org.eventb.core.carrierSet#_K5XigJT_EeGSmsOPZ71WXA" org.eventb.core.type="ℙ(PERSON)"/>
+</org.eventb.core.scContextFile>

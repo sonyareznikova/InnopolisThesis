@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<org.eventb.core.machineFile org.eventb.core.configuration="org.eventb.core.fwd" org.eventb.texttools.text_lastmodified="1362152629847" org.eventb.texttools.text_representation="machine ref8_socialpermissions refines ref7_socialinvite  sees ctx_events&#10;&#10;variables persons // persons in the network&#10;          contents // contents in the net&#10;          owner // owner of a content&#10;          pages // contents visible for each person&#10;          viewp // persons having view permission&#10;          editp // edit permission&#10;          principal // main contents&#10;          field // principal of a secondary content (e.g. a comment)&#10;          required // required rawcontent (cannot be deleted)&#10;          wallcontents // all contents in the wall&#10;          wall // who sees what of the wall&#10;          wallaccess // who has rights to see someone else's wall&#10;          wallowner // the owner of each wall&#10;          listpe // persons belonging to each list&#10;          listow // who created  each list&#10;          policies // policies concerning lists&#10;          disjointness // a particular policy&#10;          sevents // events in the social event planner&#10;          scontents // contents attached to events&#10;          eventcontents // the contets associated to a social event&#10;          eventowner // event owners&#10;          invited // people invited to a social event&#10;          populate // people who have permissions to invite more people&#10;          join // people who accepted to participate of a social event&#10;          maybe // people who may participate of the social event&#10;          decline // people who declined to participate of a social event&#10;&#10;          socialviewp // persons having view permission in the social event&#10;          socialeditp // edit permission in the social event&#10;&#10;&#10;invariants&#10;  @invr8_1 socialviewp ∈ scontents ↔ persons&#10;  @invr8_2 socialeditp ∈ scontents ↔ persons&#10;  @invr8_3 eventcontents;invited ⊆ socialviewp&#10;  @invr8_4 eventcontents;eventowner ⊆ socialeditp&#10;  @invr8_5 socialeditp ⊆ socialviewp&#10;&#10;events&#10;  event INITIALISATION extends INITIALISATION&#10;    then&#10;      @actr8_1 socialviewp ≔ ∅&#10;      @actr8_2 socialeditp ≔ ∅&#10;  end&#10;&#10;  event create_account extends create_account&#10;  end&#10;&#10;  event make_visible extends make_visible&#10;  end&#10;&#10;  event hide extends hide&#10;  end&#10;&#10;  event delete_principal_scontent extends delete_principal_scontent&#10;    where&#10;      @grdr8_1 c1↦owner(c1) ∈ socialeditp&#10;    then&#10;     @act1r8 socialviewp ≔  ({c1}∪cts) ⩤ socialviewp&#10;     @act2r8 socialeditp ≔  ({c1}∪cts) ⩤ socialeditp&#10;  end&#10;&#10;  event delete_secondary_scontent extends delete_secondary_scontent&#10;   then&#10;     @act1r8 socialviewp ≔  {c1} ⩤ socialviewp&#10;     @act2r8 socialeditp ≔  {c1} ⩤ socialeditp&#10;  end&#10;&#10;  event grant_view_perm extends grant_view_perm&#10;  end&#10;&#10;  event grant_edit_perm extends grant_edit_perm&#10;  end&#10;&#10;  event edit_owned_secondary_scontent extends edit_owned_secondary_scontent&#10;    then&#10;      @act1r8 socialviewp ≔ ({c1} ⩤ socialviewp) ∪ ({newc} × socialviewp[{c1}] )&#10;      @act2r8 socialeditp ≔ ({c1} ⩤ socialeditp) ∪ ({newc} × socialeditp[{c1}] )&#10;  end&#10;&#10;  event edit_not_owned_scontent extends edit_not_owned_scontent&#10;    then&#10;      @act1r8 socialviewp ≔ ({c1} ⩤ socialviewp) ∪ ({newc} × socialviewp[{c1}] )&#10;      @act2r8 socialeditp ≔ ({c1} ⩤ socialeditp) ∪ ({newc} × socialeditp[{c1}] )&#10;  end&#10;&#10;  event transmit_nolist extends transmit_nolist&#10;  end&#10;&#10;  event transmit_tolist extends transmit_tolist&#10;  end&#10;&#10;  event transmit_tolist_restricted extends transmit_tolist_restricted&#10;  end&#10;&#10;  event comment_scontent_principal extends comment_scontent_principal&#10;    then&#10;      @act1r8 socialviewp ≔ socialviewp ∪ ({cmt} × socialviewp[{rc}])&#10;      @act2r8 socialeditp ≔ socialeditp ∪ ({cmt} × socialeditp[{rc}])&#10;  end&#10;&#10;  event comment_scontent_secondary extends comment_scontent_secondary&#10;    then&#10;      @act1r8 socialviewp ≔ socialviewp ∪ ({cmt} × socialviewp[{rc}])&#10;      @act2r8 socialeditp ≔ socialeditp ∪ ({cmt} × socialeditp[{rc}])&#10;  end&#10;&#10;  event edit_owned_required_page extends edit_owned_required_page&#10;  end&#10;&#10;  event edit_owned_not_required_page extends edit_owned_not_required_page&#10;  end&#10;&#10;  event edit_owned_not_required_planner extends edit_owned_not_required_planner&#10;    then&#10;      @actr8_1 socialviewp ≔ ({c1} ⩤ socialviewp) ∪ ({newc}×socialviewp[{c1}])&#10;      @actr8_2 socialeditp ≔ ({c1} ⩤ socialeditp) ∪ ({newc}×socialeditp[{c1}])&#10;  end&#10;&#10;  event comment_wall extends comment_wall&#10;  end&#10;&#10;  event hide_comment_wall extends hide_comment_wall&#10;  end&#10;&#10;  event delete_comment_wall extends delete_comment_wall&#10;  end&#10;&#10;  event create_list extends create_list&#10;  end&#10;&#10;  event delete_list extends delete_list&#10;  end&#10;&#10;  event addtolist extends addtolist&#10;  end&#10;&#10;  event add_disjointness extends add_disjointness&#10;  end&#10;&#10;  event upload_principal extends upload_principal&#10;  end&#10;&#10;  event upload_secondary extends upload_secondary&#10;  end&#10;&#10;  event create_social_event extends create_social_event&#10;    then&#10;      @actr8_1 socialviewp ≔ socialviewp ∪ (dom(eventcontents ▷ {se}) × {pe}) // the owner can view the contents&#10;      @actr8_2 socialeditp ≔ socialeditp ∪ (dom(eventcontents ▷ {se}) × {pe}) // the owner can edit the contents&#10;  end&#10;&#10;  event upload_principal_content_planner extends upload_principal_content_planner&#10;    then&#10;      @actr8_1 socialviewp ≔ socialviewp ∪ ({c2} × invited[{se}]) // c1 is attached to the invitees to se&#10;      @actr8_2 socialeditp ≔ socialeditp ∪ {c2 ↦ eventowner(se)} // the owner can edit any content&#10;  end&#10;&#10;  event upload_secondary_content_planner extends upload_secondary_content_planner&#10;    then&#10;      @actr8_1 socialviewp ≔ socialviewp ∪ ({c1} × invited[{se}]) // c1 is attached to the invitees to se&#10;      @actr8_2 socialeditp ≔ socialeditp ∪ {c1 ↦ eventowner(se)} // the owner can edit any content&#10;  end&#10;&#10;  event sent_invite extends sent_invite&#10;    then&#10;      @actr8_1 socialviewp ≔ socialviewp ∪ (dom(eventcontents ▷ {se}) × listpe[{l1}])&#10;  end&#10;&#10;  event grant_populate extends grant_populate&#10;  end&#10;&#10;  event reply_with_join extends reply_with_join&#10;  end&#10;&#10;  event reply_with_decline extends reply_with_decline&#10;  end&#10;&#10;  event reply_with_maybe extends reply_with_maybe&#10;  end&#10;end&#10;" version="5">
+<org.eventb.core.refinesMachine name="_bpCmwIJ-EeK-c_np-tCR6Q" org.eventb.core.target="ref7_socialinvite"/>
+<org.eventb.core.seesContext name="_bpCmwYJ-EeK-c_np-tCR6Q" org.eventb.core.target="ctx_events"/>
+<org.eventb.core.variable name="_fJp50Jj6EeGr1OWTpSJVRQ" org.eventb.core.comment="persons in the network" org.eventb.core.identifier="persons"/>
+<org.eventb.core.variable name="_fJp50Zj6EeGr1OWTpSJVRQ" org.eventb.core.comment="contents in the net" org.eventb.core.identifier="contents"/>
+<org.eventb.core.variable name="_fJp50pj6EeGr1OWTpSJVRQ" org.eventb.core.comment="owner of a content" org.eventb.core.identifier="owner"/>
+<org.eventb.core.variable name="_fJqg4Jj6EeGr1OWTpSJVRQ" org.eventb.core.comment="contents visible for each person" org.eventb.core.identifier="pages"/>
+<org.eventb.core.variable name="_fJqg4Zj6EeGr1OWTpSJVRQ" org.eventb.core.comment="persons having view permission" org.eventb.core.identifier="viewp"/>
+<org.eventb.core.variable name="_fJqg4pj6EeGr1OWTpSJVRQ" org.eventb.core.comment="edit permission" org.eventb.core.identifier="editp"/>
+<org.eventb.core.variable name="_fJqg45j6EeGr1OWTpSJVRQ" org.eventb.core.comment="main contents" org.eventb.core.identifier="principal"/>
+<org.eventb.core.variable name="_fJrH8Jj6EeGr1OWTpSJVRQ" org.eventb.core.comment="principal of a secondary content (e.g. a comment)" org.eventb.core.identifier="field"/>
+<org.eventb.core.variable name="_fJrH8Zj6EeGr1OWTpSJVRQ" org.eventb.core.comment="required rawcontent (cannot be deleted)" org.eventb.core.identifier="required"/>
+<org.eventb.core.variable name="_fJrH8pj6EeGr1OWTpSJVRQ" org.eventb.core.comment="all contents in the wall" org.eventb.core.identifier="wallcontents"/>
+<org.eventb.core.variable name="_fJrH85j6EeGr1OWTpSJVRQ" org.eventb.core.comment="who sees what of the wall" org.eventb.core.identifier="wall"/>
+<org.eventb.core.variable name="_fJrvAJj6EeGr1OWTpSJVRQ" org.eventb.core.comment="who has rights to see someone else's wall" org.eventb.core.identifier="wallaccess"/>
+<org.eventb.core.variable name="_fJrvAZj6EeGr1OWTpSJVRQ" org.eventb.core.comment="the owner of each wall" org.eventb.core.identifier="wallowner"/>
+<org.eventb.core.variable name="_fJrvApj6EeGr1OWTpSJVRQ" org.eventb.core.comment="persons belonging to each list" org.eventb.core.identifier="listpe"/>
+<org.eventb.core.variable name="_fJrvA5j6EeGr1OWTpSJVRQ" org.eventb.core.comment="who created  each list" org.eventb.core.identifier="listow"/>
+<org.eventb.core.variable name="_fJsWEJj6EeGr1OWTpSJVRQ" org.eventb.core.comment="policies concerning lists" org.eventb.core.identifier="policies"/>
+<org.eventb.core.variable name="_fJsWEZj6EeGr1OWTpSJVRQ" org.eventb.core.comment="a particular policy" org.eventb.core.identifier="disjointness"/>
+<org.eventb.core.variable name="_fJsWEpj6EeGr1OWTpSJVRQ" org.eventb.core.comment="events in the social event planner" org.eventb.core.identifier="sevents"/>
+<org.eventb.core.variable name="_fJsWE5j6EeGr1OWTpSJVRQ" org.eventb.core.comment="contents attached to events" org.eventb.core.identifier="scontents"/>
+<org.eventb.core.variable name="_fJs9IJj6EeGr1OWTpSJVRQ" org.eventb.core.comment="the contets associated to a social event" org.eventb.core.identifier="eventcontents"/>
+<org.eventb.core.variable name="_fJs9IZj6EeGr1OWTpSJVRQ" org.eventb.core.comment="event owners" org.eventb.core.identifier="eventowner"/>
+<org.eventb.core.variable name="_fJs9Ipj6EeGr1OWTpSJVRQ" org.eventb.core.comment="people invited to a social event" org.eventb.core.identifier="invited"/>
+<org.eventb.core.variable name="_fJs9I5j6EeGr1OWTpSJVRQ" org.eventb.core.comment="people who have permissions to invite more people" org.eventb.core.identifier="populate"/>
+<org.eventb.core.variable name="_fJtkMJj6EeGr1OWTpSJVRQ" org.eventb.core.comment="people who accepted to participate of a social event" org.eventb.core.identifier="join"/>
+<org.eventb.core.variable name="_fJtkMZj6EeGr1OWTpSJVRQ" org.eventb.core.comment="people who may participate of the social event" org.eventb.core.identifier="maybe"/>
+<org.eventb.core.variable name="_fJtkMpj6EeGr1OWTpSJVRQ" org.eventb.core.comment="people who declined to participate of a social event" org.eventb.core.identifier="decline"/>
+<org.eventb.core.variable name="_onx2UJ56EeGHYpIOEcbU-Q" org.eventb.core.comment="persons having view permission in the social event" org.eventb.core.identifier="socialviewp"/>
+<org.eventb.core.variable name="_onydYJ56EeGHYpIOEcbU-Q" org.eventb.core.comment="edit permission in the social event" org.eventb.core.identifier="socialeditp"/>
+<org.eventb.core.invariant name="_onydYZ56EeGHYpIOEcbU-Q" org.eventb.core.label="invr8_1" org.eventb.core.predicate="socialviewp ∈ scontents ↔ persons"/>
+<org.eventb.core.invariant name="_onzEcJ56EeGHYpIOEcbU-Q" org.eventb.core.label="invr8_2" org.eventb.core.predicate="socialeditp ∈ scontents ↔ persons"/>
+<org.eventb.core.invariant name="_onzEcZ56EeGHYpIOEcbU-Q" org.eventb.core.label="invr8_3" org.eventb.core.predicate="eventcontents;invited ⊆ socialviewp"/>
+<org.eventb.core.invariant name="_onzrgJ56EeGHYpIOEcbU-Q" org.eventb.core.label="invr8_4" org.eventb.core.predicate="eventcontents;eventowner ⊆ socialeditp"/>
+<org.eventb.core.invariant name="_onzrgZ56EeGHYpIOEcbU-Q" org.eventb.core.label="invr8_5" org.eventb.core.predicate="socialeditp ⊆ socialviewp"/>
+<org.eventb.core.event name="_k1LBAJ5yEeGHYpIOEcbU-R" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="INITIALISATION">
+<org.eventb.core.action name="_on0SkJ56EeGHYpIOEcbU-Q" org.eventb.core.assignment="socialviewp ≔ ∅" org.eventb.core.label="actr8_1"/>
+<org.eventb.core.action name="_on0SkZ56EeGHYpIOEcbU-Q" org.eventb.core.assignment="socialeditp ≔ ∅" org.eventb.core.label="actr8_2"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_k1LBAJ5yEeGHYpIOEcbU-S" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="create_account">
+<org.eventb.core.refinesEvent name="_bpItYIJ-EeK-c_np-tCR6Q" org.eventb.core.target="create_account"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_k1LBAJ5yEeGHYpIOEcbU-T" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="make_visible">
+<org.eventb.core.refinesEvent name="_bpItYYJ-EeK-c_np-tCR6Q" org.eventb.core.target="make_visible"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_k1LBAJ5yEeGHYpIOEcbU-U" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="hide">
+<org.eventb.core.refinesEvent name="_bpJUcIJ-EeK-c_np-tCR6Q" org.eventb.core.target="hide"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_k1LBAJ5yEeGHYpIOEcbU-V" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="delete_principal_scontent">
+<org.eventb.core.refinesEvent name="_bpJUcYJ-EeK-c_np-tCR6Q" org.eventb.core.target="delete_principal_scontent"/>
+<org.eventb.core.guard name="_E2ZBIJ57EeGHYpIOEcbU-Q" org.eventb.core.label="grdr8_1" org.eventb.core.predicate="c1↦owner(c1) ∈ socialeditp"/>
+<org.eventb.core.action name="_zK0EcIJ9EeK-c_np-tCR6Q" org.eventb.core.assignment="socialviewp ≔  ({c1}∪cts) ⩤ socialviewp" org.eventb.core.label="act1r8"/>
+<org.eventb.core.action name="_zK0EcYJ9EeK-c_np-tCR6Q" org.eventb.core.assignment="socialeditp ≔  ({c1}∪cts) ⩤ socialeditp" org.eventb.core.label="act2r8"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_k1LBAJ5yEeGHYpIOEcbU-W" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="delete_secondary_scontent">
+<org.eventb.core.refinesEvent name="_bpJUcoJ-EeK-c_np-tCR6Q" org.eventb.core.target="delete_secondary_scontent"/>
+<org.eventb.core.action name="_YD6TIYJ-EeK-c_np-tCR6Q" org.eventb.core.assignment="socialviewp ≔  {c1} ⩤ socialviewp" org.eventb.core.label="act1r8"/>
+<org.eventb.core.action name="_YD6TIoJ-EeK-c_np-tCR6Q" org.eventb.core.assignment="socialeditp ≔  {c1} ⩤ socialeditp" org.eventb.core.label="act2r8"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_k1LBAJ5yEeGHYpIOEcbU-X" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="grant_view_perm">
+<org.eventb.core.refinesEvent name="_bpJ7gIJ-EeK-c_np-tCR6Q" org.eventb.core.target="grant_view_perm"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_k1LBAJ5yEeGHYpIOEcbU-Y" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="grant_edit_perm">
+<org.eventb.core.refinesEvent name="_bpJ7gYJ-EeK-c_np-tCR6Q" org.eventb.core.target="grant_edit_perm"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_k1LBAJ5yEeGHYpIOEcbU-Z" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="edit_owned_secondary_scontent">
+<org.eventb.core.refinesEvent name="_bpJ7goJ-EeK-c_np-tCR6Q" org.eventb.core.target="edit_owned_secondary_scontent"/>
+<org.eventb.core.action name="_gl6cMJ57EeGHYpIOEcbU-Q" org.eventb.core.assignment="socialviewp ≔ ({c1} ⩤ socialviewp) ∪ ({newc} × socialviewp[{c1}] )" org.eventb.core.label="act1r8"/>
+<org.eventb.core.action name="_gl6cMZ57EeGHYpIOEcbU-Q" org.eventb.core.assignment="socialeditp ≔ ({c1} ⩤ socialeditp) ∪ ({newc} × socialeditp[{c1}] )" org.eventb.core.label="act2r8"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_k1LBAJ5yEeGHYpIOEcbU-[" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="edit_not_owned_scontent">
+<org.eventb.core.refinesEvent name="_bpJ7g4J-EeK-c_np-tCR6Q" org.eventb.core.target="edit_not_owned_scontent"/>
+<org.eventb.core.action name="_t0qVcZ57EeGHYpIOEcbU-Q" org.eventb.core.assignment="socialviewp ≔ ({c1} ⩤ socialviewp) ∪ ({newc} × socialviewp[{c1}] )" org.eventb.core.label="act1r8"/>
+<org.eventb.core.action name="_t0qVcp57EeGHYpIOEcbU-Q" org.eventb.core.assignment="socialeditp ≔ ({c1} ⩤ socialeditp) ∪ ({newc} × socialeditp[{c1}] )" org.eventb.core.label="act2r8"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_k1LBAJ5yEeGHYpIOEcbU-\" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="transmit_nolist">
+<org.eventb.core.refinesEvent name="_bpKikIJ-EeK-c_np-tCR6Q" org.eventb.core.target="transmit_nolist"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_k1LBAJ5yEeGHYpIOEcbU-]" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="transmit_tolist">
+<org.eventb.core.refinesEvent name="_bpKikYJ-EeK-c_np-tCR6Q" org.eventb.core.target="transmit_tolist"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_k1LBAJ5yEeGHYpIOEcbU-^" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="transmit_tolist_restricted">
+<org.eventb.core.refinesEvent name="_bpKikoJ-EeK-c_np-tCR6Q" org.eventb.core.target="transmit_tolist_restricted"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_k1LBAJ5yEeGHYpIOEcbU-_" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="comment_scontent_principal">
+<org.eventb.core.refinesEvent name="_bpKik4J-EeK-c_np-tCR6Q" org.eventb.core.target="comment_scontent_principal"/>
+<org.eventb.core.action name="_3g5KMp57EeGHYpIOEcbU-Q" org.eventb.core.assignment="socialviewp ≔ socialviewp ∪ ({cmt} × socialviewp[{rc}])" org.eventb.core.label="act1r8"/>
+<org.eventb.core.action name="_3g5KM557EeGHYpIOEcbU-Q" org.eventb.core.assignment="socialeditp ≔ socialeditp ∪ ({cmt} × socialeditp[{rc}])" org.eventb.core.label="act2r8"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_k1LBAJ5yEeGHYpIOEcbU-`" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="comment_scontent_secondary">
+<org.eventb.core.refinesEvent name="_bpLJoIJ-EeK-c_np-tCR6Q" org.eventb.core.target="comment_scontent_secondary"/>
+<org.eventb.core.action name="_3g5xQZ57EeGHYpIOEcbU-Q" org.eventb.core.assignment="socialviewp ≔ socialviewp ∪ ({cmt} × socialviewp[{rc}])" org.eventb.core.label="act1r8"/>
+<org.eventb.core.action name="_3g5xQp57EeGHYpIOEcbU-Q" org.eventb.core.assignment="socialeditp ≔ socialeditp ∪ ({cmt} × socialeditp[{rc}])" org.eventb.core.label="act2r8"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_k1LBAJ5yEeGHYpIOEcbU-a" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="edit_owned_required_page">
+<org.eventb.core.refinesEvent name="_bpLJoYJ-EeK-c_np-tCR6Q" org.eventb.core.target="edit_owned_required_page"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_k1LBAJ5yEeGHYpIOEcbU-b" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="edit_owned_not_required_page">
+<org.eventb.core.refinesEvent name="_bpLJooJ-EeK-c_np-tCR6Q" org.eventb.core.target="edit_owned_not_required_page"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_k1LBAJ5yEeGHYpIOEcbU-c" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="edit_owned_not_required_planner">
+<org.eventb.core.refinesEvent name="_bpLJo4J-EeK-c_np-tCR6Q" org.eventb.core.target="edit_owned_not_required_planner"/>
+<org.eventb.core.action name="_gl84cZ57EeGHYpIOEcbU-Q" org.eventb.core.assignment="socialviewp ≔ ({c1} ⩤ socialviewp) ∪ ({newc}×socialviewp[{c1}])" org.eventb.core.label="actr8_1"/>
+<org.eventb.core.action name="_gl84cp57EeGHYpIOEcbU-Q" org.eventb.core.assignment="socialeditp ≔ ({c1} ⩤ socialeditp) ∪ ({newc}×socialeditp[{c1}])" org.eventb.core.label="actr8_2"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_k1LBAJ5yEeGHYpIOEcbU-d" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="comment_wall">
+<org.eventb.core.refinesEvent name="_bpLwsIJ-EeK-c_np-tCR6Q" org.eventb.core.target="comment_wall"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_k1LBAJ5yEeGHYpIOEcbU-e" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="hide_comment_wall">
+<org.eventb.core.refinesEvent name="_bpLwsYJ-EeK-c_np-tCR6Q" org.eventb.core.target="hide_comment_wall"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_k1LBAJ5yEeGHYpIOEcbU-f" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="delete_comment_wall">
+<org.eventb.core.refinesEvent name="_bpLwsoJ-EeK-c_np-tCR6Q" org.eventb.core.target="delete_comment_wall"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_k1LBAJ5yEeGHYpIOEcbU-g" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="create_list">
+<org.eventb.core.refinesEvent name="_bpLws4J-EeK-c_np-tCR6Q" org.eventb.core.target="create_list"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_k1LBAJ5yEeGHYpIOEcbU-h" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="delete_list">
+<org.eventb.core.refinesEvent name="_bpMXwIJ-EeK-c_np-tCR6Q" org.eventb.core.target="delete_list"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_k1LBAJ5yEeGHYpIOEcbU-i" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="addtolist">
+<org.eventb.core.refinesEvent name="_bpMXwYJ-EeK-c_np-tCR6Q" org.eventb.core.target="addtolist"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_k1LBAJ5yEeGHYpIOEcbU-j" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="add_disjointness">
+<org.eventb.core.refinesEvent name="_bpMXwoJ-EeK-c_np-tCR6Q" org.eventb.core.target="add_disjointness"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_k1LBAJ5yEeGHYpIOEcbU-k" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="upload_principal">
+<org.eventb.core.refinesEvent name="_bpMXw4J-EeK-c_np-tCR6Q" org.eventb.core.target="upload_principal"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_k1LBAJ5yEeGHYpIOEcbU-l" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="upload_secondary">
+<org.eventb.core.refinesEvent name="_bpMXxIJ-EeK-c_np-tCR6Q" org.eventb.core.target="upload_secondary"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_k1LBAJ5yEeGHYpIOEcbU-m" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="create_social_event">
+<org.eventb.core.refinesEvent name="_bpM-0IJ-EeK-c_np-tCR6Q" org.eventb.core.target="create_social_event"/>
+<org.eventb.core.action name="_gl_Usp57EeGHYpIOEcbU-Q" org.eventb.core.assignment="socialviewp ≔ socialviewp ∪ (dom(eventcontents ▷ {se}) × {pe})" org.eventb.core.comment="the owner can view the contents" org.eventb.core.label="actr8_1"/>
+<org.eventb.core.action name="_gl_Us557EeGHYpIOEcbU-Q" org.eventb.core.assignment="socialeditp ≔ socialeditp ∪ (dom(eventcontents ▷ {se}) × {pe})" org.eventb.core.comment="the owner can edit the contents" org.eventb.core.label="actr8_2"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_k1LBAJ5yEeGHYpIOEcbU-n" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="upload_principal_content_planner">
+<org.eventb.core.refinesEvent name="_bpM-0YJ-EeK-c_np-tCR6Q" org.eventb.core.target="upload_principal_content_planner"/>
+<org.eventb.core.action name="_gl_7wZ57EeGHYpIOEcbU-Q" org.eventb.core.assignment="socialviewp ≔ socialviewp ∪ ({c2} × invited[{se}])" org.eventb.core.comment="c1 is attached to the invitees to se" org.eventb.core.label="actr8_1"/>
+<org.eventb.core.action name="_gl_7wp57EeGHYpIOEcbU-Q" org.eventb.core.assignment="socialeditp ≔ socialeditp ∪ {c2 ↦ eventowner(se)}" org.eventb.core.comment="the owner can edit any content" org.eventb.core.label="actr8_2"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_k1LBAJ5yEeGHYpIOEcbU-o" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="upload_secondary_content_planner">
+<org.eventb.core.refinesEvent name="_bpM-0oJ-EeK-c_np-tCR6Q" org.eventb.core.target="upload_secondary_content_planner"/>
+<org.eventb.core.action name="_gmAi0Z57EeGHYpIOEcbU-Q" org.eventb.core.assignment="socialviewp ≔ socialviewp ∪ ({c1} × invited[{se}])" org.eventb.core.comment="c1 is attached to the invitees to se" org.eventb.core.label="actr8_1"/>
+<org.eventb.core.action name="_gmAi0p57EeGHYpIOEcbU-Q" org.eventb.core.assignment="socialeditp ≔ socialeditp ∪ {c1 ↦ eventowner(se)}" org.eventb.core.comment="the owner can edit any content" org.eventb.core.label="actr8_2"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_k1LBAJ5yEeGHYpIOEcbU-p" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="sent_invite">
+<org.eventb.core.refinesEvent name="_bpNl4IJ-EeK-c_np-tCR6Q" org.eventb.core.target="sent_invite"/>
+<org.eventb.core.action name="_gmBJ4Z57EeGHYpIOEcbU-Q" org.eventb.core.assignment="socialviewp ≔ socialviewp ∪ (dom(eventcontents ▷ {se}) × listpe[{l1}])" org.eventb.core.label="actr8_1"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_k1LBAJ5yEeGHYpIOEcbU-q" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="grant_populate">
+<org.eventb.core.refinesEvent name="_bpNl4YJ-EeK-c_np-tCR6Q" org.eventb.core.target="grant_populate"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_k1LBAJ5yEeGHYpIOEcbU-r" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="reply_with_join">
+<org.eventb.core.refinesEvent name="_bpNl4oJ-EeK-c_np-tCR6Q" org.eventb.core.target="reply_with_join"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_k1LBAJ5yEeGHYpIOEcbU-s" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="reply_with_decline">
+<org.eventb.core.refinesEvent name="_bpOM8IJ-EeK-c_np-tCR6Q" org.eventb.core.target="reply_with_decline"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_k1LBAJ5yEeGHYpIOEcbU-t" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="reply_with_maybe">
+<org.eventb.core.refinesEvent name="_bpOM8YJ-EeK-c_np-tCR6Q" org.eventb.core.target="reply_with_maybe"/>
+</org.eventb.core.event>
+</org.eventb.core.machineFile>

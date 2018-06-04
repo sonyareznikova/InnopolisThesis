@@ -786,7 +786,6 @@ public class Translator implements ISimpleVisitor2 {
 			eiffelCode.add(")");
 			break;
 		}
-		
 	}
 	
 	//visited 

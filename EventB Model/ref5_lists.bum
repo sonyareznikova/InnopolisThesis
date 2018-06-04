@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<org.eventb.core.machineFile org.eventb.core.configuration="org.eventb.core.fwd" org.eventb.texttools.text_lastmodified="1361888695241" org.eventb.texttools.text_representation="machine ref5_lists refines ref4_wall  sees ctx_lists&#10;&#10;variables persons // persons in the network&#10;          contents // contents in the net&#10;          owner // owner of a content&#10;          pages // contents visible for each person&#10;          viewp // persons having view permission&#10;          editp // edit permission&#10;          principal // main contents&#10;          field // principal of a secondary content (e.g. a comment)&#10;          required // required rawcontent (cannot be deleted)&#10;          wallcontents // all contents in the wall&#10;          wall // who sees what of the wall&#10;          wallaccess // who has rights to see someone else's wall&#10;          wallowner // the owner of each wall&#10;&#10;          listpe // persons belonging to each list&#10;          listow // who created  each list&#10;          policies // policies concerning lists&#10;          disjointness // a particular policy&#10;&#10;invariants&#10;  @invr5_1 listpe ∈ LISTS ↔ persons&#10;  @invr5_2 listow ∈ LISTS ⇸ persons&#10;  @invr5_3 policies ∈ dom(listow) ↔ dom(listow)&#10;  @invr5_4 dom(listow) ◁ id ∩ policies = ∅&#10;  @invr5_5 disjointness  ⊆ policies&#10;  @invr5_6 listow ∩ listpe = ∅&#10;  @invr5_7 policies ; listow ⊆ listow // the same owner created lists in policies&#10;&#10;events&#10;  event INITIALISATION extends INITIALISATION&#10;    then&#10;      @actr5_1 listpe ≔ ∅&#10;      @actr5_2 listow ≔ ∅&#10;      @actr5_3 policies ≔ ∅&#10;      @actr5_4 disjointness ≔ ∅&#10;  end&#10;&#10;  event create_account extends create_account&#10;  end&#10;&#10;  event make_visible extends make_visible&#10;  end&#10;&#10;  event hide extends hide&#10;  end&#10;&#10;  event delete_principal extends delete_principal&#10;  end&#10;&#10;  event delete_secondary extends delete_secondary&#10;  end&#10;&#10;  event grant_view_perm extends grant_view_perm&#10;  end&#10;&#10;  event grant_edit_perm extends grant_edit_perm&#10;  end&#10;&#10;  event edit_owned_secondary extends edit_owned_secondary&#10;  end&#10;&#10;  event edit_not_owned extends edit_not_owned&#10;  end&#10;&#10;  event transmit_nolist extends transmit_rc&#10;  end&#10;&#10;  event transmit_tolist extends transmit_rc&#10;    any l&#10;    where&#10;      @grdr5_1 l ∈ dom(listow)&#10;      @grdr5_2 listpe[{l}] = prs&#10;      @grdr5_3 owner(rc) = listow(l)&#10;  end&#10;&#10;  event transmit_tolist_restricted extends transmit_rc&#10;    any l1 l2&#10;    where&#10;      @grdr5_1 l1 ∈ dom(listow)&#10;      @grdr5_2 l2 ∈ dom(listow)&#10;      @grdr5_3 l1 ≠ l2&#10;      @grdr5_4 owner(rc) = listow(l1)&#10;      @grdr5_5 owner(rc) = listow(l2)&#10;      @grdr5_6 prs = listpe[{l1}] ∖ listpe[{l2}]&#10;  end&#10;&#10;  event comment_rc_principal extends comment_rc_principal&#10;  end&#10;&#10;  event comment_rc_secondary extends comment_rc_secondary&#10;  end&#10;&#10;  event edit_owned_required extends edit_owned_required&#10;  end&#10;&#10;  event edit_owned_not_required extends edit_owned_not_required&#10;  end&#10;&#10;  event comment_wall extends comment_wall&#10;  end&#10;&#10;  event hide_comment_wall extends hide_comment_wall&#10;  end&#10;&#10;  event delete_comment_wall extends delete_comment_wall&#10;  end&#10;&#10;  event create_list&#10;    any l ow&#10;    where&#10;      @grdr5_1 l ∈ LISTS∖(dom(listow)∪dom(listpe))&#10;      @grdr5_2 ow ∈ persons&#10;    then&#10;      @actr5_1 listow ≔ listow ∪  {l↦ow}&#10;  end&#10;&#10;  event delete_list&#10;    any l ow&#10;    where&#10;      @grdr5_1 l ∈ dom(listow)&#10;      @grdr5_2 ow ∈ persons&#10;      @grdr5_3 listow(l) = ow&#10;    then&#10;      @actr5_1 listow ≔ {l}⩤ listow&#10;      @actr5_2 listpe ≔ {l}⩤ listpe&#10;      @actr5_3 policies ≔  {l}⩤ policies ⩥{l}&#10;      @actr5_4 disjointness ≔  {l}⩤ disjointness ⩥{l}&#10;  end&#10;&#10;  event addtolist&#10;    any pe l&#10;    where&#10;      @grdr5_1 l ∈ dom(listow)&#10;      @grdr5_2 pe ∈ persons&#10;      @grdr5_3 pe ≠ listow(l)&#10;      @grdr5_4 pe ∉  listpe[{l}]&#10;    then&#10;      @actr5_1 listpe ≔ listpe  ∪  {l↦pe}&#10;  end&#10;&#10;  event add_disjointness&#10;    any l1 l2&#10;    where&#10;      @grdr5_1 l1 ∈ dom(listow)&#10;      @grdr5_2 l2 ∈ dom(listow)&#10;      @grdr5_3 l1 ≠ l2&#10;      @grdr5_4 listow(l1) = listow(l2)&#10;      @grdr5_5 l1↦l2 ∉ disjointness&#10;      @grdr5_6 l2↦l1 ∉ disjointness&#10;    then&#10;      @actr5_1 disjointness ≔ disjointness ∪ {l1↦l2}&#10;      @actr5_2 policies ≔ policies ∪ {l1↦l2}&#10;  end&#10;&#10;  event upload_principal extends upload_principal&#10;  end&#10;&#10;  event upload_secondary extends upload_secondary&#10;  end&#10;end&#10;" version="5">
+<org.eventb.core.refinesMachine name="_6Sw9kIAXEeKj0pNGFHKNbQ" org.eventb.core.target="ref4_wall"/>
+<org.eventb.core.seesContext name="_6Sw9kYAXEeKj0pNGFHKNbQ" org.eventb.core.target="ctx_lists"/>
+<org.eventb.core.variable name="_2EODUpUkEeGSmsOPZ71WXA" org.eventb.core.comment="persons in the network" org.eventb.core.identifier="persons"/>
+<org.eventb.core.variable name="_2EOqYJUkEeGSmsOPZ71WXA" org.eventb.core.comment="contents in the net" org.eventb.core.identifier="contents"/>
+<org.eventb.core.variable name="_2EOqYZUkEeGSmsOPZ71WXA" org.eventb.core.comment="owner of a content" org.eventb.core.identifier="owner"/>
+<org.eventb.core.variable name="_2EOqYpUkEeGSmsOPZ71WXA" org.eventb.core.comment="contents visible for each person" org.eventb.core.identifier="pages"/>
+<org.eventb.core.variable name="_2EOqY5UkEeGSmsOPZ71WXA" org.eventb.core.comment="persons having view permission" org.eventb.core.identifier="viewp"/>
+<org.eventb.core.variable name="_2EOqZJUkEeGSmsOPZ71WXA" org.eventb.core.comment="edit permission" org.eventb.core.identifier="editp"/>
+<org.eventb.core.variable name="_2EOqZZUkEeGSmsOPZ71WXA" org.eventb.core.comment="main contents" org.eventb.core.identifier="principal"/>
+<org.eventb.core.variable name="_2EOqZpUkEeGSmsOPZ71WXA" org.eventb.core.comment="principal of a secondary content (e.g. a comment)" org.eventb.core.identifier="field"/>
+<org.eventb.core.variable name="_2EPRcJUkEeGSmsOPZ71WXA" org.eventb.core.comment="required rawcontent (cannot be deleted)" org.eventb.core.identifier="required"/>
+<org.eventb.core.variable name="_2EPRcZUkEeGSmsOPZ71WXA" org.eventb.core.comment="all contents in the wall" org.eventb.core.identifier="wallcontents"/>
+<org.eventb.core.variable name="_2EPRcpUkEeGSmsOPZ71WXA" org.eventb.core.comment="who sees what of the wall" org.eventb.core.identifier="wall"/>
+<org.eventb.core.variable name="_2EPRc5UkEeGSmsOPZ71WXA" org.eventb.core.comment="who has rights to see someone else's wall" org.eventb.core.identifier="wallaccess"/>
+<org.eventb.core.variable name="_2EPRdJUkEeGSmsOPZ71WXA" org.eventb.core.comment="the owner of each wall" org.eventb.core.identifier="wallowner"/>
+<org.eventb.core.variable name="_2EPRdZUkEeGSmsOPZ71WXA" org.eventb.core.comment="persons belonging to each list" org.eventb.core.identifier="listpe"/>
+<org.eventb.core.variable name="_2EP4gJUkEeGSmsOPZ71WXA" org.eventb.core.comment="who created  each list" org.eventb.core.identifier="listow"/>
+<org.eventb.core.variable name="_2EP4gZUkEeGSmsOPZ71WXA" org.eventb.core.comment="policies concerning lists" org.eventb.core.identifier="policies"/>
+<org.eventb.core.variable name="_2EP4gpUkEeGSmsOPZ71WXA" org.eventb.core.comment="a particular policy" org.eventb.core.identifier="disjointness"/>
+<org.eventb.core.invariant name="_2EP4g5UkEeGSmsOPZ71WXA" org.eventb.core.label="invr5_1" org.eventb.core.predicate="listpe ∈ LISTS ↔ persons"/>
+<org.eventb.core.invariant name="_2EP4hJUkEeGSmsOPZ71WXA" org.eventb.core.label="invr5_2" org.eventb.core.predicate="listow ∈ LISTS ⇸ persons"/>
+<org.eventb.core.invariant name="_2EQfkJUkEeGSmsOPZ71WXA" org.eventb.core.label="invr5_3" org.eventb.core.predicate="policies ∈ dom(listow) ↔ dom(listow)"/>
+<org.eventb.core.invariant name="_2EQfkZUkEeGSmsOPZ71WXA" org.eventb.core.label="invr5_4" org.eventb.core.predicate="dom(listow) ◁ id ∩ policies = ∅"/>
+<org.eventb.core.invariant name="_2EQfkpUkEeGSmsOPZ71WXA" org.eventb.core.label="invr5_5" org.eventb.core.predicate="disjointness  ⊆ policies"/>
+<org.eventb.core.invariant name="_2EQfk5UkEeGSmsOPZ71WXA" org.eventb.core.label="invr5_6" org.eventb.core.predicate="listow ∩ listpe = ∅"/>
+<org.eventb.core.invariant name="_2EQflJUkEeGSmsOPZ71WXA" org.eventb.core.comment="the same owner created lists in policies" org.eventb.core.label="invr5_7" org.eventb.core.predicate="policies ; listow ⊆ listow"/>
+<org.eventb.core.event name="'" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="INITIALISATION">
+<org.eventb.core.action name="_2ERGoJUkEeGSmsOPZ71WXA" org.eventb.core.assignment="listpe ≔ ∅" org.eventb.core.label="actr5_1"/>
+<org.eventb.core.action name="_2ERGoZUkEeGSmsOPZ71WXA" org.eventb.core.assignment="listow ≔ ∅" org.eventb.core.label="actr5_2"/>
+<org.eventb.core.action name="_2ERGopUkEeGSmsOPZ71WXA" org.eventb.core.assignment="policies ≔ ∅" org.eventb.core.label="actr5_3"/>
+<org.eventb.core.action name="_2ERGo5UkEeGSmsOPZ71WXA" org.eventb.core.assignment="disjointness ≔ ∅" org.eventb.core.label="actr5_4"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_2ERtsJUkEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="create_account">
+<org.eventb.core.refinesEvent name="_6SzZ0IAXEeKj0pNGFHKNbQ" org.eventb.core.target="create_account"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_2ERtspUkEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="make_visible">
+<org.eventb.core.refinesEvent name="_6SzZ0YAXEeKj0pNGFHKNbQ" org.eventb.core.target="make_visible"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_2ERttJUkEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="hide">
+<org.eventb.core.refinesEvent name="_6SzZ0oAXEeKj0pNGFHKNbQ" org.eventb.core.target="hide"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_2ERttpUkEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="delete_principal">
+<org.eventb.core.refinesEvent name="_6SzZ04AXEeKj0pNGFHKNbQ" org.eventb.core.target="delete_principal"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_2ESUwZUkEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="delete_secondary">
+<org.eventb.core.refinesEvent name="_6S0A4IAXEeKj0pNGFHKNbQ" org.eventb.core.target="delete_secondary"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_2ESUw5UkEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="grant_view_perm">
+<org.eventb.core.refinesEvent name="_6S0A4YAXEeKj0pNGFHKNbQ" org.eventb.core.target="grant_view_perm"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_2ESUxZUkEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="grant_edit_perm">
+<org.eventb.core.refinesEvent name="_6S0A4oAXEeKj0pNGFHKNbQ" org.eventb.core.target="grant_edit_perm"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_F-8k4pj6EeG_TIv2gvsZ4g" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="edit_owned_secondary">
+<org.eventb.core.refinesEvent name="_6S0A44AXEeKj0pNGFHKNbQ" org.eventb.core.target="edit_owned_secondary"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_2ES705UkEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="edit_not_owned">
+<org.eventb.core.refinesEvent name="_6S0A5IAXEeKj0pNGFHKNbQ" org.eventb.core.target="edit_not_owned"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_2ES71ZUkEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="transmit_nolist">
+<org.eventb.core.refinesEvent name="_6S0n8IAXEeKj0pNGFHKNbQ" org.eventb.core.target="transmit_rc"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_2ETi4JUkEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="transmit_tolist">
+<org.eventb.core.refinesEvent name="_6S0n8YAXEeKj0pNGFHKNbQ" org.eventb.core.target="transmit_rc"/>
+<org.eventb.core.parameter name="_2ETi4pUkEeGSmsOPZ71WXA" org.eventb.core.identifier="l"/>
+<org.eventb.core.guard name="_2ETi45UkEeGSmsOPZ71WXA" org.eventb.core.label="grdr5_1" org.eventb.core.predicate="l ∈ dom(listow)"/>
+<org.eventb.core.guard name="_2ETi5JUkEeGSmsOPZ71WXA" org.eventb.core.label="grdr5_2" org.eventb.core.predicate="listpe[{l}] = prs"/>
+<org.eventb.core.guard name="_2ETi5ZUkEeGSmsOPZ71WXA" org.eventb.core.label="grdr5_3" org.eventb.core.predicate="owner(rc) = listow(l)"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_2EUJ8JUkEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="transmit_tolist_restricted">
+<org.eventb.core.refinesEvent name="_6S0n8oAXEeKj0pNGFHKNbQ" org.eventb.core.target="transmit_rc"/>
+<org.eventb.core.parameter name="_2EUJ8pUkEeGSmsOPZ71WXA" org.eventb.core.identifier="l1"/>
+<org.eventb.core.parameter name="_2EUJ85UkEeGSmsOPZ71WXA" org.eventb.core.identifier="l2"/>
+<org.eventb.core.guard name="_2EUJ9JUkEeGSmsOPZ71WXA" org.eventb.core.label="grdr5_1" org.eventb.core.predicate="l1 ∈ dom(listow)"/>
+<org.eventb.core.guard name="_2EUJ9ZUkEeGSmsOPZ71WXA" org.eventb.core.label="grdr5_2" org.eventb.core.predicate="l2 ∈ dom(listow)"/>
+<org.eventb.core.guard name="_2EUJ9pUkEeGSmsOPZ71WXA" org.eventb.core.label="grdr5_3" org.eventb.core.predicate="l1 ≠ l2"/>
+<org.eventb.core.guard name="_2EUxAJUkEeGSmsOPZ71WXA" org.eventb.core.label="grdr5_4" org.eventb.core.predicate="owner(rc) = listow(l1)"/>
+<org.eventb.core.guard name="_2EUxAZUkEeGSmsOPZ71WXA" org.eventb.core.label="grdr5_5" org.eventb.core.predicate="owner(rc) = listow(l2)"/>
+<org.eventb.core.guard name="_2EUxApUkEeGSmsOPZ71WXA" org.eventb.core.label="grdr5_6" org.eventb.core.predicate="prs = listpe[{l1}] ∖ listpe[{l2}]"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_2EUxA5UkEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="comment_rc_principal">
+<org.eventb.core.refinesEvent name="_6S12EIAXEeKj0pNGFHKNbQ" org.eventb.core.target="comment_rc_principal"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_F-8k5Jj6EeG_TIv2gvsZ4g" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="comment_rc_secondary">
+<org.eventb.core.refinesEvent name="_6S12EYAXEeKj0pNGFHKNbQ" org.eventb.core.target="comment_rc_secondary"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_2EUxB5UkEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="edit_owned_required">
+<org.eventb.core.refinesEvent name="_6S12EoAXEeKj0pNGFHKNbQ" org.eventb.core.target="edit_owned_required"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_2EVYEZUkEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="edit_owned_not_required">
+<org.eventb.core.refinesEvent name="_6S2dIIAXEeKj0pNGFHKNbQ" org.eventb.core.target="edit_owned_not_required"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_2EVYE5UkEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="comment_wall">
+<org.eventb.core.refinesEvent name="_6S2dIYAXEeKj0pNGFHKNbQ" org.eventb.core.target="comment_wall"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_2EVYFZUkEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="hide_comment_wall">
+<org.eventb.core.refinesEvent name="_6S2dIoAXEeKj0pNGFHKNbQ" org.eventb.core.target="hide_comment_wall"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_2EVYF5UkEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="delete_comment_wall">
+<org.eventb.core.refinesEvent name="_6S2dI4AXEeKj0pNGFHKNbQ" org.eventb.core.target="delete_comment_wall"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_2EV_IZUkEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="false" org.eventb.core.label="create_list">
+<org.eventb.core.parameter name="_2EV_IpUkEeGSmsOPZ71WXA" org.eventb.core.identifier="l"/>
+<org.eventb.core.parameter name="_2EV_I5UkEeGSmsOPZ71WXA" org.eventb.core.identifier="ow"/>
+<org.eventb.core.guard name="_2EV_JJUkEeGSmsOPZ71WXA" org.eventb.core.label="grdr5_1" org.eventb.core.predicate="l ∈ LISTS∖(dom(listow)∪dom(listpe))"/>
+<org.eventb.core.guard name="_2EV_JZUkEeGSmsOPZ71WXA" org.eventb.core.label="grdr5_2" org.eventb.core.predicate="ow ∈ persons"/>
+<org.eventb.core.action name="_2EV_JpUkEeGSmsOPZ71WXA" org.eventb.core.assignment="listow ≔ listow ∪  {l↦ow}" org.eventb.core.label="actr5_1"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_2EV_J5UkEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="false" org.eventb.core.label="delete_list">
+<org.eventb.core.parameter name="_2EV_KJUkEeGSmsOPZ71WXA" org.eventb.core.identifier="l"/>
+<org.eventb.core.parameter name="_2EWmMJUkEeGSmsOPZ71WXA" org.eventb.core.identifier="ow"/>
+<org.eventb.core.guard name="_2EWmMZUkEeGSmsOPZ71WXA" org.eventb.core.label="grdr5_1" org.eventb.core.predicate="l ∈ dom(listow)"/>
+<org.eventb.core.guard name="_2EWmMpUkEeGSmsOPZ71WXA" org.eventb.core.label="grdr5_2" org.eventb.core.predicate="ow ∈ persons"/>
+<org.eventb.core.guard name="_2EWmM5UkEeGSmsOPZ71WXA" org.eventb.core.label="grdr5_3" org.eventb.core.predicate="listow(l) = ow"/>
+<org.eventb.core.action name="_2EWmNJUkEeGSmsOPZ71WXA" org.eventb.core.assignment="listow ≔ {l}⩤ listow" org.eventb.core.label="actr5_1"/>
+<org.eventb.core.action name="_2EWmNZUkEeGSmsOPZ71WXA" org.eventb.core.assignment="listpe ≔ {l}⩤ listpe" org.eventb.core.label="actr5_2"/>
+<org.eventb.core.action name="_2EWmNpUkEeGSmsOPZ71WXA" org.eventb.core.assignment="policies ≔  {l}⩤ policies ⩥{l}" org.eventb.core.label="actr5_3"/>
+<org.eventb.core.action name="_2EWmN5UkEeGSmsOPZ71WXA" org.eventb.core.assignment="disjointness ≔  {l}⩤ disjointness ⩥{l}" org.eventb.core.label="actr5_4"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_2EXNQJUkEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="false" org.eventb.core.label="addtolist">
+<org.eventb.core.parameter name="_2EXNQZUkEeGSmsOPZ71WXA" org.eventb.core.identifier="pe"/>
+<org.eventb.core.parameter name="_2EXNQpUkEeGSmsOPZ71WXA" org.eventb.core.identifier="l"/>
+<org.eventb.core.guard name="_2EXNQ5UkEeGSmsOPZ71WXA" org.eventb.core.label="grdr5_1" org.eventb.core.predicate="l ∈ dom(listow)"/>
+<org.eventb.core.guard name="_2EXNRJUkEeGSmsOPZ71WXA" org.eventb.core.label="grdr5_2" org.eventb.core.predicate="pe ∈ persons"/>
+<org.eventb.core.guard name="_2EXNRZUkEeGSmsOPZ71WXA" org.eventb.core.label="grdr5_3" org.eventb.core.predicate="pe ≠ listow(l)"/>
+<org.eventb.core.guard name="_2EXNRpUkEeGSmsOPZ71WXA" org.eventb.core.label="grdr5_4" org.eventb.core.predicate="pe ∉  listpe[{l}]"/>
+<org.eventb.core.action name="_2EXNR5UkEeGSmsOPZ71WXA" org.eventb.core.assignment="listpe ≔ listpe  ∪  {l↦pe}" org.eventb.core.label="actr5_1"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_2EXNSJUkEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="false" org.eventb.core.label="add_disjointness">
+<org.eventb.core.parameter name="_2EX0UJUkEeGSmsOPZ71WXA" org.eventb.core.identifier="l1"/>
+<org.eventb.core.parameter name="_2EX0UZUkEeGSmsOPZ71WXA" org.eventb.core.identifier="l2"/>
+<org.eventb.core.guard name="_2EX0UpUkEeGSmsOPZ71WXA" org.eventb.core.label="grdr5_1" org.eventb.core.predicate="l1 ∈ dom(listow)"/>
+<org.eventb.core.guard name="_2EX0U5UkEeGSmsOPZ71WXA" org.eventb.core.label="grdr5_2" org.eventb.core.predicate="l2 ∈ dom(listow)"/>
+<org.eventb.core.guard name="_2EX0VJUkEeGSmsOPZ71WXA" org.eventb.core.label="grdr5_3" org.eventb.core.predicate="l1 ≠ l2"/>
+<org.eventb.core.guard name="_2EX0VZUkEeGSmsOPZ71WXA" org.eventb.core.label="grdr5_4" org.eventb.core.predicate="listow(l1) = listow(l2)"/>
+<org.eventb.core.guard name="_2EX0VpUkEeGSmsOPZ71WXA" org.eventb.core.label="grdr5_5" org.eventb.core.predicate="l1↦l2 ∉ disjointness"/>
+<org.eventb.core.guard name="_2EX0V5UkEeGSmsOPZ71WXA" org.eventb.core.label="grdr5_6" org.eventb.core.predicate="l2↦l1 ∉ disjointness"/>
+<org.eventb.core.action name="_2EYbYJUkEeGSmsOPZ71WXA" org.eventb.core.assignment="disjointness ≔ disjointness ∪ {l1↦l2}" org.eventb.core.label="actr5_1"/>
+<org.eventb.core.action name="_2EYbYZUkEeGSmsOPZ71WXA" org.eventb.core.assignment="policies ≔ policies ∪ {l1↦l2}" org.eventb.core.label="actr5_2"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_2EYbYpUkEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="upload_principal">
+<org.eventb.core.refinesEvent name="_6S5gcIAXEeKj0pNGFHKNbQ" org.eventb.core.target="upload_principal"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_2EYbZJUkEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="upload_secondary">
+<org.eventb.core.refinesEvent name="_6S6HgIAXEeKj0pNGFHKNbQ" org.eventb.core.target="upload_secondary"/>
+</org.eventb.core.event>
+</org.eventb.core.machineFile>

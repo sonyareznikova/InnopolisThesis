@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<org.eventb.core.poFile org.eventb.core.poStamp="0">
+<org.eventb.core.poPredicateSet name="CTXHYP" org.eventb.core.poStamp="0">
+<org.eventb.core.poIdentifier name="CONTENTS" org.eventb.core.type="ℙ(CONTENTS)"/>
+<org.eventb.core.poIdentifier name="PERSON" org.eventb.core.type="ℙ(PERSON)"/>
+</org.eventb.core.poPredicateSet>
+<org.eventb.core.poPredicateSet name="ABSHYP" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#CTXHYP" org.eventb.core.poStamp="0">
+<org.eventb.core.poIdentifier name="contents" org.eventb.core.type="ℙ(CONTENTS)"/>
+<org.eventb.core.poIdentifier name="editp" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="field" org.eventb.core.type="ℙ(CONTENTS×CONTENTS)"/>
+<org.eventb.core.poIdentifier name="owner" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="pages" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="persons" org.eventb.core.type="ℙ(PERSON)"/>
+<org.eventb.core.poIdentifier name="principal" org.eventb.core.type="ℙ(CONTENTS)"/>
+<org.eventb.core.poIdentifier name="required" org.eventb.core.type="ℙ(CONTENTS)"/>
+<org.eventb.core.poIdentifier name="viewp" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poPredicate name="principam" org.eventb.core.predicate="persons⊆PERSON" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.invariant#_RkVltZT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="principan" org.eventb.core.predicate="contents⊆CONTENTS" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.invariant#_RkWMwJT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="principao" org.eventb.core.predicate="owner∈contents ↠ persons" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.invariant#_RkWMwZT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="principap" org.eventb.core.predicate="pages∈contents  persons" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.invariant#_RkWMwpT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="principaq" org.eventb.core.predicate="owner⊆pages" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.invariant#_RkWMw5T_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="principar" org.eventb.core.predicate="viewp∈contents ↔ persons" org.eventb.core.source="/SocialEventPlanner/ref1_permissions.bum|org.eventb.core.machineFile#ref1_permissions|org.eventb.core.invariant#_3xY3JZUhEeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="principas" org.eventb.core.predicate="editp∈contents ↔ persons" org.eventb.core.source="/SocialEventPlanner/ref1_permissions.bum|org.eventb.core.machineFile#ref1_permissions|org.eventb.core.invariant#_3xZeMJUhEeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="principat" org.eventb.core.predicate="owner⊆viewp" org.eventb.core.source="/SocialEventPlanner/ref1_permissions.bum|org.eventb.core.machineFile#ref1_permissions|org.eventb.core.invariant#_3xZeMZUhEeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="principau" org.eventb.core.predicate="owner⊆editp" org.eventb.core.source="/SocialEventPlanner/ref1_permissions.bum|org.eventb.core.machineFile#ref1_permissions|org.eventb.core.invariant#_3xZeMpUhEeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="principav" org.eventb.core.predicate="editp⊆viewp" org.eventb.core.source="/SocialEventPlanner/ref1_permissions.bum|org.eventb.core.machineFile#ref1_permissions|org.eventb.core.invariant#_3xZeM5UhEeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="principaw" org.eventb.core.predicate="pages⊆viewp" org.eventb.core.source="/SocialEventPlanner/ref1_permissions.bum|org.eventb.core.machineFile#ref1_permissions|org.eventb.core.invariant#_3xZeNJUhEeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="principax" org.eventb.core.predicate="principal⊆contents" org.eventb.core.source="/SocialEventPlanner/ref2_principal.bum|org.eventb.core.machineFile#ref2_principal|org.eventb.core.invariant#_JYlXVpUiEeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="principay" org.eventb.core.predicate="field∈contents ∖ principal → principal" org.eventb.core.source="/SocialEventPlanner/ref2_principal.bum|org.eventb.core.machineFile#ref2_principal|org.eventb.core.invariant#_JYlXV5UiEeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="principaz" org.eventb.core.predicate="owner[principal]=persons" org.eventb.core.source="/SocialEventPlanner/ref2_principal.bum|org.eventb.core.machineFile#ref2_principal|org.eventb.core.invariant#_JYl-YJUiEeGSmsOPZ71WXA"/>
+</org.eventb.core.poPredicateSet>
+<org.eventb.core.poSequent name="INITIALISATION/invr3_1/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  establishment" org.eventb.core.poStamp="0">
+<org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#EVTALLHYPprincipam"/>
+<org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="(∅ ⦂ ℙ(CONTENTS))⊆(∅ ⦂ ℙ(CONTENTS))" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.invariant#_4T9GxZUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="ABSTRACT" org.eventb.core.source="/SocialEventPlanner/ref2_principal.bum|org.eventb.core.machineFile#ref2_principal|org.eventb.core.event#'"/>
+<org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="CONCRETE" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.event#'"/>
+<org.eventb.core.poSource name="SEQHYT" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.invariant#_4T9GxZUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#CTXHYP" org.eventb.core.poSelHintSnd="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poSequent#INITIALISATION\/invr3_1\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+<org.eventb.core.poSelHint name="SEQHYV" org.eventb.core.poSelHintFst="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP|org.eventb.core.poPredicate#PRD0"/>
+</org.eventb.core.poSequent>
+<org.eventb.core.poSequent name="INITIALISATION/invr3_2/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  establishment" org.eventb.core.poStamp="0">
+<org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#EVTALLHYPprincipam"/>
+<org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="(∅ ⦂ ℙ(CONTENTS×PERSON))[∅ ⦂ ℙ(CONTENTS)]=(∅ ⦂ ℙ(PERSON))" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.invariant#_4T9t0JUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="ABSTRACT" org.eventb.core.source="/SocialEventPlanner/ref2_principal.bum|org.eventb.core.machineFile#ref2_principal|org.eventb.core.event#'"/>
+<org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="CONCRETE" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.event#'"/>
+<org.eventb.core.poSource name="SEQHYT" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.invariant#_4T9t0JUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#CTXHYP" org.eventb.core.poSelHintSnd="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poSequent#INITIALISATION\/invr3_2\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+<org.eventb.core.poSelHint name="SEQHYV" org.eventb.core.poSelHintFst="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP|org.eventb.core.poPredicate#PRD1"/>
+</org.eventb.core.poSequent>
+<org.eventb.core.poPredicateSet name="EVTIDENTprincipam" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#CTXHYP" org.eventb.core.poStamp="0">
+<org.eventb.core.poIdentifier name="principal'" org.eventb.core.type="ℙ(CONTENTS)"/>
+<org.eventb.core.poIdentifier name="owner'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="pages'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="viewp'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="editp'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="contents'" org.eventb.core.type="ℙ(CONTENTS)"/>
+<org.eventb.core.poIdentifier name="field'" org.eventb.core.type="ℙ(CONTENTS×CONTENTS)"/>
+<org.eventb.core.poIdentifier name="required'" org.eventb.core.type="ℙ(CONTENTS)"/>
+<org.eventb.core.poIdentifier name="persons'" org.eventb.core.type="ℙ(PERSON)"/>
+</org.eventb.core.poPredicateSet>
+<org.eventb.core.poPredicateSet name="EVTALLHYPprincipam" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#EVTIDENTprincipam" org.eventb.core.poStamp="0"/>
+<org.eventb.core.poSequent name="create_account/invr3_1/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+<org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#EVTALLHYPprincipan"/>
+<org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="required∪{c1}⊆principal∪{c1}" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.invariant#_4T9GxZUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="ABSTRACT" org.eventb.core.source="/SocialEventPlanner/ref2_principal.bum|org.eventb.core.machineFile#ref2_principal|org.eventb.core.event#_JYl-Y5UiEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="CONCRETE" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.event#_4T9t0pUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSource name="SEQHYT" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.invariant#_4T9GxZUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poSequent#create_account\/invr3_1\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+<org.eventb.core.poSelHint name="SEQHYV" org.eventb.core.poSelHintFst="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP|org.eventb.core.poPredicate#PRD0"/>
+</org.eventb.core.poSequent>
+<org.eventb.core.poSequent name="create_account/invr3_2/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+<org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#EVTALLHYPprincipan"/>
+<org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="(owner∪{c1 ↦ p1})[required∪{c1}]=persons∪{p1}" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.invariant#_4T9t0JUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="ABSTRACT" org.eventb.core.source="/SocialEventPlanner/ref2_principal.bum|org.eventb.core.machineFile#ref2_principal|org.eventb.core.event#_JYl-Y5UiEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="CONCRETE" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.event#_4T9t0pUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSource name="SEQHYT" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.invariant#_4T9t0JUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poSequent#create_account\/invr3_2\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+<org.eventb.core.poSelHint name="SEQHYV" org.eventb.core.poSelHintFst="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP|org.eventb.core.poPredicate#PRD1"/>
+</org.eventb.core.poSequent>
+<org.eventb.core.poPredicateSet name="EVTIDENTprincipan" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poStamp="0">
+<org.eventb.core.poIdentifier name="principal'" org.eventb.core.type="ℙ(CONTENTS)"/>
+<org.eventb.core.poIdentifier name="owner'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="c1" org.eventb.core.type="CONTENTS"/>
+<org.eventb.core.poIdentifier name="p1" org.eventb.core.type="PERSON"/>
+<org.eventb.core.poIdentifier name="pages'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="viewp'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="editp'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="contents'" org.eventb.core.type="ℙ(CONTENTS)"/>
+<org.eventb.core.poIdentifier name="required'" org.eventb.core.type="ℙ(CONTENTS)"/>
+<org.eventb.core.poIdentifier name="persons'" org.eventb.core.type="ℙ(PERSON)"/>
+</org.eventb.core.poPredicateSet>
+<org.eventb.core.poPredicateSet name="EVTALLHYPprincipan" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#EVTIDENTprincipan" org.eventb.core.poStamp="0">
+<org.eventb.core.poPredicate name="PRD0" org.eventb.core.predicate="p1∈PERSON ∖ persons" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkWz1JT_EeGSmsOPZ71WXA|org.eventb.core.guard#_RkXa4ZT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD1" org.eventb.core.predicate="c1∈CONTENTS ∖ contents" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkWz1JT_EeGSmsOPZ71WXA|org.eventb.core.guard#_RkXa4pT_EeGSmsOPZ71WXA"/>
+</org.eventb.core.poPredicateSet>
+<org.eventb.core.poPredicateSet name="EVTIDENTprincipao" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poStamp="0">
+<org.eventb.core.poIdentifier name="c1" org.eventb.core.type="CONTENTS"/>
+<org.eventb.core.poIdentifier name="p1" org.eventb.core.type="PERSON"/>
+<org.eventb.core.poIdentifier name="pages'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+</org.eventb.core.poPredicateSet>
+<org.eventb.core.poPredicateSet name="EVTALLHYPprincipao" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#EVTIDENTprincipao" org.eventb.core.poStamp="0">
+<org.eventb.core.poPredicate name="PRD0" org.eventb.core.predicate="p1∈persons" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkYpApT_EeGSmsOPZ71WXA|org.eventb.core.guard#_RkYpBZT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD1" org.eventb.core.predicate="c1∈contents" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkYpApT_EeGSmsOPZ71WXA|org.eventb.core.guard#_RkZQEJT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD2" org.eventb.core.predicate="c1 ↦ p1∉pages" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkYpApT_EeGSmsOPZ71WXA|org.eventb.core.guard#_RkZQEZT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD3" org.eventb.core.predicate="c1 ↦ p1∈viewp" org.eventb.core.source="/SocialEventPlanner/ref1_permissions.bum|org.eventb.core.machineFile#ref1_permissions|org.eventb.core.event#_3xbTYJUhEeGSmsOPZ71WXA|org.eventb.core.guard#_3xbTYpUhEeGSmsOPZ71WXA"/>
+</org.eventb.core.poPredicateSet>
+<org.eventb.core.poPredicateSet name="EVTIDENTprincipap" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poStamp="0">
+<org.eventb.core.poIdentifier name="c1" org.eventb.core.type="CONTENTS"/>
+<org.eventb.core.poIdentifier name="p1" org.eventb.core.type="PERSON"/>
+<org.eventb.core.poIdentifier name="pages'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="viewp'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="editp'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+</org.eventb.core.poPredicateSet>
+<org.eventb.core.poPredicateSet name="EVTALLHYPprincipap" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#EVTIDENTprincipap" org.eventb.core.poStamp="0">
+<org.eventb.core.poPredicate name="PRD0" org.eventb.core.predicate="p1∈persons" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkZQE5T_EeGSmsOPZ71WXA|org.eventb.core.guard#_RkZQFpT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD1" org.eventb.core.predicate="c1∈contents" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkZQE5T_EeGSmsOPZ71WXA|org.eventb.core.guard#_RkZ3IJT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD2" org.eventb.core.predicate="c1 ↦ p1∈pages" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkZQE5T_EeGSmsOPZ71WXA|org.eventb.core.guard#_RkZ3IZT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD3" org.eventb.core.predicate="owner(c1)≠p1" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkZQE5T_EeGSmsOPZ71WXA|org.eventb.core.guard#_RkZ3IpT_EeGSmsOPZ71WXA"/>
+</org.eventb.core.poPredicateSet>
+<org.eventb.core.poSequent name="delete_principal/invr3_1/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+<org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#EVTALLHYPprincipaq"/>
+<org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="required⊆principal ∖ {c1}" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.invariant#_4T9GxZUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="ABSTRACT" org.eventb.core.source="/SocialEventPlanner/ref2_principal.bum|org.eventb.core.machineFile#ref2_principal|org.eventb.core.event#_JYmldJUiEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="CONCRETE" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.event#_4T-U5ZUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSource name="SEQHYT" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.invariant#_4T9GxZUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poSequent#delete_principal\/invr3_1\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+<org.eventb.core.poSelHint name="SEQHYV" org.eventb.core.poSelHintFst="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP|org.eventb.core.poPredicate#PRD0"/>
+</org.eventb.core.poSequent>
+<org.eventb.core.poSequent name="delete_principal/invr3_2/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+<org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#EVTALLHYPprincipaq"/>
+<org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="(({c1}∪cts) ⩤ owner)[required]=persons" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.invariant#_4T9t0JUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="ABSTRACT" org.eventb.core.source="/SocialEventPlanner/ref2_principal.bum|org.eventb.core.machineFile#ref2_principal|org.eventb.core.event#_JYmldJUiEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="CONCRETE" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.event#_4T-U5ZUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSource name="SEQHYT" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.invariant#_4T9t0JUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poSequent#delete_principal\/invr3_2\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+<org.eventb.core.poSelHint name="SEQHYV" org.eventb.core.poSelHintFst="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP|org.eventb.core.poPredicate#PRD1"/>
+</org.eventb.core.poSequent>
+<org.eventb.core.poPredicateSet name="EVTIDENTprincipaq" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poStamp="0">
+<org.eventb.core.poIdentifier name="principal'" org.eventb.core.type="ℙ(CONTENTS)"/>
+<org.eventb.core.poIdentifier name="owner'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="c1" org.eventb.core.type="CONTENTS"/>
+<org.eventb.core.poIdentifier name="pages'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="cts" org.eventb.core.type="ℙ(CONTENTS)"/>
+<org.eventb.core.poIdentifier name="viewp'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="editp'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="contents'" org.eventb.core.type="ℙ(CONTENTS)"/>
+<org.eventb.core.poIdentifier name="field'" org.eventb.core.type="ℙ(CONTENTS×CONTENTS)"/>
+<org.eventb.core.poIdentifier name="ow" org.eventb.core.type="PERSON"/>
+</org.eventb.core.poPredicateSet>
+<org.eventb.core.poPredicateSet name="EVTALLHYPprincipaq" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#EVTIDENTprincipaq" org.eventb.core.poStamp="0">
+<org.eventb.core.poPredicate name="PRD0" org.eventb.core.predicate="c1∈contents" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkZ3JJT_EeGSmsOPZ71WXA|org.eventb.core.guard#_RkaeMpT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD1" org.eventb.core.predicate="{c1}∪cts⊂dom(owner ▷ {ow})" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkZ3JJT_EeGSmsOPZ71WXA|org.eventb.core.guard#_RkaeM5T_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD2" org.eventb.core.predicate="cts⊆contents" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkZ3JJT_EeGSmsOPZ71WXA|org.eventb.core.guard#_RkaeNJT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD3" org.eventb.core.predicate="c1∉cts" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkZ3JJT_EeGSmsOPZ71WXA|org.eventb.core.guard#_RkaeNZT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD4" org.eventb.core.predicate="owner[{c1}∪cts]={ow}" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkZ3JJT_EeGSmsOPZ71WXA|org.eventb.core.guard#_mr_uIYAeEeKj0pNGFHKNbQ"/>
+<org.eventb.core.poPredicate name="PRD5" org.eventb.core.predicate="c1∈principal" org.eventb.core.source="/SocialEventPlanner/ref2_principal.bum|org.eventb.core.machineFile#ref2_principal|org.eventb.core.event#_JYmldJUiEeGSmsOPZ71WXA|org.eventb.core.guard#_JYmldpUiEeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD6" org.eventb.core.predicate="owner[principal ∖ {c1}]=persons" org.eventb.core.source="/SocialEventPlanner/ref2_principal.bum|org.eventb.core.machineFile#ref2_principal|org.eventb.core.event#_JYmldJUiEeGSmsOPZ71WXA|org.eventb.core.guard#_JYmld5UiEeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD7" org.eventb.core.predicate="cts=field∼[{c1}]" org.eventb.core.source="/SocialEventPlanner/ref2_principal.bum|org.eventb.core.machineFile#ref2_principal|org.eventb.core.event#_JYmldJUiEeGSmsOPZ71WXA|org.eventb.core.guard#_JYnMgJUiEeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD8" org.eventb.core.predicate="c1∉required" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.event#_4T-U5ZUjEeGSmsOPZ71WXA|org.eventb.core.guard#_4T-U55UjEeGSmsOPZ71WXA"/>
+</org.eventb.core.poPredicateSet>
+<org.eventb.core.poSequent name="delete_secondary/invr3_2/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+<org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#EVTALLHYPprincipar"/>
+<org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="(({c1}∪cts) ⩤ owner)[required]=persons" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.invariant#_4T9t0JUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="ABSTRACT" org.eventb.core.source="/SocialEventPlanner/ref2_principal.bum|org.eventb.core.machineFile#ref2_principal|org.eventb.core.event#_JYnMg5UiEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="CONCRETE" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.event#_4T-78JUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSource name="SEQHYT" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.invariant#_4T9t0JUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poSequent#delete_secondary\/invr3_2\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+<org.eventb.core.poSelHint name="SEQHYV" org.eventb.core.poSelHintFst="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP|org.eventb.core.poPredicate#PRD1"/>
+</org.eventb.core.poSequent>
+<org.eventb.core.poPredicateSet name="EVTIDENTprincipar" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poStamp="0">
+<org.eventb.core.poIdentifier name="owner'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="c1" org.eventb.core.type="CONTENTS"/>
+<org.eventb.core.poIdentifier name="pages'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="cts" org.eventb.core.type="ℙ(CONTENTS)"/>
+<org.eventb.core.poIdentifier name="viewp'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="editp'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="contents'" org.eventb.core.type="ℙ(CONTENTS)"/>
+<org.eventb.core.poIdentifier name="field'" org.eventb.core.type="ℙ(CONTENTS×CONTENTS)"/>
+<org.eventb.core.poIdentifier name="ow" org.eventb.core.type="PERSON"/>
+</org.eventb.core.poPredicateSet>
+<org.eventb.core.poPredicateSet name="EVTALLHYPprincipar" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#EVTIDENTprincipar" org.eventb.core.poStamp="0">
+<org.eventb.core.poPredicate name="PRD0" org.eventb.core.predicate="c1∈contents" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkZ3JJT_EeGSmsOPZ71WXA|org.eventb.core.guard#_RkaeMpT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD1" org.eventb.core.predicate="{c1}∪cts⊂dom(owner ▷ {ow})" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkZ3JJT_EeGSmsOPZ71WXA|org.eventb.core.guard#_RkaeM5T_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD2" org.eventb.core.predicate="cts⊆contents" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkZ3JJT_EeGSmsOPZ71WXA|org.eventb.core.guard#_RkaeNJT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD3" org.eventb.core.predicate="c1∉cts" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkZ3JJT_EeGSmsOPZ71WXA|org.eventb.core.guard#_RkaeNZT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD4" org.eventb.core.predicate="owner[{c1}∪cts]={ow}" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkZ3JJT_EeGSmsOPZ71WXA|org.eventb.core.guard#_mr_uIYAeEeKj0pNGFHKNbQ"/>
+<org.eventb.core.poPredicate name="PRD5" org.eventb.core.predicate="c1∈dom(field)" org.eventb.core.source="/SocialEventPlanner/ref2_principal.bum|org.eventb.core.machineFile#ref2_principal|org.eventb.core.event#_JYnMg5UiEeGSmsOPZ71WXA|org.eventb.core.guard#_JYnMhZUiEeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD6" org.eventb.core.predicate="cts=(∅ ⦂ ℙ(CONTENTS))" org.eventb.core.source="/SocialEventPlanner/ref2_principal.bum|org.eventb.core.machineFile#ref2_principal|org.eventb.core.event#_JYnMg5UiEeGSmsOPZ71WXA|org.eventb.core.guard#_JYnMhpUiEeGSmsOPZ71WXA"/>
+</org.eventb.core.poPredicateSet>
+<org.eventb.core.poPredicateSet name="EVTIDENTprincipas" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poStamp="0">
+<org.eventb.core.poIdentifier name="rc" org.eventb.core.type="CONTENTS"/>
+<org.eventb.core.poIdentifier name="p1" org.eventb.core.type="PERSON"/>
+<org.eventb.core.poIdentifier name="viewp'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="ow" org.eventb.core.type="PERSON"/>
+</org.eventb.core.poPredicateSet>
+<org.eventb.core.poPredicateSet name="EVTALLHYPprincipas" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#EVTIDENTprincipas" org.eventb.core.poStamp="0">
+<org.eventb.core.poPredicate name="PRD0" org.eventb.core.predicate="p1∈persons" org.eventb.core.source="/SocialEventPlanner/ref1_permissions.bum|org.eventb.core.machineFile#ref1_permissions|org.eventb.core.event#_3xdvo5UhEeGSmsOPZ71WXA|org.eventb.core.guard#_3xeWspUhEeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD1" org.eventb.core.predicate="rc∈contents" org.eventb.core.source="/SocialEventPlanner/ref1_permissions.bum|org.eventb.core.machineFile#ref1_permissions|org.eventb.core.event#_3xdvo5UhEeGSmsOPZ71WXA|org.eventb.core.guard#_3xeWs5UhEeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD2" org.eventb.core.predicate="rc ↦ p1∉viewp" org.eventb.core.source="/SocialEventPlanner/ref1_permissions.bum|org.eventb.core.machineFile#ref1_permissions|org.eventb.core.event#_3xdvo5UhEeGSmsOPZ71WXA|org.eventb.core.guard#_3xeWtJUhEeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD3" org.eventb.core.predicate="owner(rc)=ow" org.eventb.core.source="/SocialEventPlanner/ref1_permissions.bum|org.eventb.core.machineFile#ref1_permissions|org.eventb.core.event#_3xdvo5UhEeGSmsOPZ71WXA|org.eventb.core.guard#_Sy4JcIAwEeKj0pNGFHKNbQ"/>
+</org.eventb.core.poPredicateSet>
+<org.eventb.core.poPredicateSet name="EVTIDENTprincipat" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poStamp="0">
+<org.eventb.core.poIdentifier name="rc" org.eventb.core.type="CONTENTS"/>
+<org.eventb.core.poIdentifier name="p1" org.eventb.core.type="PERSON"/>
+<org.eventb.core.poIdentifier name="editp'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="ow" org.eventb.core.type="PERSON"/>
+</org.eventb.core.poPredicateSet>
+<org.eventb.core.poPredicateSet name="EVTALLHYPprincipat" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#EVTIDENTprincipat" org.eventb.core.poStamp="0">
+<org.eventb.core.poPredicate name="PRD0" org.eventb.core.predicate="p1∈persons" org.eventb.core.source="/SocialEventPlanner/ref1_permissions.bum|org.eventb.core.machineFile#ref1_permissions|org.eventb.core.event#_3xe9wZUhEeGSmsOPZ71WXA|org.eventb.core.guard#_3xfk0ZUhEeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD1" org.eventb.core.predicate="rc∈contents" org.eventb.core.source="/SocialEventPlanner/ref1_permissions.bum|org.eventb.core.machineFile#ref1_permissions|org.eventb.core.event#_3xe9wZUhEeGSmsOPZ71WXA|org.eventb.core.guard#_3xfk0pUhEeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD2" org.eventb.core.predicate="rc ↦ p1∉editp" org.eventb.core.source="/SocialEventPlanner/ref1_permissions.bum|org.eventb.core.machineFile#ref1_permissions|org.eventb.core.event#_3xe9wZUhEeGSmsOPZ71WXA|org.eventb.core.guard#_3xfk05UhEeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD3" org.eventb.core.predicate="rc ↦ p1∈viewp" org.eventb.core.source="/SocialEventPlanner/ref1_permissions.bum|org.eventb.core.machineFile#ref1_permissions|org.eventb.core.event#_3xe9wZUhEeGSmsOPZ71WXA|org.eventb.core.guard#_Sy4wgIAwEeKj0pNGFHKNbQ"/>
+<org.eventb.core.poPredicate name="PRD4" org.eventb.core.predicate="owner(rc)=ow" org.eventb.core.source="/SocialEventPlanner/ref1_permissions.bum|org.eventb.core.machineFile#ref1_permissions|org.eventb.core.event#_3xe9wZUhEeGSmsOPZ71WXA|org.eventb.core.guard#_Sy4wgYAwEeKj0pNGFHKNbQ"/>
+</org.eventb.core.poPredicateSet>
+<org.eventb.core.poSequent name="edit_owned_secondary/invr3_2/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+<org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#EVTALLHYPprincipau"/>
+<org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="(({c1} ⩤ owner)∪{newc ↦ p1})[required]=persons" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.invariant#_4T9t0JUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="ABSTRACT" org.eventb.core.source="/SocialEventPlanner/ref2_principal.bum|org.eventb.core.machineFile#ref2_principal|org.eventb.core.event#_26vl4Jj5EeG_TIv2gvsZ4g"/>
+<org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="CONCRETE" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.event#_-TZ1gZj5EeG_TIv2gvsZ4g"/>
+<org.eventb.core.poSource name="SEQHYT" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.invariant#_4T9t0JUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poSequent#edit_owned_secondary\/invr3_2\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+<org.eventb.core.poSelHint name="SEQHYV" org.eventb.core.poSelHintFst="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP|org.eventb.core.poPredicate#PRD1"/>
+</org.eventb.core.poSequent>
+<org.eventb.core.poPredicateSet name="EVTIDENTprincipau" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poStamp="0">
+<org.eventb.core.poIdentifier name="owner'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="c1" org.eventb.core.type="CONTENTS"/>
+<org.eventb.core.poIdentifier name="p1" org.eventb.core.type="PERSON"/>
+<org.eventb.core.poIdentifier name="pages'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="newc" org.eventb.core.type="CONTENTS"/>
+<org.eventb.core.poIdentifier name="viewp'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="editp'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="contents'" org.eventb.core.type="ℙ(CONTENTS)"/>
+<org.eventb.core.poIdentifier name="field'" org.eventb.core.type="ℙ(CONTENTS×CONTENTS)"/>
+</org.eventb.core.poPredicateSet>
+<org.eventb.core.poPredicateSet name="EVTALLHYPprincipau" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#EVTIDENTprincipau" org.eventb.core.poStamp="0">
+<org.eventb.core.poPredicate name="PRD0" org.eventb.core.predicate="c1∈contents" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkcTYZT_EeGSmsOPZ71WXA|org.eventb.core.guard#_RkcTZpT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD1" org.eventb.core.predicate="p1∈persons" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkcTYZT_EeGSmsOPZ71WXA|org.eventb.core.guard#_Rkc6cJT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD2" org.eventb.core.predicate="owner(c1)=p1" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkcTYZT_EeGSmsOPZ71WXA|org.eventb.core.guard#_Rkc6cZT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD3" org.eventb.core.predicate="newc∈CONTENTS ∖ contents" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkcTYZT_EeGSmsOPZ71WXA|org.eventb.core.guard#_Rkc6dJT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD4" org.eventb.core.predicate="c1∈dom(field)" org.eventb.core.source="/SocialEventPlanner/ref2_principal.bum|org.eventb.core.machineFile#ref2_principal|org.eventb.core.event#_26vl4Jj5EeG_TIv2gvsZ4g|org.eventb.core.guard#_26vl4pj5EeG_TIv2gvsZ4g"/>
+</org.eventb.core.poPredicateSet>
+<org.eventb.core.poSequent name="edit_owned_required/invr3_1/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+<org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#EVTALLHYPprincipav"/>
+<org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="(required ∖ {c1})∪{newc}⊆(principal ∖ {c1})∪{newc}" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.invariant#_4T9GxZUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="ABSTRACT" org.eventb.core.source="/SocialEventPlanner/ref2_principal.bum|org.eventb.core.machineFile#ref2_principal|org.eventb.core.event#_JYoaoJUiEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="CONCRETE" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.event#_4T-7-JUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSource name="SEQHYT" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.invariant#_4T9GxZUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poSequent#edit_owned_required\/invr3_1\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+<org.eventb.core.poSelHint name="SEQHYV" org.eventb.core.poSelHintFst="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP|org.eventb.core.poPredicate#PRD0"/>
+</org.eventb.core.poSequent>
+<org.eventb.core.poSequent name="edit_owned_required/invr3_2/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+<org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#EVTALLHYPprincipav"/>
+<org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="(({c1} ⩤ owner)∪{newc ↦ p1})[(required ∖ {c1})∪{newc}]=persons" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.invariant#_4T9t0JUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="ABSTRACT" org.eventb.core.source="/SocialEventPlanner/ref2_principal.bum|org.eventb.core.machineFile#ref2_principal|org.eventb.core.event#_JYoaoJUiEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="CONCRETE" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.event#_4T-7-JUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSource name="SEQHYT" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.invariant#_4T9t0JUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poSequent#edit_owned_required\/invr3_2\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+<org.eventb.core.poSelHint name="SEQHYV" org.eventb.core.poSelHintFst="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP|org.eventb.core.poPredicate#PRD1"/>
+</org.eventb.core.poSequent>
+<org.eventb.core.poPredicateSet name="EVTIDENTprincipav" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poStamp="0">
+<org.eventb.core.poIdentifier name="principal'" org.eventb.core.type="ℙ(CONTENTS)"/>
+<org.eventb.core.poIdentifier name="owner'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="c1" org.eventb.core.type="CONTENTS"/>
+<org.eventb.core.poIdentifier name="p1" org.eventb.core.type="PERSON"/>
+<org.eventb.core.poIdentifier name="pages'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="newc" org.eventb.core.type="CONTENTS"/>
+<org.eventb.core.poIdentifier name="viewp'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="editp'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="contents'" org.eventb.core.type="ℙ(CONTENTS)"/>
+<org.eventb.core.poIdentifier name="field'" org.eventb.core.type="ℙ(CONTENTS×CONTENTS)"/>
+<org.eventb.core.poIdentifier name="required'" org.eventb.core.type="ℙ(CONTENTS)"/>
+</org.eventb.core.poPredicateSet>
+<org.eventb.core.poPredicateSet name="EVTALLHYPprincipav" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#EVTIDENTprincipav" org.eventb.core.poStamp="0">
+<org.eventb.core.poPredicate name="PRD0" org.eventb.core.predicate="c1∈contents" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkcTYZT_EeGSmsOPZ71WXA|org.eventb.core.guard#_RkcTZpT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD1" org.eventb.core.predicate="p1∈persons" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkcTYZT_EeGSmsOPZ71WXA|org.eventb.core.guard#_Rkc6cJT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD2" org.eventb.core.predicate="owner(c1)=p1" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkcTYZT_EeGSmsOPZ71WXA|org.eventb.core.guard#_Rkc6cZT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD3" org.eventb.core.predicate="newc∈CONTENTS ∖ contents" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkcTYZT_EeGSmsOPZ71WXA|org.eventb.core.guard#_Rkc6dJT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD4" org.eventb.core.predicate="c1∈principal" org.eventb.core.source="/SocialEventPlanner/ref2_principal.bum|org.eventb.core.machineFile#ref2_principal|org.eventb.core.event#_JYoaoJUiEeGSmsOPZ71WXA|org.eventb.core.guard#_JYoaopUiEeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD5" org.eventb.core.predicate="c1∈required" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.event#_4T-7-JUjEeGSmsOPZ71WXA|org.eventb.core.guard#_4T_jAJUjEeGSmsOPZ71WXA"/>
+</org.eventb.core.poPredicateSet>
+<org.eventb.core.poSequent name="edit_owned_not_required/invr3_1/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+<org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#EVTALLHYPprincipaw"/>
+<org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="required⊆(principal ∖ {c1})∪{newc}" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.invariant#_4T9GxZUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="ABSTRACT" org.eventb.core.source="/SocialEventPlanner/ref2_principal.bum|org.eventb.core.machineFile#ref2_principal|org.eventb.core.event#_JYoaoJUiEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="CONCRETE" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.event#_4T_jApUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSource name="SEQHYT" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.invariant#_4T9GxZUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poSequent#edit_owned_not_required\/invr3_1\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+<org.eventb.core.poSelHint name="SEQHYV" org.eventb.core.poSelHintFst="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP|org.eventb.core.poPredicate#PRD0"/>
+</org.eventb.core.poSequent>
+<org.eventb.core.poSequent name="edit_owned_not_required/invr3_2/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+<org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#EVTALLHYPprincipaw"/>
+<org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="(({c1} ⩤ owner)∪{newc ↦ p1})[required]=persons" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.invariant#_4T9t0JUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="ABSTRACT" org.eventb.core.source="/SocialEventPlanner/ref2_principal.bum|org.eventb.core.machineFile#ref2_principal|org.eventb.core.event#_JYoaoJUiEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="CONCRETE" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.event#_4T_jApUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSource name="SEQHYT" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.invariant#_4T9t0JUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poSequent#edit_owned_not_required\/invr3_2\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+<org.eventb.core.poSelHint name="SEQHYV" org.eventb.core.poSelHintFst="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP|org.eventb.core.poPredicate#PRD1"/>
+</org.eventb.core.poSequent>
+<org.eventb.core.poPredicateSet name="EVTIDENTprincipaw" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poStamp="0">
+<org.eventb.core.poIdentifier name="principal'" org.eventb.core.type="ℙ(CONTENTS)"/>
+<org.eventb.core.poIdentifier name="owner'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="c1" org.eventb.core.type="CONTENTS"/>
+<org.eventb.core.poIdentifier name="p1" org.eventb.core.type="PERSON"/>
+<org.eventb.core.poIdentifier name="pages'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="newc" org.eventb.core.type="CONTENTS"/>
+<org.eventb.core.poIdentifier name="viewp'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="editp'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="contents'" org.eventb.core.type="ℙ(CONTENTS)"/>
+<org.eventb.core.poIdentifier name="field'" org.eventb.core.type="ℙ(CONTENTS×CONTENTS)"/>
+</org.eventb.core.poPredicateSet>
+<org.eventb.core.poPredicateSet name="EVTALLHYPprincipaw" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#EVTIDENTprincipaw" org.eventb.core.poStamp="0">
+<org.eventb.core.poPredicate name="PRD0" org.eventb.core.predicate="c1∈contents" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkcTYZT_EeGSmsOPZ71WXA|org.eventb.core.guard#_RkcTZpT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD1" org.eventb.core.predicate="p1∈persons" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkcTYZT_EeGSmsOPZ71WXA|org.eventb.core.guard#_Rkc6cJT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD2" org.eventb.core.predicate="owner(c1)=p1" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkcTYZT_EeGSmsOPZ71WXA|org.eventb.core.guard#_Rkc6cZT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD3" org.eventb.core.predicate="newc∈CONTENTS ∖ contents" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkcTYZT_EeGSmsOPZ71WXA|org.eventb.core.guard#_Rkc6dJT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD4" org.eventb.core.predicate="c1∈principal" org.eventb.core.source="/SocialEventPlanner/ref2_principal.bum|org.eventb.core.machineFile#ref2_principal|org.eventb.core.event#_JYoaoJUiEeGSmsOPZ71WXA|org.eventb.core.guard#_JYoaopUiEeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD5" org.eventb.core.predicate="c1∉required" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.event#_4T_jApUjEeGSmsOPZ71WXA|org.eventb.core.guard#_4T_jBJUjEeGSmsOPZ71WXA"/>
+</org.eventb.core.poPredicateSet>
+<org.eventb.core.poSequent name="edit_not_owned/invr3_2/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+<org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#EVTALLHYPprincipax"/>
+<org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="(owner∪{newc ↦ p1})[required]=persons" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.invariant#_4T9t0JUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="ABSTRACT" org.eventb.core.source="/SocialEventPlanner/ref2_principal.bum|org.eventb.core.machineFile#ref2_principal|org.eventb.core.event#_JYoapZUiEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="CONCRETE" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.event#_4T_jBZUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSource name="SEQHYT" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.invariant#_4T9t0JUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poSequent#edit_not_owned\/invr3_2\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+<org.eventb.core.poSelHint name="SEQHYV" org.eventb.core.poSelHintFst="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP|org.eventb.core.poPredicate#PRD1"/>
+</org.eventb.core.poSequent>
+<org.eventb.core.poPredicateSet name="EVTIDENTprincipax" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poStamp="0">
+<org.eventb.core.poIdentifier name="owner'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="c1" org.eventb.core.type="CONTENTS"/>
+<org.eventb.core.poIdentifier name="p1" org.eventb.core.type="PERSON"/>
+<org.eventb.core.poIdentifier name="pages'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="newc" org.eventb.core.type="CONTENTS"/>
+<org.eventb.core.poIdentifier name="viewp'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="editp'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="contents'" org.eventb.core.type="ℙ(CONTENTS)"/>
+<org.eventb.core.poIdentifier name="field'" org.eventb.core.type="ℙ(CONTENTS×CONTENTS)"/>
+</org.eventb.core.poPredicateSet>
+<org.eventb.core.poPredicateSet name="EVTALLHYPprincipax" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#EVTIDENTprincipax" org.eventb.core.poStamp="0">
+<org.eventb.core.poPredicate name="PRD0" org.eventb.core.predicate="c1∈contents" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkdhgpT_EeGSmsOPZ71WXA|org.eventb.core.guard#_RkeIkJT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD1" org.eventb.core.predicate="p1∈persons" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkdhgpT_EeGSmsOPZ71WXA|org.eventb.core.guard#_RkeIkZT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD2" org.eventb.core.predicate="owner(c1)≠p1" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkdhgpT_EeGSmsOPZ71WXA|org.eventb.core.guard#_RkeIkpT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD3" org.eventb.core.predicate="newc∈CONTENTS ∖ contents" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkdhgpT_EeGSmsOPZ71WXA|org.eventb.core.guard#_RkeIk5T_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD4" org.eventb.core.predicate="c1 ↦ p1∈editp" org.eventb.core.source="/SocialEventPlanner/ref1_permissions.bum|org.eventb.core.machineFile#ref1_permissions|org.eventb.core.event#_3xgy8ZUhEeGSmsOPZ71WXA|org.eventb.core.guard#_3xgy85UhEeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD5" org.eventb.core.predicate="c1∉principal" org.eventb.core.source="/SocialEventPlanner/ref2_principal.bum|org.eventb.core.machineFile#ref2_principal|org.eventb.core.event#_JYoapZUiEeGSmsOPZ71WXA|org.eventb.core.guard#_JYoap5UiEeGSmsOPZ71WXA"/>
+</org.eventb.core.poPredicateSet>
+<org.eventb.core.poPredicateSet name="EVTIDENTprincipay" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poStamp="0">
+<org.eventb.core.poIdentifier name="rc" org.eventb.core.type="CONTENTS"/>
+<org.eventb.core.poIdentifier name="pages'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="viewp'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="prs" org.eventb.core.type="ℙ(PERSON)"/>
+<org.eventb.core.poIdentifier name="ow" org.eventb.core.type="PERSON"/>
+</org.eventb.core.poPredicateSet>
+<org.eventb.core.poPredicateSet name="EVTALLHYPprincipay" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#EVTIDENTprincipay" org.eventb.core.poStamp="0">
+<org.eventb.core.poPredicate name="PRD0" org.eventb.core.predicate="prs⊆persons" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkbFQ5T_EeGSmsOPZ71WXA|org.eventb.core.guard#_RkbsUJT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD1" org.eventb.core.predicate="rc∈contents" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkbFQ5T_EeGSmsOPZ71WXA|org.eventb.core.guard#_RkbsUZT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD2" org.eventb.core.predicate="owner(rc)=ow" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkbFQ5T_EeGSmsOPZ71WXA|org.eventb.core.guard#_RkbsUpT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD3" org.eventb.core.predicate="owner(rc)∉prs" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkbFQ5T_EeGSmsOPZ71WXA|org.eventb.core.guard#_RkbsU5T_EeGSmsOPZ71WXA"/>
+</org.eventb.core.poPredicateSet>
+<org.eventb.core.poSequent name="comment_rc_principal/invr3_2/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+<org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#EVTALLHYPprincipaz"/>
+<org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="(owner∪{cmt ↦ owner(rc)})[required]=persons" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.invariant#_4T9t0JUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="ABSTRACT" org.eventb.core.source="/SocialEventPlanner/ref2_principal.bum|org.eventb.core.machineFile#ref2_principal|org.eventb.core.event#_JYpBs5UiEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="CONCRETE" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.event#_4UAKEJUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSource name="SEQHYT" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.invariant#_4T9t0JUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poSequent#comment_rc_principal\/invr3_2\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+<org.eventb.core.poSelHint name="SEQHYV" org.eventb.core.poSelHintFst="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP|org.eventb.core.poPredicate#PRD1"/>
+</org.eventb.core.poSequent>
+<org.eventb.core.poPredicateSet name="EVTIDENTprincipaz" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poStamp="0">
+<org.eventb.core.poIdentifier name="rc" org.eventb.core.type="CONTENTS"/>
+<org.eventb.core.poIdentifier name="owner'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="pages'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="viewp'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="editp'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="prs" org.eventb.core.type="ℙ(PERSON)"/>
+<org.eventb.core.poIdentifier name="contents'" org.eventb.core.type="ℙ(CONTENTS)"/>
+<org.eventb.core.poIdentifier name="field'" org.eventb.core.type="ℙ(CONTENTS×CONTENTS)"/>
+<org.eventb.core.poIdentifier name="cmt" org.eventb.core.type="CONTENTS"/>
+</org.eventb.core.poPredicateSet>
+<org.eventb.core.poPredicateSet name="EVTALLHYPprincipaz" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#EVTIDENTprincipaz" org.eventb.core.poStamp="0">
+<org.eventb.core.poPredicate name="PRD0" org.eventb.core.predicate="rc∈contents" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkevoZT_EeGSmsOPZ71WXA|org.eventb.core.guard#_RkevpZT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD1" org.eventb.core.predicate="cmt∈CONTENTS ∖ contents" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkevoZT_EeGSmsOPZ71WXA|org.eventb.core.guard#_RkevppT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD2" org.eventb.core.predicate="prs⊆persons" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkevoZT_EeGSmsOPZ71WXA|org.eventb.core.guard#_RkfWsJT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD3" org.eventb.core.predicate="{rc} × prs⊆pages" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkevoZT_EeGSmsOPZ71WXA|org.eventb.core.guard#_RkfWsZT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD4" org.eventb.core.predicate="prs≠(∅ ⦂ ℙ(PERSON))" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkevoZT_EeGSmsOPZ71WXA|org.eventb.core.guard#_RkfWspT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD5" org.eventb.core.predicate="rc∈principal" org.eventb.core.source="/SocialEventPlanner/ref2_principal.bum|org.eventb.core.machineFile#ref2_principal|org.eventb.core.event#_JYpBs5UiEeGSmsOPZ71WXA|org.eventb.core.guard#_JYpBtZUiEeGSmsOPZ71WXA"/>
+</org.eventb.core.poPredicateSet>
+<org.eventb.core.poSequent name="comment_rc_secondary/invr3_2/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+<org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#EVTALLHYPprincipa{"/>
+<org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="(owner∪{cmt ↦ owner(rc)})[required]=persons" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.invariant#_4T9t0JUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="ABSTRACT" org.eventb.core.source="/SocialEventPlanner/ref2_principal.bum|org.eventb.core.machineFile#ref2_principal|org.eventb.core.event#_26vl5Jj5EeG_TIv2gvsZ4g"/>
+<org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="CONCRETE" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.event#_-TZ1g5j5EeG_TIv2gvsZ4g"/>
+<org.eventb.core.poSource name="SEQHYT" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.invariant#_4T9t0JUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poSequent#comment_rc_secondary\/invr3_2\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+<org.eventb.core.poSelHint name="SEQHYV" org.eventb.core.poSelHintFst="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP|org.eventb.core.poPredicate#PRD1"/>
+</org.eventb.core.poSequent>
+<org.eventb.core.poPredicateSet name="EVTIDENTprincipa{" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poStamp="0">
+<org.eventb.core.poIdentifier name="rc" org.eventb.core.type="CONTENTS"/>
+<org.eventb.core.poIdentifier name="owner'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="pages'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="viewp'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="editp'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="prs" org.eventb.core.type="ℙ(PERSON)"/>
+<org.eventb.core.poIdentifier name="contents'" org.eventb.core.type="ℙ(CONTENTS)"/>
+<org.eventb.core.poIdentifier name="field'" org.eventb.core.type="ℙ(CONTENTS×CONTENTS)"/>
+<org.eventb.core.poIdentifier name="cmt" org.eventb.core.type="CONTENTS"/>
+</org.eventb.core.poPredicateSet>
+<org.eventb.core.poPredicateSet name="EVTALLHYPprincipa{" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#EVTIDENTprincipa{" org.eventb.core.poStamp="0">
+<org.eventb.core.poPredicate name="PRD0" org.eventb.core.predicate="rc∈contents" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkevoZT_EeGSmsOPZ71WXA|org.eventb.core.guard#_RkevpZT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD1" org.eventb.core.predicate="cmt∈CONTENTS ∖ contents" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkevoZT_EeGSmsOPZ71WXA|org.eventb.core.guard#_RkevppT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD2" org.eventb.core.predicate="prs⊆persons" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkevoZT_EeGSmsOPZ71WXA|org.eventb.core.guard#_RkfWsJT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD3" org.eventb.core.predicate="{rc} × prs⊆pages" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkevoZT_EeGSmsOPZ71WXA|org.eventb.core.guard#_RkfWsZT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD4" org.eventb.core.predicate="prs≠(∅ ⦂ ℙ(PERSON))" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkevoZT_EeGSmsOPZ71WXA|org.eventb.core.guard#_RkfWspT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD5" org.eventb.core.predicate="rc∉principal" org.eventb.core.source="/SocialEventPlanner/ref2_principal.bum|org.eventb.core.machineFile#ref2_principal|org.eventb.core.event#_26vl5Jj5EeG_TIv2gvsZ4g|org.eventb.core.guard#_26vl5pj5EeG_TIv2gvsZ4g"/>
+</org.eventb.core.poPredicateSet>
+<org.eventb.core.poSequent name="upload_principal/invr3_1/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+<org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#EVTALLHYPprincipa\|"/>
+<org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="required⊆principal∪{c2}" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.invariant#_4T9GxZUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="ABSTRACT" org.eventb.core.source="/SocialEventPlanner/ref2_principal.bum|org.eventb.core.machineFile#ref2_principal|org.eventb.core.event#_JYqP0JUiEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="CONCRETE" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.event#_4UAKFJUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSource name="SEQHYT" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.invariant#_4T9GxZUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poSequent#upload_principal\/invr3_1\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+<org.eventb.core.poSelHint name="SEQHYV" org.eventb.core.poSelHintFst="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP|org.eventb.core.poPredicate#PRD0"/>
+</org.eventb.core.poSequent>
+<org.eventb.core.poSequent name="upload_principal/invr3_2/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+<org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#EVTALLHYPprincipa\|"/>
+<org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="(owner∪{c2 ↦ p1})[required]=persons" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.invariant#_4T9t0JUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="ABSTRACT" org.eventb.core.source="/SocialEventPlanner/ref2_principal.bum|org.eventb.core.machineFile#ref2_principal|org.eventb.core.event#_JYqP0JUiEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="CONCRETE" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.event#_4UAKFJUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSource name="SEQHYT" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.invariant#_4T9t0JUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poSequent#upload_principal\/invr3_2\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+<org.eventb.core.poSelHint name="SEQHYV" org.eventb.core.poSelHintFst="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP|org.eventb.core.poPredicate#PRD1"/>
+</org.eventb.core.poSequent>
+<org.eventb.core.poPredicateSet name="EVTIDENTprincipa|" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poStamp="0">
+<org.eventb.core.poIdentifier name="principal'" org.eventb.core.type="ℙ(CONTENTS)"/>
+<org.eventb.core.poIdentifier name="owner'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="p1" org.eventb.core.type="PERSON"/>
+<org.eventb.core.poIdentifier name="pages'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="viewp'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="editp'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="c2" org.eventb.core.type="CONTENTS"/>
+<org.eventb.core.poIdentifier name="contents'" org.eventb.core.type="ℙ(CONTENTS)"/>
+</org.eventb.core.poPredicateSet>
+<org.eventb.core.poPredicateSet name="EVTALLHYPprincipa|" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#EVTIDENTprincipa\|" org.eventb.core.poStamp="0">
+<org.eventb.core.poPredicate name="PRD0" org.eventb.core.predicate="p1∈persons" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkYB8ZT_EeGSmsOPZ71WXA|org.eventb.core.guard#_RkYB9JT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD1" org.eventb.core.predicate="c2∈CONTENTS ∖ contents" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkYB8ZT_EeGSmsOPZ71WXA|org.eventb.core.guard#_RkYB9ZT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD2" org.eventb.core.predicate="c2∉principal" org.eventb.core.source="/SocialEventPlanner/ref2_principal.bum|org.eventb.core.machineFile#ref2_principal|org.eventb.core.event#_JYqP0JUiEeGSmsOPZ71WXA|org.eventb.core.guard#_JYqP0pUiEeGSmsOPZ71WXA"/>
+</org.eventb.core.poPredicateSet>
+<org.eventb.core.poSequent name="upload_secondary/invr3_2/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+<org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#EVTALLHYPprincipa}"/>
+<org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="(owner∪{c2 ↦ p1})[required]=persons" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.invariant#_4T9t0JUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="ABSTRACT" org.eventb.core.source="/SocialEventPlanner/ref2_principal.bum|org.eventb.core.machineFile#ref2_principal|org.eventb.core.event#_JYpow5UiEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="CONCRETE" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.event#_4UAKFpUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSource name="SEQHYT" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.invariant#_4T9t0JUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poSequent#upload_secondary\/invr3_2\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+<org.eventb.core.poSelHint name="SEQHYV" org.eventb.core.poSelHintFst="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP|org.eventb.core.poPredicate#PRD1"/>
+</org.eventb.core.poSequent>
+<org.eventb.core.poPredicateSet name="EVTIDENTprincipa}" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poStamp="0">
+<org.eventb.core.poIdentifier name="owner'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="c1" org.eventb.core.type="CONTENTS"/>
+<org.eventb.core.poIdentifier name="p1" org.eventb.core.type="PERSON"/>
+<org.eventb.core.poIdentifier name="pages'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="viewp'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="editp'" org.eventb.core.type="ℙ(CONTENTS×PERSON)"/>
+<org.eventb.core.poIdentifier name="c2" org.eventb.core.type="CONTENTS"/>
+<org.eventb.core.poIdentifier name="contents'" org.eventb.core.type="ℙ(CONTENTS)"/>
+<org.eventb.core.poIdentifier name="field'" org.eventb.core.type="ℙ(CONTENTS×CONTENTS)"/>
+</org.eventb.core.poPredicateSet>
+<org.eventb.core.poPredicateSet name="EVTALLHYPprincipa}" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#EVTIDENTprincipa}" org.eventb.core.poStamp="0">
+<org.eventb.core.poPredicate name="PRD0" org.eventb.core.predicate="p1∈persons" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkYB8ZT_EeGSmsOPZ71WXA|org.eventb.core.guard#_RkYB9JT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD1" org.eventb.core.predicate="c2∈CONTENTS ∖ contents" org.eventb.core.source="/SocialEventPlanner/abstract.bum|org.eventb.core.machineFile#abstract|org.eventb.core.event#_RkYB8ZT_EeGSmsOPZ71WXA|org.eventb.core.guard#_RkYB9ZT_EeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD2" org.eventb.core.predicate="c1∈principal" org.eventb.core.source="/SocialEventPlanner/ref2_principal.bum|org.eventb.core.machineFile#ref2_principal|org.eventb.core.event#_JYpow5UiEeGSmsOPZ71WXA|org.eventb.core.guard#_JYpoxpUiEeGSmsOPZ71WXA"/>
+</org.eventb.core.poPredicateSet>
+<org.eventb.core.poPredicateSet name="ALLHYP" org.eventb.core.parentSet="/SocialEventPlanner/ref3_required.bpo|org.eventb.core.poFile#ref3_required|org.eventb.core.poPredicateSet#ABSHYP" org.eventb.core.poStamp="0">
+<org.eventb.core.poPredicate name="PRD0" org.eventb.core.predicate="required⊆principal" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.invariant#_4T9GxZUjEeGSmsOPZ71WXA"/>
+<org.eventb.core.poPredicate name="PRD1" org.eventb.core.predicate="owner[required]=persons" org.eventb.core.source="/SocialEventPlanner/ref3_required.bum|org.eventb.core.machineFile#ref3_required|org.eventb.core.invariant#_4T9t0JUjEeGSmsOPZ71WXA"/>
+</org.eventb.core.poPredicateSet>
+</org.eventb.core.poFile>

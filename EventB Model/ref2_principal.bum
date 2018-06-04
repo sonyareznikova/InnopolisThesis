@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<org.eventb.core.machineFile org.eventb.core.configuration="org.eventb.core.fwd" org.eventb.texttools.text_lastmodified="1361888702201" org.eventb.texttools.text_representation="machine ref2_principal refines ref1_permissions  sees ctx1&#10;&#10;variables persons // persons in the network&#10;          contents // contents in the net&#10;          owner // owner of a content&#10;          pages // contents visible for each person&#10;          viewp // persons having view permission&#10;          editp // persons having edit permission&#10;          principal // main contents&#10;          field // secondary content (e.g. a comment)&#10;&#10;&#10;invariants&#10;  @invr2_1 principal ⊆ contents&#10;  @invr2_2 field ∈ contents∖principal → principal&#10;  @invr2_3 owner[principal] = persons&#10;&#10;events&#10;  event INITIALISATION extends INITIALISATION&#10;    then&#10;      @actr2_1 principal ≔ ∅&#10;      @actr2_2 field ≔ ∅&#10;  end&#10;&#10;  event create_account extends create_account&#10;    then&#10;      @actr2_1 principal ≔  principal ∪ {c1}&#10;  end&#10;&#10;  event make_visible extends make_visible&#10;  end&#10;&#10;  event hide extends hide&#10;  end&#10;&#10;  event delete_principal extends delete&#10;    where&#10;      @grdr2_1 c1 ∈ principal&#10;      @grdr2_2 owner[principal∖{c1}] = persons&#10;      @grdr2_3 cts = field∼[{c1}]&#10;    then&#10;      @actr2_1 principal ≔ principal ∖ {c1}&#10;      @actr2_2 field ≔  field ⩥{c1}&#10;  end&#10;&#10;  event delete_secondary extends delete&#10;    where&#10;      @grdr2_1 c1 ∈ dom(field)&#10;      @grdr2_3 cts = ∅&#10;    then&#10;      @actr2_2 field ≔ {c1}⩤ field&#10;  end&#10;&#10;  event grant_view_perm extends grant_view_perm&#10;  end&#10;&#10;  event grant_edit_perm extends grant_edit_perm&#10;  end&#10;&#10;  event edit_owned_secondary extends edit_owned&#10;    where&#10;      @grdr2_1 c1 ∈ dom(field)&#10;    then&#10;      @actr2_1 field ≔  (field∖{c1↦field(c1)}) ∪ {newc↦field(c1)}&#10;  end&#10;&#10;  event edit_owned_principal extends edit_owned&#10;    where&#10;      @grdr2_1 c1 ∈ principal&#10;    then&#10;      @actr2_1 principal ≔  (principal ∖{c1}) ∪ {newc}&#10;      @actr2_2 field ≔  (field ⩥{c1})  ∪ (field∼[{c1}]×{newc})&#10;  end&#10;&#10;  event edit_not_owned extends edit_not_owned&#10;    where&#10;      @grdr2_1 c1 ∉ principal&#10;    then&#10;      @actr2_1 field ≔ field ∪ {newc↦field(c1)}&#10;  end&#10;&#10;  event transmit_rc extends transmit_rc&#10;  end&#10;&#10;  event comment_rc_principal extends comment_rc&#10;    where&#10;      @grdr2_1 rc ∈ principal&#10;    then&#10;      @actr2_1 field ≔ field ∪ {cmt↦rc}&#10;  end&#10;&#10;  event comment_rc_secondary extends comment_rc&#10;    where&#10;      @grdr2_1 rc ∉ principal&#10;    then&#10;      @actr2_1 field ≔ field ∪ {cmt↦field(rc)}&#10;  end&#10;&#10;  event upload_secondary extends upload&#10;  any c1&#10;  where&#10;  @grdr2_1 c1 ∈ principal&#10;  then&#10;      @actr2_1 field ≔ field ∪ {c2↦c1}&#10;  end&#10;&#10;  event upload_principal extends upload&#10;  where&#10;  @grdr2_1 c2 ∉ principal&#10;    then&#10;      @actr2_1 principal ≔ principal ∪ {c2}&#10;  end&#10;end&#10;" version="5">
+<org.eventb.core.refinesMachine name="_7UdEEIAXEeKj0pNGFHKNbQ" org.eventb.core.target="ref1_permissions"/>
+<org.eventb.core.seesContext name="_7UdEEYAXEeKj0pNGFHKNbQ" org.eventb.core.target="ctx1"/>
+<org.eventb.core.variable name="_JYkwQpUiEeGSmsOPZ71WXA" org.eventb.core.comment="persons in the network" org.eventb.core.identifier="persons"/>
+<org.eventb.core.variable name="_JYkwQ5UiEeGSmsOPZ71WXA" org.eventb.core.comment="contents in the net" org.eventb.core.identifier="contents"/>
+<org.eventb.core.variable name="_JYlXUJUiEeGSmsOPZ71WXA" org.eventb.core.comment="owner of a content" org.eventb.core.identifier="owner"/>
+<org.eventb.core.variable name="_JYlXUZUiEeGSmsOPZ71WXA" org.eventb.core.comment="contents visible for each person" org.eventb.core.identifier="pages"/>
+<org.eventb.core.variable name="_JYlXUpUiEeGSmsOPZ71WXA" org.eventb.core.comment="persons having view permission" org.eventb.core.identifier="viewp"/>
+<org.eventb.core.variable name="_JYlXU5UiEeGSmsOPZ71WXA" org.eventb.core.comment="persons having edit permission" org.eventb.core.identifier="editp"/>
+<org.eventb.core.variable name="_JYlXVJUiEeGSmsOPZ71WXA" org.eventb.core.comment="main contents" org.eventb.core.identifier="principal"/>
+<org.eventb.core.variable name="_JYlXVZUiEeGSmsOPZ71WXA" org.eventb.core.comment="secondary content (e.g. a comment)" org.eventb.core.identifier="field"/>
+<org.eventb.core.invariant name="_JYlXVpUiEeGSmsOPZ71WXA" org.eventb.core.label="invr2_1" org.eventb.core.predicate="principal ⊆ contents"/>
+<org.eventb.core.invariant name="_JYlXV5UiEeGSmsOPZ71WXA" org.eventb.core.label="invr2_2" org.eventb.core.predicate="field ∈ contents∖principal → principal"/>
+<org.eventb.core.invariant name="_JYl-YJUiEeGSmsOPZ71WXA" org.eventb.core.label="invr2_3" org.eventb.core.predicate="owner[principal] = persons"/>
+<org.eventb.core.event name="'" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="INITIALISATION">
+<org.eventb.core.action name="_JYl-YZUiEeGSmsOPZ71WXA" org.eventb.core.assignment="principal ≔ ∅" org.eventb.core.label="actr2_1"/>
+<org.eventb.core.action name="_JYl-YpUiEeGSmsOPZ71WXA" org.eventb.core.assignment="field ≔ ∅" org.eventb.core.label="actr2_2"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_JYl-Y5UiEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="create_account">
+<org.eventb.core.refinesEvent name="_7Ue5QIAXEeKj0pNGFHKNbQ" org.eventb.core.target="create_account"/>
+<org.eventb.core.action name="_JYl-ZZUiEeGSmsOPZ71WXA" org.eventb.core.assignment="principal ≔  principal ∪ {c1}" org.eventb.core.label="actr2_1"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_JYmlcJUiEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="make_visible">
+<org.eventb.core.refinesEvent name="_7UijoIAXEeKj0pNGFHKNbQ" org.eventb.core.target="make_visible"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_JYmlcpUiEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="hide">
+<org.eventb.core.refinesEvent name="_7UijoYAXEeKj0pNGFHKNbQ" org.eventb.core.target="hide"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_JYmldJUiEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="delete_principal">
+<org.eventb.core.refinesEvent name="_7UijooAXEeKj0pNGFHKNbQ" org.eventb.core.target="delete"/>
+<org.eventb.core.guard name="_JYmldpUiEeGSmsOPZ71WXA" org.eventb.core.label="grdr2_1" org.eventb.core.predicate="c1 ∈ principal"/>
+<org.eventb.core.guard name="_JYmld5UiEeGSmsOPZ71WXA" org.eventb.core.label="grdr2_2" org.eventb.core.predicate="owner[principal∖{c1}] = persons"/>
+<org.eventb.core.guard name="_JYnMgJUiEeGSmsOPZ71WXA" org.eventb.core.label="grdr2_3" org.eventb.core.predicate="cts = field∼[{c1}]"/>
+<org.eventb.core.action name="_JYnMgZUiEeGSmsOPZ71WXA" org.eventb.core.assignment="principal ≔ principal ∖ {c1}" org.eventb.core.label="actr2_1"/>
+<org.eventb.core.action name="_JYnMgpUiEeGSmsOPZ71WXA" org.eventb.core.assignment="field ≔  field ⩥{c1}" org.eventb.core.label="actr2_2"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_JYnMg5UiEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="delete_secondary">
+<org.eventb.core.refinesEvent name="_7UjKsIAXEeKj0pNGFHKNbQ" org.eventb.core.target="delete"/>
+<org.eventb.core.guard name="_JYnMhZUiEeGSmsOPZ71WXA" org.eventb.core.label="grdr2_1" org.eventb.core.predicate="c1 ∈ dom(field)"/>
+<org.eventb.core.guard name="_JYnMhpUiEeGSmsOPZ71WXA" org.eventb.core.label="grdr2_3" org.eventb.core.predicate="cts = ∅"/>
+<org.eventb.core.action name="_JYnMh5UiEeGSmsOPZ71WXA" org.eventb.core.assignment="field ≔ {c1}⩤ field" org.eventb.core.label="actr2_2"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_JYnzkJUiEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="grant_view_perm">
+<org.eventb.core.refinesEvent name="_7UjKsYAXEeKj0pNGFHKNbQ" org.eventb.core.target="grant_view_perm"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_JYnzkpUiEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="grant_edit_perm">
+<org.eventb.core.refinesEvent name="_7UjxwIAXEeKj0pNGFHKNbQ" org.eventb.core.target="grant_edit_perm"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_26vl4Jj5EeG_TIv2gvsZ4g" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="edit_owned_secondary">
+<org.eventb.core.refinesEvent name="_7UjxwYAXEeKj0pNGFHKNbQ" org.eventb.core.target="edit_owned"/>
+<org.eventb.core.guard name="_26vl4pj5EeG_TIv2gvsZ4g" org.eventb.core.label="grdr2_1" org.eventb.core.predicate="c1 ∈ dom(field)"/>
+<org.eventb.core.action name="_26vl45j5EeG_TIv2gvsZ4g" org.eventb.core.assignment="field ≔  (field∖{c1↦field(c1)}) ∪ {newc↦field(c1)}" org.eventb.core.label="actr2_1"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_JYoaoJUiEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="edit_owned_principal">
+<org.eventb.core.refinesEvent name="_7UjxwoAXEeKj0pNGFHKNbQ" org.eventb.core.target="edit_owned"/>
+<org.eventb.core.guard name="_JYoaopUiEeGSmsOPZ71WXA" org.eventb.core.label="grdr2_1" org.eventb.core.predicate="c1 ∈ principal"/>
+<org.eventb.core.action name="_JYoao5UiEeGSmsOPZ71WXA" org.eventb.core.assignment="principal ≔  (principal ∖{c1}) ∪ {newc}" org.eventb.core.label="actr2_1"/>
+<org.eventb.core.action name="_JYoapJUiEeGSmsOPZ71WXA" org.eventb.core.assignment="field ≔  (field ⩥{c1})  ∪ (field∼[{c1}]×{newc})" org.eventb.core.label="actr2_2"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_JYoapZUiEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="edit_not_owned">
+<org.eventb.core.refinesEvent name="_7UkY0IAXEeKj0pNGFHKNbQ" org.eventb.core.target="edit_not_owned"/>
+<org.eventb.core.guard name="_JYoap5UiEeGSmsOPZ71WXA" org.eventb.core.label="grdr2_1" org.eventb.core.predicate="c1 ∉ principal"/>
+<org.eventb.core.action name="_JYpBsJUiEeGSmsOPZ71WXA" org.eventb.core.assignment="field ≔ field ∪ {newc↦field(c1)}" org.eventb.core.label="actr2_1"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_JYpBsZUiEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="transmit_rc">
+<org.eventb.core.refinesEvent name="_7UkY0YAXEeKj0pNGFHKNbQ" org.eventb.core.target="transmit_rc"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_JYpBs5UiEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="comment_rc_principal">
+<org.eventb.core.refinesEvent name="_7UkY0oAXEeKj0pNGFHKNbQ" org.eventb.core.target="comment_rc"/>
+<org.eventb.core.guard name="_JYpBtZUiEeGSmsOPZ71WXA" org.eventb.core.label="grdr2_1" org.eventb.core.predicate="rc ∈ principal"/>
+<org.eventb.core.action name="_JYpBtpUiEeGSmsOPZ71WXA" org.eventb.core.assignment="field ≔ field ∪ {cmt↦rc}" org.eventb.core.label="actr2_1"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_26vl5Jj5EeG_TIv2gvsZ4g" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="comment_rc_secondary">
+<org.eventb.core.refinesEvent name="_7UkY04AXEeKj0pNGFHKNbQ" org.eventb.core.target="comment_rc"/>
+<org.eventb.core.guard name="_26vl5pj5EeG_TIv2gvsZ4g" org.eventb.core.label="grdr2_1" org.eventb.core.predicate="rc ∉ principal"/>
+<org.eventb.core.action name="_26vl55j5EeG_TIv2gvsZ4g" org.eventb.core.assignment="field ≔ field ∪ {cmt↦field(rc)}" org.eventb.core.label="actr2_1"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_JYpow5UiEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="upload_secondary">
+<org.eventb.core.refinesEvent name="_7Uk_4IAXEeKj0pNGFHKNbQ" org.eventb.core.target="upload"/>
+<org.eventb.core.parameter name="_JYpoxZUiEeGSmsOPZ71WXA" org.eventb.core.identifier="c1"/>
+<org.eventb.core.guard name="_JYpoxpUiEeGSmsOPZ71WXA" org.eventb.core.label="grdr2_1" org.eventb.core.predicate="c1 ∈ principal"/>
+<org.eventb.core.action name="_JYpox5UiEeGSmsOPZ71WXA" org.eventb.core.assignment="field ≔ field ∪ {c2↦c1}" org.eventb.core.label="actr2_1"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="_JYqP0JUiEeGSmsOPZ71WXA" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="upload_principal">
+<org.eventb.core.refinesEvent name="_7Uk_4YAXEeKj0pNGFHKNbQ" org.eventb.core.target="upload"/>
+<org.eventb.core.guard name="_JYqP0pUiEeGSmsOPZ71WXA" org.eventb.core.label="grdr2_1" org.eventb.core.predicate="c2 ∉ principal"/>
+<org.eventb.core.action name="_JYqP05UiEeGSmsOPZ71WXA" org.eventb.core.assignment="principal ≔ principal ∪ {c2}" org.eventb.core.label="actr2_1"/>
+</org.eventb.core.event>
+</org.eventb.core.machineFile>
